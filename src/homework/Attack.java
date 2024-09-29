@@ -2,6 +2,6 @@ package homework;
 
 public interface Attack {
 	
-	public void attck();
+	public void attack(User user, Monster monster);
 
 }

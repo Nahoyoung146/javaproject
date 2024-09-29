@@ -1,7 +1,7 @@
 package homework;
 
 public class Rpg {
-	private static String name;
+	private String name;
 	private int hp, mp, atk;
 
 	Rpg() {
@@ -11,28 +11,25 @@ public class Rpg {
 		this.atk = 0;
 	}
 
-	Rpg(String name, int hp, int mp, int atk) {
+	Rpg(String name) {
 		this.name = name;
-		this.hp = hp;
-		this.mp = mp;
-		this.atk = atk;
+		this.hp = 1000;
+		this.mp = 100;
+		this.atk = 100;
 	}
 
 	Rpg(String name, int atk) {
 		this.name = name;
-		this.hp = 0;
-		this.mp = 0;
+		this.hp = 1000;
+		this.mp = 100;
 		this.atk = atk;
 	}
 
-	public static void printinfo(String Name) {
-		System.out.print("게임이름 : " + Name + "\n");
-		System.out.print("========== 게임 룰 설명 ==========\n1. 총 3개의 던전을 클리어하는 것이 목적이고"
-				+ "한 던전당 일반 몬스터 2마리, 보스 몬스터 1마리가 순차적으로 등장하고 모험가가 선공이고 던전 입장시 Npc와 동행할지 안할지 결정."
-				+ "\n2. 모험가는 레벨 1부터 시작하고 몬스터 처치시 경험치, 골드 획득 그리고 10레벨이 되면 전사, 궁수, 마법사로 전직이 가능하고 얻은 골드로 Npc한테 무기 구입 가능.\n"
-				+ "3. 총 3명의 모험가 캐릭터가 한 팀으로 진행하고 모혐가 전원 사망이면 게임 종료 그 외에 경우에는 게임이 진행되고 만약에 이전 던전에서 모험가가 죽었으면 다음 던전 입장시 기존의 최대 체력으로 부활함.\n4. 마지막으로 Npc 부가적으로 "
-				+ "버프를 줄 수 있고 상대 몬스터의 특수효과가 존재할 수도 있다.");
-
+	Rpg(String name, int hp, int atk) {
+		this.name = name;
+		this.hp = hp;
+		this.mp = 0;
+		this.atk = atk;
 	}
 
 	public String getName() {
@@ -61,6 +58,23 @@ public class Rpg {
 
 	public void setAtk(int atk) {
 		this.atk = atk;
+	}
+
+	public static void printinfo(String GameName) {
+		System.out.print("게임이름 : " + GameName + "\n");
+		System.out.print("========== 게임 룰 설명 ==========\n1. 총 3개의 던전을 클리어하는 것이 목적이고"
+				+ "한 던전당 일반 몬스터 2마리, 보스 몬스터 1마리가 순차적으로 등장하고 모험가가 선공이고 던전 입장시 Npc와 동행할지 안할지 결정."
+				+ "\n2. 모험가는 레벨 1부터 시작하고 몬스터 처치시 경험치, 골드 획득 그리고 10레벨이 되면 전사, 궁수, 마법사로 전직이 가능하고 얻은 골드로 Npc한테 무기 구입 가능.\n"
+				+ "3. 총 3명의 모험가 캐릭터가 한 팀으로 진행하고 모혐가 전원 사망이면 게임 종료 그 외에 경우에는 게임이 진행되고 만약에 이전 던전에서 모험가가 죽었으면 다음 던전 입장시 기존의 최대 체력으로 부활함.\n4. 마지막으로 Npc 부가적으로 "
+				+ "버프를 줄 수 있고 상대 몬스터의 특수효과가 존재할 수도 있다.");
+	}
+
+	public boolean death(User user, Monster monster) {
+		if (user.getHp() == 0 || monster.getHp() == 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

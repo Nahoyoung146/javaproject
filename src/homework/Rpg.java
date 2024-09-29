@@ -15,7 +15,7 @@ public class Rpg {
 		this.name = name;
 		this.hp = 1000;
 		this.mp = 100;
-		this.atk = 100;
+		this.atk = 10;
 	}
 
 	Rpg(String name, int atk) {

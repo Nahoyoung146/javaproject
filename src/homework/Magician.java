@@ -5,12 +5,26 @@ public class Magician extends User {
 		super();
 	}
 
-	Magician(String name, int atk, int skillatk, String job) {
-		super(name, atk, skillatk, job);
+	Magician(String name, String job) {
+		super(name, job);
 	}
 
-	public void SkillWa(User user, Monster monster) {
-		System.out.println(super.getName() + "이(가) 스킬을 시전했습니다\t적에게 상당한 피해를 입혔습니다.");
-		monster.setHp(monster.getHp() - user.getSkillatk());
+	public void SkillWa() {
+		System.out.println(super.getName() + "이(가) 스킬을 시전했습니다\t아군들의 체력이 회복되었습니다.");
+
+	}
+
+	public void ClassUpMa() {
+		if (super.getLevel() == 10) {
+			super.setJob("마법사");
+		}
+	}
+	
+	public void MagicBolt() {
+		
+	}
+	
+	public void Apocylpse() {
+		
 	}
 }

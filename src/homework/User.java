@@ -1,7 +1,7 @@
 package homework;
 
 public class User extends Rpg implements Attack {
-	private int money, exp, level, skillatk, needexp, addexp, addhp, addmp, addatk, addskillatk;
+	private int money, exp, level, skillatk, needexp, addexp, addhp, addmp, addatk, addskillatk, maxhp, maxmp;
 	private String job;
 
 	User() {
@@ -17,14 +17,16 @@ public class User extends Rpg implements Attack {
 		this.job = "가나다";
 		this.addatk = 5;
 		this.addskillatk = 5;
+		this.maxhp = 0;
+		this.maxmp = 0;
 	}
 
-	User(String name, int atk, int skillatk, String job) {
-		super(name, atk);
+	User(String name, String job) {
+		super(name);
 		this.money = 0;
 		this.exp = 0;
 		this.level = 1;
-		this.skillatk = skillatk;
+		this.skillatk = 50;
 		this.needexp = 500;
 		this.addexp = 5;
 		this.addhp = 100;
@@ -32,6 +34,8 @@ public class User extends Rpg implements Attack {
 		this.job = job;
 		this.addatk = 5;
 		this.addskillatk = 5;
+		this.maxhp = 1000;
+		this.maxmp = 100;
 	}
 
 	public int getMoney() {
@@ -102,6 +106,10 @@ public class User extends Rpg implements Attack {
 		return job;
 	}
 
+	public void setJob(String job) {
+		this.job = job;
+	}
+
 	public int getAddatk() {
 		return addatk;
 	}
@@ -118,6 +126,22 @@ public class User extends Rpg implements Attack {
 		this.addskillatk = addskillatk;
 	}
 
+	public int getMaxhp() {
+		return maxhp;
+	}
+
+	public void setMaxhp(int maxhp) {
+		this.maxhp = maxhp;
+	}
+
+	public int getMaxmp() {
+		return maxmp;
+	}
+
+	public void setMaxmp(int maxmp) {
+		this.maxmp = maxmp;
+	}
+
 	public void Expup(Monster monster) {
 		int a = (int) Math.random() * monster.getDifficulty() + 1;
 		this.setExp(this.getExp() + a);
@@ -130,11 +154,10 @@ public class User extends Rpg implements Attack {
 			this.setAddatk(this.getAddatk() + 5);
 			this.setAddskillatk(this.getAddskillatk() + 5);
 			this.setNeedexp(this.getNeedexp() + this.getAddexp());
-			this.setHp(this.getHp() + this.getAddhp());
-			this.setMp(this.getMp() + this.getAddmp());
+			this.setHp(this.getMaxhp() + this.getAddhp());
+			this.setMp(this.getMaxmp() + this.getAddmp());
 			super.setAtk(super.getAtk() + this.getAddatk());
 			this.setSkillatk(this.getSkillatk() + this.getAddskillatk());
-
 		}
 	}
 
@@ -143,12 +166,28 @@ public class User extends Rpg implements Attack {
 		this.setMoney(this.getMoney() + a);
 	}
 
+	public void recovery() {
+		System.out.println("일정량의 hp와 mp가 회복되었습니다.");
+		this.setHp(this.getHp() + 10);
+		this.setMp(this.getMp() + 5);
+		if (this.getHp() >= this.getMaxhp()) {
+			this.setHp(this.getMaxhp());
+		}
+		if (this.getMp() >= this.getMaxmp()) {
+			this.setMp(this.getMaxmp());
+		}
+	}
+
 	public void BuyItems() {
 
 	}
 
-	public void attack(User user, Monster monster) {
+	public void attack(User user, Monster monster, Npc npc) {
 		System.out.println(user.getName() + "이가 공격을 합니다.");
 		monster.setHp(monster.getHp() - user.getAtk());
+	}
+
+	public String toString() {
+		return "이름 : " + super.getName() + ", 레벨 : " + this.getLevel() + ", 경험치 : " + this.getExp();
 	}
 }

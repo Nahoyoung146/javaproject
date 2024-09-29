@@ -1,5 +1,8 @@
 package homework;
 
-public class NpcItems extends Npc{
+public class NpcItems extends Npc {
 
+	public void Sellitems() {
+
+	}
 }

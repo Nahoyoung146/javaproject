@@ -24,7 +24,7 @@ public class Monster extends Rpg implements Attack {
 		return difficulty;
 	}
 
-	public void attack(User user, Monster monster) {
+	public void attack(User user, Monster monster, Npc npc) {
 		System.out.println(monster.getName() + "이가 공격을 합니다.");
 		monster.setHp(user.getHp() - monster.getAtk());
 	}

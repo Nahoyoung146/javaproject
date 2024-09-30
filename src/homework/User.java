@@ -159,11 +159,13 @@ public class User extends Rpg implements Attack {
 			super.setAtk(super.getAtk() + this.getAddatk());
 			this.setSkillatk(this.getSkillatk() + this.getAddskillatk());
 		}
+		System.out.println(this.getName() + "이(가) 레벨업했습니다.");
 	}
 
 	public void MoneyUp(Monster monster) {
 		int a = 10 + (int) Math.random() * monster.getDifficulty() * 10 + 1;
 		this.setMoney(this.getMoney() + a);
+		System.out.println(this.getName() + "이(가) " + a + "원을(를) 획득하였습니다.");
 	}
 
 	public void recovery() {
@@ -178,16 +180,38 @@ public class User extends Rpg implements Attack {
 		}
 	}
 
-	public void BuyItems() {
+	public void attack(User[] user, MonDragon[] dragon, int order) {
+		int i = 0;
+		while (i < user.length) {
+			System.out.println(user[i].getName() + "이(가) 공격을 합니다.");
+			dragon[order].setHp(dragon[order].getHp() - user[i].getAtk());
+			i++;
+		}
+		System.out.println("적 체력 : " + dragon[order].getHp());
+	};
 
+	public void attack(User[] user, MonDemon[] demon, int order) {
+		int i = 0;
+		while (i < user.length) {
+			System.out.println(user[i].getName() + "이(가) 공격을 합니다.");
+			demon[order].setHp(demon[order].getHp() - user[i].getAtk());
+			i++;
+		}
+		System.out.println("적 체력 : " + demon[order].getHp());
 	}
 
-	public void attack(User user, Monster monster, Npc npc) {
-		System.out.println(user.getName() + "이가 공격을 합니다.");
-		monster.setHp(monster.getHp() - user.getAtk());
+	public void attack(User[] user, MonMachine[] machine, int order) {
+		int i = 0;
+		while (i < user.length) {
+			System.out.println(user[i].getName() + "이(가) 공격을 합니다.");
+			machine[order].setHp(machine[order].getHp() - user[i].getAtk());
+			i++;
+		}
+		System.out.println("적 체력 : " + machine[order].getHp());
 	}
 
 	public String toString() {
-		return "이름 : " + super.getName() + ", 레벨 : " + this.getLevel() + ", 경험치 : " + this.getExp();
+		return "이름 : " + this.getName() + ", 레벨 : " + this.getLevel() + ", 경험치 : " + this.getExp() + ", 직업 : "
+				+ this.getJob();
 	}
 }

@@ -1,6 +1,6 @@
 package homework;
 
-public class DemonThird extends MonDemon implements BossSkill{
+public class DemonThird extends MonDemon implements Skill{
 	DemonThird() {
 		super();
 	}
@@ -9,7 +9,7 @@ public class DemonThird extends MonDemon implements BossSkill{
 		super(name, hp, atk, species, difficulty);
 	}
 	
-	public void BossSkill(User[] user) {
+	public void Skill(User[] user,Monster[] monster, int order) {
 		System.out.println(this.getName() + "이(가) 스킬을 시전했습니다.\t적들의 공격력을 반감시킵니다.");
 		int i = 0;
 		while (i < user.length) {

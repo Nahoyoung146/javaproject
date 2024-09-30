@@ -1,6 +1,6 @@
 package homework;
 
-public class Archer extends User {
+public class Archer extends User{
 	Archer() {
 		super();
 	}
@@ -9,8 +9,8 @@ public class Archer extends User {
 		super(name, job, futurejob);
 	}
 
-	public void SkillAr(User[] user) {
-		System.out.println(this.getName() + "이(가) 스킬을 시전했습니다\t아군들의 공격력이 증가하였습니다.");
+	public void Skill(User[] user,Monster[] monster, int order) {
+		System.out.println(this.getName() + "이(가) 스킬을 시전했습니다\n아군들의 공격력이 증가하였습니다.");
 		int i = 0;
 		while (i < user.length) {
 			user[i].setAtk(user[i].getAtk() + 50);

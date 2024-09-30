@@ -1,6 +1,6 @@
 package homework;
 
-public class Magician extends User {
+public class Magician extends User{
 	Magician() {
 		super();
 	}
@@ -9,8 +9,8 @@ public class Magician extends User {
 		super(name, job, futurejob);
 	}
 
-	public void SkillMa(User[] user) {
-		System.out.println(this.getName() + "이(가) 스킬을 시전했습니다\t아군들의 체력이 회복되었습니다.");
+	public void Skill(User[] user,Monster[] monster, int order) {
+		System.out.println(this.getName() + "이(가) 스킬을 시전했습니다\n아군들의 체력이 회복되었습니다.");
 		int i = 0;
 		while (i < user.length) {
 			user[i].setHp(user[i].getHp() + 50);

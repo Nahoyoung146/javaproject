@@ -1,6 +1,6 @@
 package homework;
 
-public class MachineThird extends MonMachine implements BossSkill{
+public class MachineThird extends MonMachine implements Skill{
 	MachineThird() {
 		super();
 	}
@@ -9,7 +9,7 @@ public class MachineThird extends MonMachine implements BossSkill{
 		super(name, hp, atk, species, difficulty);
 	}
 	
-	public void BossSkill(User[] user) {
+	public void Skill(User[] user,Monster[] monster, int order) {
 		System.out.println(this.getName() + "이(가) 스킬을 시전했습니다\t적들의 체력이 10%만 남습니다.");
 		int i = 0;
 		while (i < user.length) {

@@ -28,19 +28,18 @@ public class Main {
 		int s1 = 0;
 		while (s1 < user.length) {
 			if (user[s1].getLevel() == 10 && ClassUp[s1]) {
-				System.out.println("축하합니다." + user[s1].getName() + "이 레벨10을 달성해서" + user[s1].getFuturejob()
+				System.out.println("축하합니다." + user[s1].getName() + "이(가) 레벨10을 달성해서 " + user[s1].getFuturejob()
 						+ "으로 전직하였습니다. 이제부터 직업스킬이 사용가능합니다.");
 				ClassUp[s1] = false;
 				user[s1].setJob(user[s1].getFuturejob());
 			}
-			s1++;
 			System.out.println(user[s1]);
+			s1++;
 		}
 		System.out.println("=================================================================================");
 		int turn = 1;
 		int s2 = 0;
 		boolean help = false;
-
 		while (s2 < stage.length) {
 			System.out.println(stage[s2] + "에 입장합니다.");
 			int qua = (int) Math.random() * 3;
@@ -58,31 +57,22 @@ public class Main {
 
 				while (true) {
 					System.out.println("턴 수 : " + turn);
-					int s4=0;
-					while(s4<user.length) {
-						if(ClassUp[s4]==false) {
+					int s4 = 0;
+					while (s4 < user.length) {
+						if (ClassUp[s4] == false) {
 							System.out.print("공격방식을 선택하세요. 1.일반공격 2.스킬 : ");
-							int num=sc.nextInt();
-							if(num==1)
-								user[s1].attack(user, dragon, order[0]);
-							else {
-								user[sl].
-							}
+							int num = sc.nextInt();
+							if (num == 1)
+								user[s4].attack(user, dragon, order[0]);
+							else
+								user[s4].Skill(user, dragon, order[0]);
 						}
-						
+
 						else
-							user[s1].attack(user, dragon, order[0]);
+							user[s4].attack(user, dragon, order[0]);
+						s4++;
 					}
-					s1++;
-					
-					
-					
-					
-					
-					
-					
-					
-					
+
 					if (help)
 						npc[qua].attack(user, dragon, order[0]);
 

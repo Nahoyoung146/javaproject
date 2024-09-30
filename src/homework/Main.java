@@ -27,7 +27,7 @@ public class Main {
 		boolean[] ClassUp = { true, true, true };
 		int s1 = 0;
 		while (s1 < user.length) {
-			if (user[s1].getLevel() == 10 && ClassUp[s1]) {
+			if (user[s1].getLevel() >= 10 && ClassUp[s1]) {
 				System.out.println("축하합니다." + user[s1].getName() + "이(가) 레벨10을 달성해서 " + user[s1].getFuturejob()
 						+ "으로 전직하였습니다. 이제부터 직업스킬이 사용가능합니다.");
 				ClassUp[s1] = false;

@@ -2,7 +2,7 @@ package homework;
 
 public class User extends Rpg implements Attack {
 	private int money, exp, level, skillatk, needexp, addexp, addhp, addmp, addatk, addskillatk, maxhp, maxmp;
-	private String job;
+	private String job,futurejob;
 
 	User() {
 		super();
@@ -21,7 +21,7 @@ public class User extends Rpg implements Attack {
 		this.maxmp = 0;
 	}
 
-	User(String name, String job) {
+	User(String name, String job, String futurejob) {
 		super(name);
 		this.money = 0;
 		this.exp = 0;
@@ -36,6 +36,7 @@ public class User extends Rpg implements Attack {
 		this.addskillatk = 5;
 		this.maxhp = 1000;
 		this.maxmp = 100;
+		this.futurejob=futurejob;
 	}
 
 	public int getMoney() {
@@ -141,7 +142,11 @@ public class User extends Rpg implements Attack {
 	public void setMaxmp(int maxmp) {
 		this.maxmp = maxmp;
 	}
-
+	
+	public String getFuturejob() {
+		return futurejob;
+	}
+	
 	public void Expup(Monster monster) {
 		int a = (int) Math.random() * monster.getDifficulty() + 1;
 		this.setExp(this.getExp() + a);
@@ -209,7 +214,7 @@ public class User extends Rpg implements Attack {
 		}
 		System.out.println("적 체력 : " + machine[order].getHp());
 	}
-
+	
 	public String toString() {
 		return "이름 : " + this.getName() + ", 레벨 : " + this.getLevel() + ", 경험치 : " + this.getExp() + ", 직업 : "
 				+ this.getJob();

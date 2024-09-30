@@ -5,8 +5,8 @@ public class Magician extends User {
 		super();
 	}
 
-	Magician(String name, String job) {
-		super(name, job);
+	Magician(String name, String job, String futurejob) {
+		super(name, job, futurejob);
 	}
 
 	public void SkillMa(User[] user) {
@@ -20,5 +20,6 @@ public class Magician extends User {
 			System.out.println(user[i].getName() + "의 체력 : " + user[i].getHp());
 			i++;
 		}
+		this.setMp(this.getMp() - 30);
 	}
 }

@@ -14,8 +14,11 @@ public class Main {
 				new DemonThird("어둠의 형상", 4500, 45, "용족", 12) };
 		MonMachine[] machine = { new MachineFirst("안녕로봇", 5000, 50, "기계족", 14),
 				new MachineSecond("기계거미", 5500, 55, "기계족", 16), new MachineThird("기계박사 홍길동", 6000, 60, "기계족", 20) };
-	
-		NpcBattle[] npc = { new BattleHigh("알프레드", 100), new BattleMid("사바나", 50), new BattleLow("조나단", 10) };
+		ArrayList<Object> mon = new ArrayList<Object>();
+		mon.add(dragon);
+		mon.add(demon);
+		mon.add(machine);
+		NpcBattle[] npc = { new BattleHigh("알프레드", 100000000), new BattleMid("사바나", 50), new BattleLow("조나단", 10) };
 		Scanner sc = new Scanner(System.in);
 		String[] stage = { "용들의 무덤", "어둠의 동물원", "기계성" };
 		int[] order = { 0, 1, 2 };
@@ -29,6 +32,7 @@ public class Main {
 		System.out.println("=================================================================================");
 		int turn = 1;
 		int i = 0;
+		boolean help = false;
 		while (i < stage.length) {
 			System.out.println(stage[i] + "에 입장합니다.");
 			int qua = (int) Math.random() * 3;
@@ -36,27 +40,29 @@ public class Main {
 			char answer = sc.next().charAt(0);
 			if (answer == 'y') {
 				System.out.println(npc[qua]);
-			System.out.println("첫 번째 몬스터가 등장했습니다");
-			System.out.println(dragon[order[0]]);
-			
-			while(true) {
-				i++;
-				System.out.println("턴 수 : " + turn);
-				user[order[0]].attack(user, dragon, order[0]);
-				break;
-			}
-			
-					
-					
-
-				
-
-			
+				help = true;
 			}
 
-			i++;
+			int j = 0;
+			while (j < 3) {
+				System.out.println("첫 번째 몬스터가 등장했습니다");
+				System.out.println(mon.get(i));// dragon[0];
+
+				while (true) {
+					i++;
+					System.out.println("턴 수 : " + turn);
+					user[order[0]].attack(user, dragon, order[0]);
+					if (help)
+						npc[qua].attack(user, dragon, order[0]);
+
+					if (Rpg.death(user, dragon, demon, machine, order[0])) {
+						System.out.println("적이 쓰려졌습니다.");
+						break;
+					}
+				}
+				j++;
+			}
 		}
-
+		i++;
 	}
-
 }

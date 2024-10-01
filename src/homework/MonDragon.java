@@ -1,6 +1,8 @@
 package homework;
 
-public abstract class MonDragon extends Monster {
+import java.util.ArrayList;
+
+public abstract class MonDragon extends Monster implements Skill {
 	MonDragon() {
 		super();
 	}
@@ -9,5 +11,5 @@ public abstract class MonDragon extends Monster {
 		super(name, hp, atk, species, difficulty);
 	}
 
-	public abstract void Skill(User[] user, Monster[] monster, int order);
+	public abstract void Skill(ArrayList<User> user, Monster[] monster, int order);
 }

@@ -1,6 +1,8 @@
 package homework;
 
-public abstract class MonMachine extends Monster {
+import java.util.ArrayList;
+
+public abstract class MonMachine extends Monster implements Skill {
 	MonMachine() {
 		super();
 	}
@@ -9,5 +11,5 @@ public abstract class MonMachine extends Monster {
 		super(name, hp, atk, species, difficulty);
 	}
 
-	public abstract void Skill(User[] user, Monster[] monster, int order);
+	public abstract void Skill(ArrayList<User> user, Monster[] monster, int order);
 }

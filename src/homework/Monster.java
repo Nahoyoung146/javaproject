@@ -1,6 +1,8 @@
 package homework;
 
-public abstract class Monster extends Rpg implements Attack,Skill {
+import java.util.ArrayList;
+
+public class Monster extends Rpg implements Attack {
 	private String species;
 	private int difficulty;
 
@@ -24,34 +26,35 @@ public abstract class Monster extends Rpg implements Attack,Skill {
 		return difficulty;
 	}
 
-	public void attack(User[] user, MonDragon[] dragon, int order) {
-		System.out.println(dragon[order].getName() + "이가 공격을 합니다.");
+	public void attack(ArrayList<User> user, MonDragon[] dragon, int order, int order2) {
 		int i = 0;
-		while (i < user.length) {
-			user[i].setHp(user[i].getHp() - dragon[order].getAtk());
-			System.out.println(user[i].getName() + "의 체력 : " + user[i].getHp());
+		while (i < user.size()) {
+			System.out.println(dragon[order].getName() + "이(가) 공격을 합니다.");
+			user.get(i).setHp(user.get(i).getHp() - dragon[order].getAtk());
+			System.out.println(user.get(i).getName() + "의 체력 : " + user.get(i).getHp());
+			i++;
 		}
 	}
 
-	public void attack(User[] user, MonDemon[] demon, int order) {
-		System.out.println(demon[order].getName() + "이가 공격을 합니다.");
+	public void attack(ArrayList<User> user, MonDemon[] demon, int order, int order2) {
 		int i = 0;
-		while (i < user.length) {
-			user[i].setHp(user[i].getHp() - demon[order].getAtk());
-			System.out.println(user[i].getName() + "의 체력 : " + user[i].getHp());
+		while (i < user.size()) {
+			System.out.println(demon[order].getName() + "이(가) 공격을 합니다.");
+			user.get(i).setHp(user.get(i).getHp() - demon[order].getAtk());
+			System.out.println(user.get(i).getName() + "의 체력 : " + user.get(i).getHp());
+			i++;
 		}
 	}
 
-	public void attack(User[] user, MonMachine[] machine, int order) {
-		System.out.println(machine[order].getName() + "이가 공격을 합니다.");
+	public void attack(ArrayList<User> user, MonMachine[] machine, int order, int order2) {
 		int i = 0;
-		while (i < user.length) {
-			user[i].setHp(user[i].getHp() - machine[order].getAtk());
-			System.out.println(user[i].getName() + "의 체력 : " + user[i].getHp());
+		while (i < user.size()) {
+			System.out.println(machine[order].getName() + "이(가) 공격을 합니다.");
+			user.get(i).setHp(user.get(i).getHp() - machine[order].getAtk());
+			System.out.println(user.get(i).getName() + "의 체력 : " + user.get(i).getHp());
+			i++;
 		}
 	}
-	
-	public abstract void Skill(User[] user,Monster[] monster, int order);
 
 	public String toString() {
 		return "이름 : " + this.getName() + ", 체력 : " + this.getHp() + ", 공격력 : " + this.getAtk();

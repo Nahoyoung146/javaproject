@@ -22,20 +22,14 @@ public class Main {
 		NpcBattle[] npc = { new BattleHigh("알프레드", 100), new BattleMid("사바나", 50), new BattleLow("조나단", 10) };
 		Scanner sc = new Scanner(System.in);
 		String[] stage = { "용들의 무덤", "어둠의 동물원", "기계성" };
-		int[] order = { 0, 1, 2 };
 		Rpg.printinfo("전설의 시작");
 		boolean[] ClassUp = { true, true, true };
 		int s1 = 0;
 		while (s1 < user.length) {
-			if (user[s1].getLevel() >= 10 && ClassUp[s1]) {
-				System.out.println("축하합니다." + user[s1].getName() + "이(가) 레벨10을 달성해서 " + user[s1].getFuturejob()
-						+ "으로 전직하였습니다. 이제부터 직업스킬이 사용가능합니다.");
-				ClassUp[s1] = false;
-				user[s1].setJob(user[s1].getFuturejob());
-			}
 			System.out.println(user[s1]);
 			s1++;
 		}
+
 		System.out.println("=================================================================================");
 		int turn = 1;
 		int s2 = 0;
@@ -63,24 +57,64 @@ public class Main {
 							System.out.print("공격방식을 선택하세요. 1.일반공격 2.스킬 : ");
 							int num = sc.nextInt();
 							if (num == 1)
-								user[s4].attack(user, dragon, order[0]);
+								user[s4].attack(user, dragon, s3);
 							else
-								user[s4].Skill(user, dragon, order[0]);
+								user[s4].Skill(user, dragon, s3);
 						}
 
 						else
-							user[s4].attack(user, dragon, order[0]);
+							user[s4].attack(user, dragon, s3);
 						s4++;
 					}
 
 					if (help)
-						npc[qua].attack(user, dragon, order[0]);
+						npc[qua].attack(user, dragon, s3);
 
-					if (Rpg.death(user, dragon, demon, machine, order[0])) {
+					if (Rpg.death(user, dragon, demon, machine, s3)) {
 						System.out.println("적이 쓰려졌습니다.");
+						int s5 = 0;
+						while (s5 < user.length) {
+							user[s5].Expup(dragon[s3]);
+							user[s5].MoneyUp(dragon[s3]);
+							if (user[s5].getLevel() >= 10 && ClassUp[s5]) {
+								System.out.println("축하합니다." + user[s5].getName() + "이(가) 레벨10을 달성해서 "
+										+ user[s5].getFuturejob() + "으로 전직하였습니다. 이제부터 직업스킬이 사용가능합니다.");
+								ClassUp[s5] = false;
+								user[s5].setJob(user[s5].getFuturejob());
+							}
+							s5++;
+						}
 						break;
 					}
+
+					if (s3 == 2) {
+						int boss = (int) Math.random() * 3;
+						if (boss == 0)
+							dragon[s3].Skill(user, dragon, s3);
+
+						else
+							dragon[s3].attack(user, dragon, s3);
+					}
+
+					int s6 = 0;
+					while (s6 < user.length) {
+						if (user[s6].getHp() <= 0) {
+							user[s6] = null;
+						}
+						s6++;
+					}
+
+					if (Rpg.death(user, dragon, demon, machine, s3)) {
+						System.out.println("모험가가 모두 사망해서 게임이 종료됩니다");
+						break;
+					}
+
+					int s7 = 0;
+					while (s7 < user.length) {
+						user[s7].recovery();
+					}
 				}
+
 				s3++;
 			}
 		}

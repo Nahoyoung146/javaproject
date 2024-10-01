@@ -24,6 +24,7 @@ public class Main {
 		mon.add(dragon);
 		mon.add(demon);
 		mon.add(machine);
+
 		NpcBattle[] npc = { new BattleHigh("알프레드", 100), new BattleMid("사바나", 50), new BattleLow("조나단", 10) };
 		Scanner sc = new Scanner(System.in);
 		String[] stage = { "용들의 무덤", "어둠의 동물원", "기계성" };
@@ -51,7 +52,9 @@ public class Main {
 				}
 				System.out.println("=================================================================================");
 				System.out.println(s3 + 1 + "번째 몬스터가 등장했습니다");
-				System.out.println(mon.get(s2));// dragon[0];
+				System.out.println(mon.get(s2));// dragon[s3];
+//				int[] list= new int[3];
+//				System.out.println(list[0]);
 
 				while (true) {
 					turn++;

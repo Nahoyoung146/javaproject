@@ -9,7 +9,6 @@ public class Warrior extends User {
 
 	Warrior(String name, String job, String futurejob) {
 		super(name, job, futurejob);
-		this.setHp(0);
 	}
 
 	public void Skill(ArrayList<User> user, Monster[] monster, int order) {

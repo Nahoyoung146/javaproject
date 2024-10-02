@@ -7,8 +7,7 @@ import java.util.Scanner;
 
 public class Main {
 	public static void main(String[] args) {
-		User[] user = { new Warrior("모험가1", "전사"), new Archer("모험가2", "궁수"),
-				new Magician("모험가3", "마법사") };
+		User[] user = { new Warrior("모험가1", "전사"), new Archer("모험가2", "궁수"), new Magician("모험가3", "마법사") };
 		ArrayList<User> Arrayuser = new ArrayList<User>();
 		int s1 = 0;
 		while (s1 < user.length) {
@@ -40,6 +39,14 @@ public class Main {
 		s1 = 0;
 		boolean help = false;
 		while (s1 < stage.length) {
+			int s4 = 0;
+			while (s4 < user.length) {
+				Arrayuser.add(user[s4]);
+				user[s4].setHp(user[s4].getMaxhp());
+				user[s4].setMp(user[s4].getMaxmp());
+				user[s4].setAtk(user[s4].getAtk());
+				s4++;
+			}
 			System.out.println(stage[s1] + "에 입장합니다.");
 			int qua = (int) (Math.random() * 3);
 			System.out.println("전투Npc의 도움을 받겠습니까?\n단, 무작위로 Npc가 정해집니다. : y/n");
@@ -69,26 +76,26 @@ public class Main {
 							System.out.print("공격방식을 선택하세요. 1.일반공격 2.스킬 : ");
 							int num = sc.nextInt();
 							if (num == 1)
-								Arrayuser.get(s3).attack(Arrayuser, mon, s3, s1,s2);
+								Arrayuser.get(s3).attack(Arrayuser, mon, s3, s1, s2);
 							else
-								Arrayuser.get(s3).Skill(Arrayuser, mon, s1,s2);
+								Arrayuser.get(s3).Skill(Arrayuser, mon, s1, s2);
 						}
 
 						else
-							Arrayuser.get(s3).attack(Arrayuser, mon, s3, s1,s2);
+							Arrayuser.get(s3).attack(Arrayuser, mon, s3, s1, s2);
 						s3++;
 					}
 
 					s3 = 0;
 
 					if (help)
-						npc[qua].attack(Arrayuser, mon, s1, s2,0);
+						npc[qua].attack(Arrayuser, mon, s1, s2, 0);
 
-					if (Rpg.death(Arrayuser, mon, s1)) {
+					if (Rpg.death(Arrayuser, mon, s1, s2)) {
 						System.out.println("적이 쓰려졌습니다.");
 						while (s3 < Arrayuser.size()) {
-							Arrayuser.get(s3).Expup(mon,s1,s2);
-							Arrayuser.get(s3).MoneyUp(mon,s1,s2);
+							Arrayuser.get(s3).Expup(mon, s1, s2);
+							Arrayuser.get(s3).MoneyUp(mon, s1, s2);
 							if (Arrayuser.get(s3).getLevel() >= 10 && ClassUp[s3]) {
 								System.out.println("축하합니다." + Arrayuser.get(s3).getName() + "이(가) 레벨10을 달성해서 "
 										+ Arrayuser.get(s3).getFuturejob() + "으로 전직하였습니다. 이제부터 직업스킬이 사용가능합니다.");
@@ -104,14 +111,14 @@ public class Main {
 					if (s2 == 2) {
 						int boss = (int) (Math.random() * 3);
 						if (boss == 0)
-							mon.get(s1)[s2].Skill(Arrayuser, mon,0,0);
+							mon.get(s1)[s2].Skill(Arrayuser, mon, 0, 0);
 
 						else
-							dragon[s2].attack(Arrayuser, dragon, s2, s3);
+							dragon[s2].attack(Arrayuser, mon, s1, s2, 0);
 					}
 
 					else {
-						dragon[s2].attack(Arrayuser, dragon, s2, s3);
+						dragon[s2].attack(Arrayuser, mon, s1, s2, 0);
 					}
 
 					s3 = 0;
@@ -122,7 +129,7 @@ public class Main {
 						s3++;
 					}
 
-					if (Rpg.death(Arrayuser, dragon, demon, machine, s2)) {
+					if (Rpg.death(Arrayuser, mon, s1, s2)) {
 						System.out.println("모험가가 모두 사망해서 게임이 종료됩니다");
 						break;
 					}

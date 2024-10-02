@@ -2,7 +2,7 @@ package homework;
 
 import java.util.ArrayList;
 
-public class Monster extends Rpg implements Attack {
+public abstract class Monster extends Rpg implements Attack, Skill {
 	private String species;
 	private int difficulty;
 
@@ -35,6 +35,8 @@ public class Monster extends Rpg implements Attack {
 			i++;
 		}
 	}
+	
+	public abstract void Skill(ArrayList<User> user, ArrayList<Monster[]> Mon, int order,int order2);
 
 	public String toString() {
 		return "이름 : " + this.getName() + ", 체력 : " + this.getHp() + ", 공격력 : " + this.getAtk();

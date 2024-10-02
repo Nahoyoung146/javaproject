@@ -28,7 +28,7 @@ public abstract class User extends Rpg implements Attack, Skill {
 		this.money = 0;
 		this.exp = 0;
 		this.level = 1;
-		this.skillatk = 0;
+		this.skillatk = 50;
 		this.needexp = 500;
 		this.addexp = 5;
 		this.addhp = 100;

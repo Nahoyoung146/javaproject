@@ -7,8 +7,8 @@ import java.util.Scanner;
 
 public class Main {
 	public static void main(String[] args) {
-		User[] user = { new Warrior("모험가1", "모험가", "전사"), new Archer("모험가2", "모험가", "궁수"),
-				new Magician("모험가3", "모험가", "마법사") };
+		User[] user = { new Warrior("모험가1", "전사"), new Archer("모험가2", "궁수"),
+				new Magician("모험가3", "마법사") };
 		ArrayList<User> Arrayuser = new ArrayList<User>();
 		int s1 = 0;
 		while (s1 < user.length) {
@@ -50,7 +50,7 @@ public class Main {
 			}
 
 			int s2 = 0;
-			while (s2 < dragon.length) {
+			while (s2 < mon.get(s1).length) {
 				int s3 = 0;
 				while (s3 < Arrayuser.size()) {
 					System.out.println(Arrayuser.get(s3));
@@ -69,26 +69,26 @@ public class Main {
 							System.out.print("공격방식을 선택하세요. 1.일반공격 2.스킬 : ");
 							int num = sc.nextInt();
 							if (num == 1)
-								Arrayuser.get(s3).attack(Arrayuser, dragon, s2, s3);
+								Arrayuser.get(s3).attack(Arrayuser, mon, s3, s1,s2);
 							else
-								Arrayuser.get(s3).Skill(Arrayuser, dragon, s2);
+								Arrayuser.get(s3).Skill(Arrayuser, mon, s1,s2);
 						}
 
 						else
-							Arrayuser.get(s3).attack(Arrayuser, dragon, s2, s3);
+							Arrayuser.get(s3).attack(Arrayuser, mon, s3, s1,s2);
 						s3++;
 					}
 
 					s3 = 0;
 
 					if (help)
-						npc[qua].attack(Arrayuser, dragon, s2, s3);
+						npc[qua].attack(Arrayuser, mon, s1, s2,0);
 
-					if (Rpg.death(Arrayuser, dragon, demon, machine, s2)) {
+					if (Rpg.death(Arrayuser, mon, s1)) {
 						System.out.println("적이 쓰려졌습니다.");
 						while (s3 < Arrayuser.size()) {
-							Arrayuser.get(s3).Expup(dragon[s2]);
-							Arrayuser.get(s3).MoneyUp(dragon[s2]);
+							Arrayuser.get(s3).Expup(mon,s1,s2);
+							Arrayuser.get(s3).MoneyUp(mon,s1,s2);
 							if (Arrayuser.get(s3).getLevel() >= 10 && ClassUp[s3]) {
 								System.out.println("축하합니다." + Arrayuser.get(s3).getName() + "이(가) 레벨10을 달성해서 "
 										+ Arrayuser.get(s3).getFuturejob() + "으로 전직하였습니다. 이제부터 직업스킬이 사용가능합니다.");
@@ -104,7 +104,7 @@ public class Main {
 					if (s2 == 2) {
 						int boss = (int) (Math.random() * 3);
 						if (boss == 0)
-							dragon[s2].Skill(Arrayuser, dragon, s2);
+							mon.get(s1)[s2].Skill(Arrayuser, mon,0,0);
 
 						else
 							dragon[s2].attack(Arrayuser, dragon, s2, s3);

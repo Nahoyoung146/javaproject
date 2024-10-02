@@ -71,21 +71,26 @@ public class Rpg {
 				+ "버프를 줄 수 있고 상대 몬스터의 특수효과가 존재할 수도 있다.\n=================================================================================\n");
 	}
 
-	public static boolean death(ArrayList<User> user, MonDragon[] dragon, MonDemon[] demon, MonMachine[] machine,
-			int order) {
+	public static boolean death(ArrayList<User> user, ArrayList<Monster[]> Mon, int order) {
 		int sum = 0;
 		int i = 0;
-
 		while (i < user.size()) {
 			sum += user.get(i).getHp();
 			i++;
 		}
 
-		if (sum <= 0 || dragon[order].getHp() <= 0 || demon[order].getHp() <= 0 || machine[order].getHp() <= 0) {
+		if (sum <= 0)
 			return true;
+
+		else if (sum > 0) {
+			i = 0;
+			while (i < Mon.get(order).length) {
+				if (Mon.get(order)[i].getHp() <= 0)
+					return true;
+				i++;
+			}
 		}
 
 		return false;
 	}
-
 }

@@ -23,17 +23,17 @@ public abstract class User extends Rpg implements Attack, Skill {
 		this.maxmp = 0;
 	}
 
-	User(String name, String job, String futurejob) {
+	User(String name, String futurejob) {
 		super(name);
 		this.money = 0;
 		this.exp = 0;
 		this.level = 1;
-		this.skillatk = 50;
+		this.skillatk = 0;
 		this.needexp = 500;
 		this.addexp = 5;
 		this.addhp = 100;
 		this.addmp = 10;
-		this.job = job;
+		this.job = "모험가";
 		this.addatk = 5;
 		this.addskillatk = 5;
 		this.maxhp = 1000;
@@ -149,8 +149,8 @@ public abstract class User extends Rpg implements Attack, Skill {
 		return futurejob;
 	}
 
-	public void Expup(Monster monster) {
-		int a = (int) (Math.random() * monster.getDifficulty()) + 1;
+	public void Expup(ArrayList<Monster[]> Mon, int order, int order2) {
+		int a = (int) (Math.random() * Mon.get(order)[order2].getDifficulty()) + 1;
 		this.setExp(this.getExp() + a);
 		if (this.getExp() >= this.getNeedexp()) {
 			this.setLevel(this.getLevel() + 1);
@@ -170,8 +170,8 @@ public abstract class User extends Rpg implements Attack, Skill {
 		System.out.println(this.getName() + "의 경험치가 " + a + " 증가하였습니다.");
 	}
 
-	public void MoneyUp(Monster monster) {
-		int a = 10 + (int) (Math.random() * monster.getDifficulty() * 10) + 1;
+	public void MoneyUp(ArrayList<Monster[]> Mon, int order, int order2) {
+		int a = 10 + (int) (Math.random() * Mon.get(order)[order2].getDifficulty() * 10) + 1;
 		this.setMoney(this.getMoney() + a);
 		System.out.println(this.getName() + "이(가) " + a + "원을(를) 획득하였습니다.");
 	}
@@ -187,25 +187,13 @@ public abstract class User extends Rpg implements Attack, Skill {
 		}
 	}
 
-	public void attack(ArrayList<User> user, MonDragon[] dragon, int order, int order2) {
-		System.out.println(user.get(order2).getName() + "이(가) 공격을 합니다.");
-		dragon[order].setHp(dragon[order].getHp() - user.get(order2).getAtk());
-		System.out.println("적 체력 : " + dragon[order].getHp());
+	public void attack(ArrayList<User> user, ArrayList<Monster[]> Mon, int order, int order2, int order3) {
+		System.out.println(user.get(order).getName() + "이(가) 공격을 합니다.");
+		Mon.get(order2)[order3].setHp(Mon.get(order2)[order3].getHp() - user.get(order2).getAtk());
+		System.out.println("적 체력 : " + Mon.get(order2)[order3].getHp());
 	}
 
-	public void attack(ArrayList<User> user, MonDemon[] demon, int order, int order2) {
-		System.out.println(user.get(order2).getName() + "이(가) 공격을 합니다.");
-		demon[order].setHp(demon[order].getHp() - user.get(order2).getAtk());
-		System.out.println("적 체력 : " + demon[order].getHp());
-	}
-
-	public void attack(ArrayList<User> user, MonMachine[] machine, int order, int order2) {
-		System.out.println(user.get(order2).getName() + "이(가) 공격을 합니다.");
-		machine[order].setHp(machine[order].getHp() - user.get(order2).getAtk());
-		System.out.println("적 체력 : " + machine[order].getHp());
-	}
-
-	public abstract void Skill(ArrayList<User> user, Monster[] monster, int order);
+	public abstract void Skill(ArrayList<User> user, ArrayList<Monster[]> Mon, int order, int order2);
 
 	public String toString() {
 		return "이름 : " + this.getName() + ", 레벨 : " + this.getLevel() + ", 경험치 : " + this.getExp() + ", 직업 : "

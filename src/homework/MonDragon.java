@@ -11,5 +11,5 @@ public abstract class MonDragon extends Monster implements Skill {
 		super(name, hp, atk, species, difficulty);
 	}
 
-	public abstract void Skill(ArrayList<User> user, Monster[] monster, int order);
+	public abstract void Skill(ArrayList<User> user, ArrayList<Monster[]> Mon, int order,int order2);
 }

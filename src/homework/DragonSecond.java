@@ -11,7 +11,7 @@ public class DragonSecond extends MonDragon {
 		super(name, hp, atk, species, difficulty);
 	}
 
-	public void Skill(ArrayList<User> user, Monster[] monster, int order) {
+	public void Skill(ArrayList<User> user, ArrayList<Monster[]> Mon, int order, int order2) {
 
 	};
 

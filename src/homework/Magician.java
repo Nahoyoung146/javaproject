@@ -7,11 +7,11 @@ public class Magician extends User {
 		super();
 	}
 
-	Magician(String name, String job, String futurejob) {
-		super(name, job, futurejob);
+	Magician(String name, String futurejob) {
+		super(name, futurejob);
 	}
 
-	public void Skill(ArrayList<User> user, Monster[] monster, int order) {
+	public void Skill(ArrayList<User> user, ArrayList<Monster[]> Mon, int order, int order2) {
 		System.out.println(this.getName() + "이(가) 스킬을 시전했습니다\n아군들의 체력이 회복되었습니다.");
 		int i = 0;
 		while (i < user.size()) {

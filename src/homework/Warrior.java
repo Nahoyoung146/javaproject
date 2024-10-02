@@ -7,14 +7,14 @@ public class Warrior extends User {
 		super();
 	}
 
-	Warrior(String name, String job, String futurejob) {
-		super(name, job, futurejob);
+	Warrior(String name, String futurejob) {
+		super(name, futurejob);
 	}
 
-	public void Skill(ArrayList<User> user, Monster[] monster, int order) {
+	public void Skill(ArrayList<User> user, ArrayList<Monster[]> Mon, int order, int order2) {
 		System.out.println(this.getName() + "이(가) 스킬을 시전했습니다\n적에게 상당한 피해를 입혔습니다.");
-		monster[order].setHp(monster[order].getHp() - this.getSkillatk());
+		Mon.get(order)[order2].setHp(Mon.get(order)[order2].getHp() - this.getSkillatk());
 		this.setMp(this.getMp() - 30);
-		System.out.println("적 체력 : " + monster[order].getHp());
+		System.out.println("적 체력 : " + Mon.get(order)[order2].getHp());
 	}
 }

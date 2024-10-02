@@ -26,31 +26,11 @@ public class Monster extends Rpg implements Attack {
 		return difficulty;
 	}
 
-	public void attack(ArrayList<User> user, MonDragon[] dragon, int order, int order2) {
+	public void attack(ArrayList<User> user, ArrayList<Monster[]> Mon, int order, int order2, int order3) {
 		int i = 0;
 		while (i < user.size()) {
-			System.out.println(dragon[order].getName() + "이(가) 공격을 합니다.");
-			user.get(i).setHp(user.get(i).getHp() - dragon[order].getAtk());
-			System.out.println(user.get(i).getName() + "의 체력 : " + user.get(i).getHp());
-			i++;
-		}
-	}
-
-	public void attack(ArrayList<User> user, MonDemon[] demon, int order, int order2) {
-		int i = 0;
-		while (i < user.size()) {
-			System.out.println(demon[order].getName() + "이(가) 공격을 합니다.");
-			user.get(i).setHp(user.get(i).getHp() - demon[order].getAtk());
-			System.out.println(user.get(i).getName() + "의 체력 : " + user.get(i).getHp());
-			i++;
-		}
-	}
-
-	public void attack(ArrayList<User> user, MonMachine[] machine, int order, int order2) {
-		int i = 0;
-		while (i < user.size()) {
-			System.out.println(machine[order].getName() + "이(가) 공격을 합니다.");
-			user.get(i).setHp(user.get(i).getHp() - machine[order].getAtk());
+			System.out.println(Mon.get(order)[order2].getName() + "이(가) 공격을 합니다.");
+			user.get(i).setHp(user.get(i).getHp() - Mon.get(order)[order2].getAtk());
 			System.out.println(user.get(i).getName() + "의 체력 : " + user.get(i).getHp());
 			i++;
 		}

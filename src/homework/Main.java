@@ -39,16 +39,8 @@ public class Main {
 		s1 = 0;
 		boolean help = false;
 		while (s1 < stage.length) {
-			int s4 = 0;
-			while (s4 < user.length) {
-				Arrayuser.clear();
-				Arrayuser.add(user[s4]);
-				user[s4].setHp(user[s4].getMaxhp());
-				user[s4].setMp(user[s4].getMaxmp());
-				user[s4].setAtk(user[s4].getAtk());
-				s4++;
-			}
-
+			NpcInfo.buff(Arrayuser);
+			User.initial(Arrayuser, user);
 			System.out.println(stage[s1] + "에 입장합니다.");
 			int qua = (int) (Math.random() * 3);
 			System.out.println("전투Npc의 도움을 받겠습니까?\n단, 무작위로 Npc가 정해집니다. : y/n");

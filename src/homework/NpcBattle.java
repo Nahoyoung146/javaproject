@@ -18,6 +18,6 @@ public class NpcBattle extends Npc implements Attack {
 	}
 
 	public String toString() {
-		return "이름 : " + this.getName() + ", 공격력 : " + this.getAtk();
+		return "Npc이름 : " + this.getName() + ", 공격력 : " + this.getAtk();
 	}
 }

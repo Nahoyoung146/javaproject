@@ -192,11 +192,11 @@ public abstract class User extends Rpg implements Attack, Skill {
 		Mon.get(order2)[order3].setHp(Mon.get(order2)[order3].getHp() - user.get(order2).getAtk());
 		System.out.println("적 체력 : " + Mon.get(order2)[order3].getHp());
 	}
-	
+
 	public static void initial(ArrayList<User> user1, User[] user2) {
+		user1.clear();
 		int i = 0;
-		while (i < user1.size()) {
-			user1.clear();
+		while (i < user2.length) {
 			user1.add(user2[i]);
 			user2[i].setHp(user2[i].getMaxhp());
 			user2[i].setMp(user2[i].getMaxmp());
@@ -205,10 +205,29 @@ public abstract class User extends Rpg implements Attack, Skill {
 		}
 	}
 
+	public static void buffinitial(ArrayList<User> user1, User[] user2, int order) {
+		if (order == 1) {
+			int i = 0;
+			while (i < user1.size()) {
+				user2[i].setAtk(user2[i].getAtk() - 50);
+				i++;
+			}
+		}
+
+		else if (order == 2) {
+			int i = 0;
+			while (i < user1.size()) {
+				user2[i].setHp(user2[i].getHp() - 100);
+				user2[i].setMp(user2[i].getMp() - 100);
+				i++;
+			}
+		}
+	}
+
 	public abstract void Skill(ArrayList<User> user, ArrayList<Monster[]> Mon, int order, int order2);
 
 	public String toString() {
 		return "이름 : " + this.getName() + ", 레벨 : " + this.getLevel() + ", 공격력 : " + this.getAtk() + ", HP : "
-				+ this.getHp() + ", MP" + this.getMp() + ", 경험치 : " + this.getExp() + ", 직업 : " + this.getJob();
+				+ this.getHp() + ", MP : " + this.getMp() + ", 경험치 : " + this.getExp() + ", 직업 : " + this.getJob();
 	}
 }

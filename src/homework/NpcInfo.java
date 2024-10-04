@@ -11,7 +11,7 @@ public class NpcInfo extends Npc {
 		super(name);
 	}
 
-	public static void buff(ArrayList<User> user) {
+	public static int buff(ArrayList<User> user) {
 		System.out.println("길잡이npc가 등장했습니다.\n일정확률로 버프가 적용됩니다.");
 		int a = (int) (Math.random() * 3) + 1;
 		switch (a) {
@@ -19,20 +19,22 @@ public class NpcInfo extends Npc {
 			System.out.println("모험가들 공격력 증가");
 			int i = 0;
 			while (i < user.size()) {
-				user.get(i).setAtk(user.get(i).getAtk());
+				user.get(i).setAtk(user.get(i).getAtk() + 50);
+				i++;
 			}
-			break;
+			return 1;
 		case 2:
 			System.out.println("모험가들 Hp과(와) Mp 증가");
 			i = 0;
 			while (i < user.size()) {
 				user.get(i).setMaxhp(user.get(i).getMaxhp() + 100);
 				user.get(i).setMaxmp(user.get(i).getMaxmp() + 50);
+				i++;
 			}
-			break;
+			return 2;
 		default:
 			System.out.println("아쉽지만 아무 버프도 받지 못했습니다.");
-		break;
 		}
+		return 0;
 	}
 }

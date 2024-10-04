@@ -21,11 +21,6 @@ public class Main {
 		MonMachine[] machine = { new MachineFirst("안녕로봇", 5000, 50, "기계족", 140),
 				new MachineSecond("기계거미", 5500, 55, "기계족", 160), new MachineThird("기계박사 홍길동", 6000, 60, "기계족", 200) };
 		ArrayList<Monster[]> mon = new ArrayList<Monster[]>();
-//		s1 = 0;
-//		while (s1 <) {
-//			mon.add();
-//			s1++;
-//		}
 		mon.add(dragon);
 		mon.add(demon);
 		mon.add(machine);
@@ -138,6 +133,7 @@ public class Main {
 				}
 				s2++;
 			}
+			User.buffinitial(Arrayuser, user, NpcInfo.buff(Arrayuser));
 		}
 		s1++;
 	}

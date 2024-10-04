@@ -24,8 +24,11 @@ public class Main {
 		mon.add(dragon);
 		mon.add(demon);
 		mon.add(machine);
-
 		NpcBattle[] npc = { new BattleHigh("알프레드", 100), new BattleMid("사바나", 50), new BattleLow("조나단", 10) };
+		ItemWa[] wa = { new Sword(1000, 10, true), new Blade(2000, 20, true), new Blunt(3000, 30, true) };
+		ItemAr[] ar = { new Cross(1500, 10, true), new Bow(2500, 20, true) };
+		ItemMa[] ma = { new Wand(1000, 10, true), new Broom(1500, 20, true) };
+
 		Scanner sc = new Scanner(System.in);
 		String[] stage = { "용들의 무덤", "어둠의 동물원", "기계성" };
 		Rpg.printinfo("전설의 시작");

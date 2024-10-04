@@ -1,11 +1,11 @@
 package homework;
 
 public class Sword extends ItemWa {
-	Sword(){
+	Sword() {
 		super();
 	}
-	
-	Sword(int price, int weaponatk){
-		super(price, weaponatk);
+
+	Sword(int price, int weaponatk, boolean weapon) {
+		super(price, weaponatk, weapon);
 	}
 }

@@ -1,11 +1,11 @@
 package homework;
 
-public class Blunt extends ItemWa{
-	Blunt(){
+public class Blunt extends ItemWa {
+	Blunt() {
 		super();
 	}
-	
-	Blunt(int price, int weaponatk){
-		super(price, weaponatk);
+
+	Blunt(int price, int weaponatk, boolean weapon) {
+		super(price, weaponatk, weapon);
 	}
 }

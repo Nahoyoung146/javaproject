@@ -1,11 +1,11 @@
 package homework;
 
-public class Broom extends ItemMa{
-	Broom(){
+public class Broom extends ItemMa {
+	Broom() {
 		super();
 	}
-	
-	Broom(int price, int weaponatk){
-		super(price, weaponatk);
+
+	Broom(int price, int weaponatk, boolean weapon) {
+		super(price, weaponatk, weapon);
 	}
 }

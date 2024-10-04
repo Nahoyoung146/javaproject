@@ -1,11 +1,11 @@
 package homework;
 
-public class ItemMa extends Item{
-	ItemMa(){
+public class ItemMa extends Item {
+	ItemMa() {
 		super();
 	}
-	
-	ItemMa(int price, int weaponatk){
-		super(price, weaponatk);
+
+	ItemMa(int price, int weaponatk, boolean weapon) {
+		super(price, weaponatk, weapon);
 	}
 }

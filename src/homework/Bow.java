@@ -1,11 +1,11 @@
 package homework;
 
 public class Bow extends ItemAr {
-	Bow(){
+	Bow() {
 		super();
 	}
-	
-	Bow(int price, int weaponatk){
-		super(price, weaponatk);
+
+	Bow(int price, int weaponatk, boolean weapon) {
+		super(price, weaponatk, weapon);
 	}
 }

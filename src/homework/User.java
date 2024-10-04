@@ -228,6 +228,7 @@ public abstract class User extends Rpg implements Attack, Skill {
 
 	public String toString() {
 		return "이름 : " + this.getName() + ", 레벨 : " + this.getLevel() + ", 공격력 : " + this.getAtk() + ", HP : "
-				+ this.getHp() + ", MP : " + this.getMp() + ", 경험치 : " + this.getExp() + ", 직업 : " + this.getJob();
+				+ this.getHp() + ", MP : " + this.getMp() + ", 경험치 : " + this.getExp() + ", 직업 : " + this.getJob()
+				+ ", 보유골드 :" + this.getMoney();
 	}
 }

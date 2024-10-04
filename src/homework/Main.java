@@ -44,7 +44,7 @@ public class Main {
 		while (s1 < stage.length) {
 			NpcInfo.buff(Arrayuser);
 			User.initial(Arrayuser, user);
-//			NpcItems.iteminfo(wa, ar, ma);
+			NpcItems.iteminfo(item, 0);
 			System.out.println(stage[s1] + "에 입장합니다.");
 			int qua = (int) (Math.random() * 3);
 			System.out.println("전투Npc의 도움을 받겠습니까?\n단, 무작위로 Npc가 정해집니다. : y/n");

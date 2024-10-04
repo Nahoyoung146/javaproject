@@ -6,6 +6,6 @@ public class Sword extends ItemWa {
 	}
 
 	Sword(String name, int price, int weaponatk, boolean weapon) {
-		super(name, price, weaponatk,weapon);
+		super(name, price, weaponatk, weapon);
 	}
 }

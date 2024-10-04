@@ -5,7 +5,7 @@ public class Wand extends ItemMa {
 		super();
 	}
 
-	Wand(int price, int weaponatk, boolean weapon) {
-		super(price, weaponatk, weapon);
+	Wand(String name, int price, int weaponatk, boolean weapon) {
+		super(name, price, weaponatk, weapon);
 	}
 }

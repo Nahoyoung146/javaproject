@@ -11,8 +11,8 @@ public class Item extends Rpg {
 		this.weapon = false;
 	}
 
-	Item(int price, int weaponatk, boolean weapon) {
-		super();
+	Item(String name, int price, int weaponatk, boolean weapon) {
+		super(name);
 		this.price = price;
 		this.weaponatk = weaponatk;
 		this.weapon = weapon;
@@ -32,5 +32,9 @@ public class Item extends Rpg {
 
 	public void setWeapon(boolean weapon) {
 		this.weapon = weapon;
+	}
+	
+	public String toString() {
+		return "이름 : " + this.getName() + ", 가격 : " + this.getPrice() + ", 무기공격력 : " + this.getWeaponatk();
 	}
 }

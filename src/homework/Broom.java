@@ -5,7 +5,7 @@ public class Broom extends ItemMa {
 		super();
 	}
 
-	Broom(int price, int weaponatk, boolean weapon) {
-		super(price, weaponatk, weapon);
+	Broom(String name, int price, int weaponatk, boolean weapon) {
+		super(name, price, weaponatk, weapon);
 	}
 }

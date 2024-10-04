@@ -25,9 +25,14 @@ public class Main {
 		mon.add(demon);
 		mon.add(machine);
 		NpcBattle[] npc = { new BattleHigh("알프레드", 100), new BattleMid("사바나", 50), new BattleLow("조나단", 10) };
-		ItemWa[] wa = { new Sword(1000, 10, true), new Blade(2000, 20, true), new Blunt(3000, 30, true) };
-		ItemAr[] ar = { new Cross(1500, 10, true), new Bow(2500, 20, true) };
-		ItemMa[] ma = { new Wand(1000, 10, true), new Broom(1500, 20, true) };
+		ItemWa[] wa = { new Sword("대검", 1000, 10, true), new Blade("소검", 2000, 20, true),
+				new Blunt("둔기", 3000, 30, true) };
+		ItemAr[] ar = { new Cross("석궁", 1500, 10, true), new Bow("활", 2500, 20, true) };
+		ItemMa[] ma = { new Wand("완드", 1000, 10, true), new Broom("빗자루", 1500, 20, true) };
+		ArrayList<Item[]> item = new ArrayList<Item[]>();
+		item.add(wa);
+		item.add(ar);
+		item.add(ma);
 
 		Scanner sc = new Scanner(System.in);
 		String[] stage = { "용들의 무덤", "어둠의 동물원", "기계성" };
@@ -39,6 +44,7 @@ public class Main {
 		while (s1 < stage.length) {
 			NpcInfo.buff(Arrayuser);
 			User.initial(Arrayuser, user);
+//			NpcItems.iteminfo(wa, ar, ma);
 			System.out.println(stage[s1] + "에 입장합니다.");
 			int qua = (int) (Math.random() * 3);
 			System.out.println("전투Npc의 도움을 받겠습니까?\n단, 무작위로 Npc가 정해집니다. : y/n");

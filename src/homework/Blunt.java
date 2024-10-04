@@ -5,7 +5,7 @@ public class Blunt extends ItemWa {
 		super();
 	}
 
-	Blunt(int price, int weaponatk, boolean weapon) {
-		super(price, weaponatk, weapon);
+	Blunt(String name, int price, int weaponatk, boolean weapon) {
+		super(name, price, weaponatk, weapon);
 	}
 }

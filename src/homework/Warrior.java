@@ -7,8 +7,8 @@ public class Warrior extends User {
 		super();
 	}
 
-	Warrior(String name, String futurejob) {
-		super(name, futurejob);
+	Warrior(String name, int maxhp, int maxmp, int atk, String futurejob) {
+		super(name, maxhp, maxmp, atk, futurejob);
 	}
 
 	public void Skill(ArrayList<User> user, ArrayList<Monster[]> Mon, int order, int order2) {

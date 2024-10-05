@@ -7,7 +7,8 @@ import java.util.Scanner;
 
 public class Main {
 	public static void main(String[] args) {
-		User[] user = { new Warrior("모험가1", "전사"), new Archer("모험가2", "궁수"), new Magician("모험가3", "마법사") };
+		User[] user = { new Warrior("모험가1", 1000, 100, 10, "전사"), new Archer("모험가2", 800, 200, 50, "궁수"),
+				new Magician("모험가3", 500, 300, 80, "마법사") };
 		ArrayList<User> Arrayuser = new ArrayList<User>();
 		int s1 = 0;
 		while (s1 < user.length) {
@@ -118,7 +119,7 @@ public class Main {
 					else {
 						dragon[s2].attack(Arrayuser, mon, s1, s2, 0);
 					}
-					
+
 					s3 = 0;
 					while (s3 < Arrayuser.size()) {
 						if (Arrayuser.get(s3).getHp() <= 0) {
@@ -141,11 +142,11 @@ public class Main {
 					}
 					System.out.println("=============================================");
 				}
-				if (Rpg.deathuser(Arrayuser)) 
+				if (Rpg.deathuser(Arrayuser))
 					break;
 				s2++;
 			}
-			if (Rpg.deathuser(Arrayuser)) 
+			if (Rpg.deathuser(Arrayuser))
 				break;
 
 			if (s1 == 2) {

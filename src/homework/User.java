@@ -23,8 +23,8 @@ public abstract class User extends Rpg implements Attack, Skill {
 		this.maxmp = 0;
 	}
 
-	User(String name, String futurejob) {
-		super(name);
+	User(String name, int maxhp, int maxmp, int atk, String futurejob) {
+		super(name, atk);
 		this.money = 0;
 		this.exp = 0;
 		this.level = 1;
@@ -36,8 +36,8 @@ public abstract class User extends Rpg implements Attack, Skill {
 		this.job = "모험가";
 		this.addatk = 5;
 		this.addskillatk = 5;
-		this.maxhp = 1000;
-		this.maxmp = 100;
+		this.maxhp = maxhp;
+		this.maxmp = maxmp;
 		this.futurejob = futurejob;
 	}
 
@@ -227,8 +227,8 @@ public abstract class User extends Rpg implements Attack, Skill {
 	public abstract void Skill(ArrayList<User> user, ArrayList<Monster[]> Mon, int order, int order2);
 
 	public String toString() {
-		return "이름 : " + this.getName() + ", 레벨 : " + this.getLevel() + ", 공격력 : " + this.getAtk() + ", HP : "
-				+ this.getHp() + ", MP : " + this.getMp() + ", 경험치 : " + this.getExp() + ", 직업 : " + this.getJob()
+		return "이름 : " + this.getName() + ", 레벨 : " + this.getLevel() + ", HP : " + this.getHp() + ", MP : "
+				+ this.getMp() + ", 공격력 : " + this.getAtk() + ", 경험치 : " + this.getExp() + ", 직업 : " + this.getJob()
 				+ ", 보유골드 :" + this.getMoney();
 	}
 }

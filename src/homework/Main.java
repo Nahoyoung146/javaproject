@@ -25,10 +25,9 @@ public class Main {
 		mon.add(demon);
 		mon.add(machine);
 		NpcBattle[] npc = { new BattleHigh("알프레드", 100), new BattleMid("사바나", 50), new BattleLow("조나단", 10) };
-		ItemWa[] wa = { new Sword("대검", 1000, 10, true), new Blade("소검", 2000, 20, true),
-				new Blunt("둔기", 3000, 30, true) };
-		ItemAr[] ar = { new Cross("석궁", 1500, 10, true), new Bow("활", 2500, 20, true) };
-		ItemMa[] ma = { new Wand("완드", 1000, 10, true), new Broom("빗자루", 1500, 20, true) };
+		ItemWa[] wa = { new Sword("대검", 1000, 10), new Blade("소검", 2000, 20), new Blunt("둔기", 3000, 30) };
+		ItemAr[] ar = { new Cross("석궁", 1500, 10), new Bow("활", 2500, 20) };
+		ItemMa[] ma = { new Wand("완드", 1000, 10), new Broom("빗자루", 1500, 20) };
 		ArrayList<Item[]> item = new ArrayList<Item[]>();
 		item.add(wa);
 		item.add(ar);
@@ -45,6 +44,7 @@ public class Main {
 			NpcInfo.buff(Arrayuser);
 			User.initial(Arrayuser, user);
 			NpcItems.iteminfo(item, 0);
+			NpcItems.itemcanbuy(item, Arrayuser, 0);
 			System.out.println(stage[s1] + "에 입장합니다.");
 			int qua = (int) (Math.random() * 3);
 			System.out.println("전투Npc의 도움을 받겠습니까?\n단, 무작위로 Npc가 정해집니다. : y/n");
@@ -70,7 +70,7 @@ public class Main {
 					System.out.println("턴 수 : " + turn);
 					s3 = 0;
 					while (s3 < Arrayuser.size()) {
-						if (ClassUp[s3] == false) {
+						if (ClassUp[s3] == false && Arrayuser.get(s3).getMp() >= 30) {
 							System.out.print("공격방식을 선택하세요. 1.일반공격 2.스킬 : ");
 							int num = sc.nextInt();
 							if (num == 1)
@@ -89,7 +89,7 @@ public class Main {
 					if (help)
 						npc[qua].attack(Arrayuser, mon, s1, s2, 0);
 
-					if (Rpg.death(Arrayuser, mon, s1, s2)) {
+					if (Rpg.deathmonster(mon, s1, s2)) {
 						System.out.println("적이 쓰려졌습니다.");
 						while (s3 < Arrayuser.size()) {
 							Arrayuser.get(s3).Expup(mon, s1, s2);
@@ -118,16 +118,17 @@ public class Main {
 					else {
 						dragon[s2].attack(Arrayuser, mon, s1, s2, 0);
 					}
-
+					
 					s3 = 0;
 					while (s3 < Arrayuser.size()) {
 						if (Arrayuser.get(s3).getHp() <= 0) {
 							Arrayuser.remove(s3);
+							System.err.println(Arrayuser);
 						}
 						s3++;
 					}
 
-					if (Rpg.death(Arrayuser, mon, s1, s2)) {
+					if (Rpg.deathuser(Arrayuser)) {
 						System.out.println("모험가가 모두 사망해서 게임이 종료됩니다");
 						break;
 					}
@@ -140,10 +141,19 @@ public class Main {
 					}
 					System.out.println("=============================================");
 				}
+				if (Rpg.deathuser(Arrayuser)) 
+					break;
 				s2++;
 			}
+			if (Rpg.deathuser(Arrayuser)) 
+				break;
+
+			if (s1 == 2) {
+				System.out.println("모든 스테이지를 클리어하셨습니다.\n축하합니다.");
+				break;
+			}
 			User.buffinitial(Arrayuser, user, NpcInfo.buff(Arrayuser));
+			s1++;
 		}
-		s1++;
 	}
 }

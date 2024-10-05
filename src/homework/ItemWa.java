@@ -5,7 +5,7 @@ public class ItemWa extends Item {
 		super();
 	}
 	
-	ItemWa(String name, int price, int weaponatk, boolean weapon){
-		super(name, price, weaponatk,weapon);
+	ItemWa(String name, int price, int weaponatk){
+		super(name, price, weaponatk);
 	}
 }

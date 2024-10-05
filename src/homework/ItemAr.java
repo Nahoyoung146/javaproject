@@ -5,7 +5,7 @@ public class ItemAr extends Item {
 		super();
 	}
 
-	ItemAr(String name, int price, int weaponatk, boolean weapon) {
-		super(name, price, weaponatk,weapon);
+	ItemAr(String name, int price, int weaponatk) {
+		super(name, price, weaponatk);
 	}
 }

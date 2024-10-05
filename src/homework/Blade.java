@@ -5,7 +5,7 @@ public class Blade extends ItemWa {
 		super();
 	}
 
-	Blade(String name, int price, int weaponatk, boolean weapon) {
-		super(name, price, weaponatk, weapon);
+	Blade(String name, int price, int weaponatk) {
+		super(name, price, weaponatk);
 	}
 }

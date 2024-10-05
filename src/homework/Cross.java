@@ -5,7 +5,7 @@ public class Cross extends ItemAr {
 		super();
 	}
 
-	Cross(String name, int price, int weaponatk, boolean weapon) {
-		super(name,price, weaponatk, weapon);
+	Cross(String name, int price, int weaponatk) {
+		super(name,price, weaponatk);
 	}
 }

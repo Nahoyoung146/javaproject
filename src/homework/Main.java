@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-	public static void printinfo(String GameName) { // 스태틱 사용은 괜찮으나 printInfo 작업 자체가 게임 시스템 상에서 작업이 이루진다. (아쉽다.)
+	public static void printinfo(String GameName) {
 		System.out.print("게임이름 : " + GameName + "\n");
 		System.out.print("========== 게임 룰 설명 ==========\n1. 총 3개의 던전을 클리어하는 것이 목적이고"
 				+ "한 던전당 일반 몬스터 2마리, 보스 몬스터 1마리가 순차적으로 등장하고 모험가가 선공이고 던전 입장시 Npc와 동행할지 안할지 결정."

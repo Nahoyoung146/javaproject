@@ -178,7 +178,7 @@ public abstract class User extends Rpg implements Attack, Skill {
 		System.out.println("적 체력 : " + Mon.get(order2)[order3].getHp());
 	}
 
-	public static void initial(ArrayList<User> user1, User[] user2) { // continue 사용
+	public static void initial(ArrayList<User> user1, User[] user2) { // continue 사용, 뒤에 공격,스킬 메서드도 수정해야됨
 		user1.clear();
 		int i = 0;
 		while (i < user1.size()) {

@@ -3,10 +3,6 @@ package homework;
 import java.util.ArrayList;
 
 public class NpcBattle extends Npc implements Attack {
-	NpcBattle() {
-		super();
-	}
-
 	NpcBattle(String name, int atk) {
 		super(name, atk);
 	}

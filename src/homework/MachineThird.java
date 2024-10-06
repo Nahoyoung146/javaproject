@@ -3,10 +3,6 @@ package homework;
 import java.util.ArrayList;
 
 public class MachineThird extends MonMachine {
-	MachineThird() {
-		super();
-	}
-
 	MachineThird(String name, int hp, int atk, String species, int difficulty) {
 		super(name, hp, atk, species, difficulty);
 	}

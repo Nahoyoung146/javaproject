@@ -5,13 +5,6 @@ import java.util.ArrayList;
 public abstract class Monster extends Rpg implements Attack, Skill {
 	private String species;
 	private int difficulty;
-
-	Monster() {
-		super();
-		this.species = "가나다";
-		this.difficulty = 1;
-	}
-
 	Monster(String name, int hp, int atk, String species, int difficulty) {
 		super(name, hp, atk);
 		this.species = species;
@@ -35,7 +28,7 @@ public abstract class Monster extends Rpg implements Attack, Skill {
 			i++;
 		}
 	}
-	
+
 	public abstract void Skill(ArrayList<User> user, ArrayList<Monster[]> Mon, int order,int order2);
 
 	public String toString() {

@@ -6,6 +6,15 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+	public static void printinfo(String GameName) { // 스태틱 사용은 괜찮으나 printInfo 작업 자체가 게임 시스템 상에서 작업이 이루진다. (아쉽다.)
+		System.out.print("게임이름 : " + GameName + "\n");
+		System.out.print("========== 게임 룰 설명 ==========\n1. 총 3개의 던전을 클리어하는 것이 목적이고"
+				+ "한 던전당 일반 몬스터 2마리, 보스 몬스터 1마리가 순차적으로 등장하고 모험가가 선공이고 던전 입장시 Npc와 동행할지 안할지 결정."
+				+ "\n2. 모험가는 레벨 1부터 시작하고 몬스터 처치시 경험치, 골드 획득 그리고 10레벨이 되면 전사, 궁수, 마법사로 전직이 가능하고 얻은 골드로 Npc한테 무기 구입 가능.\n"
+				+ "3. 총 3명의 모험가 캐릭터가 한 팀으로 진행하고 모혐가 전원 사망이면 게임 종료 그 외에 경우에는 게임이 진행되고 만약에 이전 던전에서 모험가가 죽었으면 다음 던전 입장시 기존의 최대 체력으로 부활함.\n4. 마지막으로 Npc 부가적으로 "
+				+ "버프를 줄 수 있고 상대 몬스터의 특수효과가 존재할 수도 있다.\n=================================================================================\n");
+	}
+
 	public static void main(String[] args) {
 		User[] user = { new Warrior("모험가1", 1000, 100, 10, "전사"), new Archer("모험가2", 800, 200, 50, "궁수"),
 				new Magician("모험가3", 500, 300, 80, "마법사") };
@@ -15,12 +24,12 @@ public class Main {
 			Arrayuser.add(user[s1]);
 			s1++;
 		}
-		MonDragon[] dragon = { new DragonFirst("용기병", 1000, 10, "용족", 10), new DragonSecond("비늘용", 2000, 20, "용족", 30),
-				new DragonThird("데스윙", 3000, 30, "용족", 50) };
-		MonDemon[] demon = { new DemonFirst("하급악마", 3500, 35, "악마족", 70), new DemonSecond("총의악마", 4000, 40, "악마족", 90),
-				new DemonThird("어둠의 형상", 4500, 45, "용족", 120) };
-		MonMachine[] machine = { new MachineFirst("안녕로봇", 5000, 50, "기계족", 140),
-				new MachineSecond("기계거미", 5500, 55, "기계족", 160), new MachineThird("기계박사 홍길동", 6000, 60, "기계족", 200) };
+		MonDragon[] dragon = { new DragonFirst("용기병", 1000, 500, "용족", 10), new DragonSecond("비늘용", 200, 20, "용족", 30),
+				new DragonThird("데스윙", 300, 30, "용족", 50) };
+		MonDemon[] demon = { new DemonFirst("하급악마", 350, 35, "악마족", 70), new DemonSecond("총의악마", 400, 40, "악마족", 90),
+				new DemonThird("어둠의 형상", 450, 45, "용족", 120) };
+		MonMachine[] machine = { new MachineFirst("안녕로봇", 500, 50, "기계족", 140),
+				new MachineSecond("기계거미", 550, 55, "기계족", 160), new MachineThird("기계박사 홍길동", 600, 60, "기계족", 200) };
 		ArrayList<Monster[]> mon = new ArrayList<Monster[]>();
 		mon.add(dragon);
 		mon.add(demon);
@@ -36,14 +45,14 @@ public class Main {
 
 		Scanner sc = new Scanner(System.in);
 		String[] stage = { "용들의 무덤", "어둠의 동물원", "기계성" };
-		Rpg.printinfo("전설의 시작");
+		printinfo("전설의 시작");
 		boolean[] ClassUp = { true, true, true };
 		int turn = 0;
 		s1 = 0;
 		boolean help = false;
 		while (s1 < stage.length) {
-			NpcInfo.buff(Arrayuser);
 			User.initial(Arrayuser, user);
+			NpcInfo.buff(Arrayuser);
 			NpcItems.iteminfo(item, 0);
 			NpcItems.itemcanbuy(item, Arrayuser, 0);
 			System.out.println(stage[s1] + "에 입장합니다.");
@@ -93,8 +102,8 @@ public class Main {
 					if (Rpg.deathmonster(mon, s1, s2)) {
 						System.out.println("적이 쓰려졌습니다.");
 						while (s3 < Arrayuser.size()) {
-							Arrayuser.get(s3).Expup(mon, s1, s2);
-							Arrayuser.get(s3).MoneyUp(mon, s1, s2);
+							Arrayuser.get(s3).Expup(mon.get(s1)[s2]); 
+							Arrayuser.get(s3).MoneyUp(mon.get(s1)[s2]); //Mon.get(order)[order2]
 							if (Arrayuser.get(s3).getLevel() >= 10 && ClassUp[s3]) {
 								System.out.println("축하합니다." + Arrayuser.get(s3).getName() + "이(가) 레벨10을 달성해서 "
 										+ Arrayuser.get(s3).getFuturejob() + "으로 전직하였습니다. 이제부터 직업스킬이 사용가능합니다.");
@@ -153,7 +162,6 @@ public class Main {
 				System.out.println("모든 스테이지를 클리어하셨습니다.\n축하합니다.");
 				break;
 			}
-			User.buffinitial(Arrayuser, user, NpcInfo.buff(Arrayuser));
 			s1++;
 		}
 	}

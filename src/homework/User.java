@@ -4,26 +4,11 @@ import java.util.ArrayList;
 
 public abstract class User extends Rpg implements Attack, Skill {
 	private int money, exp, level, skillatk, needexp, addexp, addhp, addmp, addatk, addskillatk, maxhp, maxmp;
-	private String job, futurejob;
-
-	User() {
-		super();
-		this.money = 0;
-		this.exp = 0;
-		this.level = 1;
-		this.skillatk = 0;
-		this.needexp = 500;
-		this.addexp = 5;
-		this.addhp = 100;
-		this.addmp = 10;
-		this.job = "가나다";
-		this.addatk = 5;
-		this.addskillatk = 5;
-		this.maxhp = 0;
-		this.maxmp = 0;
-	}
+	private String job, futurejob; // job과 futurejob으로 나누어 놓는 작업이 효율적인지?
 
 	User(String name, int maxhp, int maxmp, int atk, String futurejob) {
+		// 기본 생성자는 쓸 일이 없으면 오히려 만들지 않는게 좋다. -> 기본 생성자는 정의를 하지 않았을 경우 무조건적으로 만들어진다. (객체에 대한 접근이 쉽다.) 
+		//객체를 생성할때 정확하게 요구되는 매개변수(데이터)들을 확실하게 전달 받을 수 있다.
 		super(name, atk);
 		this.money = 0;
 		this.exp = 0;
@@ -149,8 +134,8 @@ public abstract class User extends Rpg implements Attack, Skill {
 		return futurejob;
 	}
 
-	public void Expup(ArrayList<Monster[]> Mon, int order, int order2) {
-		int a = (int) (Math.random() * Mon.get(order)[order2].getDifficulty()) + 1;
+	public void Expup(Monster mon) {
+		int a = (int) (Math.random() * mon.getDifficulty()) + 1;
 		this.setExp(this.getExp() + a);
 		if (this.getExp() >= this.getNeedexp()) {
 			this.setLevel(this.getLevel() + 1);
@@ -170,8 +155,8 @@ public abstract class User extends Rpg implements Attack, Skill {
 		System.out.println(this.getName() + "의 경험치가 " + a + " 증가하였습니다.");
 	}
 
-	public void MoneyUp(ArrayList<Monster[]> Mon, int order, int order2) {
-		int a = 10 + (int) (Math.random() * Mon.get(order)[order2].getDifficulty() * 10) + 1;
+	public void MoneyUp(Monster mon) {
+		int a = 10 + (int) (Math.random() * mon.getDifficulty() * 10) + 1;
 		this.setMoney(this.getMoney() + a);
 		System.out.println(this.getName() + "이(가) " + a + "원을(를) 획득하였습니다.");
 	}
@@ -189,38 +174,18 @@ public abstract class User extends Rpg implements Attack, Skill {
 
 	public void attack(ArrayList<User> user, ArrayList<Monster[]> Mon, int order, int order2, int order3) {
 		System.out.println(user.get(order).getName() + "이(가) 공격을 합니다.");
-		Mon.get(order2)[order3].setHp(Mon.get(order2)[order3].getHp() - user.get(order2).getAtk());
+		Mon.get(order2)[order3].setHp(Mon.get(order2)[order3].getHp() - user.get(order).getAtk());
 		System.out.println("적 체력 : " + Mon.get(order2)[order3].getHp());
 	}
 
-	public static void initial(ArrayList<User> user1, User[] user2) {
+	public static void initial(ArrayList<User> user1, User[] user2) { // continue 사용
 		user1.clear();
 		int i = 0;
-		while (i < user2.length) {
+		while (i < user1.size()) {
 			user1.add(user2[i]);
-			user2[i].setHp(user2[i].getMaxhp());
-			user2[i].setMp(user2[i].getMaxmp());
-			user2[i].setAtk(user2[i].getAtk());
+			user1.get(i).setHp(user1.get(i).getMaxhp());
+			user1.get(i).setMp(user1.get(i).getMaxmp());
 			i++;
-		}
-	}
-
-	public static void buffinitial(ArrayList<User> user1, User[] user2, int order) {
-		if (order == 1) {
-			int i = 0;
-			while (i < user1.size()) {
-				user2[i].setAtk(user2[i].getAtk() - 50);
-				i++;
-			}
-		}
-
-		else if (order == 2) {
-			int i = 0;
-			while (i < user1.size()) {
-				user2[i].setHp(user2[i].getHp() - 100);
-				user2[i].setMp(user2[i].getMp() - 100);
-				i++;
-			}
 		}
 	}
 

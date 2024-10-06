@@ -1,16 +1,11 @@
 package homework;
 
-public class Item extends Rpg {
+public class Item {
 	private int price, weaponatk;
-
-	Item() {
-		super();
-		this.price = 0;
-		this.weaponatk = 0;
-	}
+	private String name;
 
 	Item(String name, int price, int weaponatk) {
-		super(name);
+		this.name = name;
 		this.price = price;
 		this.weaponatk = weaponatk;
 	}
@@ -21,6 +16,10 @@ public class Item extends Rpg {
 
 	public int getWeaponatk() {
 		return weaponatk;
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	public String toString() {

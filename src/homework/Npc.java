@@ -12,5 +12,4 @@ public class Npc extends Rpg {
 	Npc(String name) {
 		super(name);
 	}
-
 }

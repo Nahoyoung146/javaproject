@@ -3,10 +3,6 @@ package homework;
 import java.util.ArrayList;
 
 public class Magician extends User {
-	Magician() {
-		super();
-	}
-
 	Magician(String name, int maxhp, int maxmp, int atk, String futurejob) {
 		super(name, maxhp, maxmp, atk, futurejob);
 	}

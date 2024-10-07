@@ -3,27 +3,22 @@ package homework;
 import java.util.ArrayList;
 
 public abstract class User extends Rpg implements Attack, Skill {
-	private int money, exp, level, skillatk, needexp, addexp, addhp, addmp, addatk, addskillatk, maxhp, maxmp;
-	private String job, futurejob; // job과 futurejob으로 나누어 놓는 작업이 효율적인지?
+	private int money, exp, level, skillatk, needexp, maxhp, maxmp;
+	private String job;
 
-	User(String name, int maxhp, int maxmp, int atk, String futurejob) {
-		// 기본 생성자는 쓸 일이 없으면 오히려 만들지 않는게 좋다. -> 기본 생성자는 정의를 하지 않았을 경우 무조건적으로 만들어진다. (객체에 대한 접근이 쉽다.) 
-		//객체를 생성할때 정확하게 요구되는 매개변수(데이터)들을 확실하게 전달 받을 수 있다.
+	User(String name, int maxhp, int maxmp, int atk) {
+		// 기본 생성자는 쓸 일이 없으면 오히려 만들지 않는게 좋다. -> 기본 생성자는 정의를 하지 않았을 경우 무조건적으로 만들어진다. (객체에
+		// 대한 접근이 쉽다.)
+		// 객체를 생성할때 정확하게 요구되는 매개변수(데이터)들을 확실하게 전달 받을 수 있다.
 		super(name, atk);
 		this.money = 0;
 		this.exp = 0;
 		this.level = 1;
 		this.skillatk = 50;
-		this.needexp = 500;
-		this.addexp = 5;
-		this.addhp = 100;
-		this.addmp = 10;
+		this.needexp = 100;
 		this.job = "모험가";
-		this.addatk = 5;
-		this.addskillatk = 5;
 		this.maxhp = maxhp;
 		this.maxmp = maxmp;
-		this.futurejob = futurejob;
 	}
 
 	public int getMoney() {
@@ -66,52 +61,12 @@ public abstract class User extends Rpg implements Attack, Skill {
 		this.needexp = needexp;
 	}
 
-	public int getAddexp() {
-		return addexp;
-	}
-
-	public void setAddexp(int addexp) {
-		this.addexp = addexp;
-	}
-
-	public int getAddhp() {
-		return addhp;
-	}
-
-	public void setAddhp(int addhp) {
-		this.addhp = addhp;
-	}
-
-	public int getAddmp() {
-		return addmp;
-	}
-
-	public void setAddmp(int addmp) {
-		this.addmp = addmp;
-	}
-
 	public String getJob() {
 		return job;
 	}
 
 	public void setJob(String job) {
 		this.job = job;
-	}
-
-	public int getAddatk() {
-		return addatk;
-	}
-
-	public void setAddatk(int addatk) {
-		this.addatk = addatk;
-	}
-
-	public int getAddskillatk() {
-		return addskillatk;
-	}
-
-	public void setAddskillatk(int addskillatk) {
-		this.addskillatk = addskillatk;
 	}
 
 	public int getMaxhp() {
@@ -130,26 +85,17 @@ public abstract class User extends Rpg implements Attack, Skill {
 		this.maxmp = maxmp;
 	}
 
-	public String getFuturejob() {
-		return futurejob;
-	}
-
 	public void Expup(Monster mon) {
 		int a = (int) (Math.random() * mon.getDifficulty()) + 1;
 		this.setExp(this.getExp() + a);
 		if (this.getExp() >= this.getNeedexp()) {
 			this.setLevel(this.getLevel() + 1);
 			this.setExp(this.getExp() - this.getNeedexp());
-			this.setAddexp(this.getAddexp() + 10);
-			this.setAddhp(this.getAddhp() + 100);
-			this.setAddmp(this.getAddmp() + 10);
-			this.setAddatk(this.getAddatk() + 5);
-			this.setAddskillatk(this.getAddskillatk() + 5);
-			this.setNeedexp(this.getNeedexp() + this.getAddexp());
-			this.setHp(this.getMaxhp() + this.getAddhp());
-			this.setMp(this.getMaxmp() + this.getAddmp());
-			super.setAtk(super.getAtk() + this.getAddatk());
-			this.setSkillatk(this.getSkillatk() + this.getAddskillatk());
+			this.setNeedexp(this.getNeedexp() + this.getLevel() * 10);
+			this.setHp(this.getMaxhp() + this.getLevel() * 10);
+			this.setMp(this.getMaxmp() + this.getLevel() * 10);
+			super.setAtk(super.getAtk() + this.getLevel() * 10);
+			this.setSkillatk(this.getSkillatk() + this.getLevel() * 10);
 			System.out.println(this.getName() + "이(가) 레벨업했습니다.");
 		}
 		System.out.println(this.getName() + "의 경험치가 " + a + " 증가하였습니다.");
@@ -176,17 +122,6 @@ public abstract class User extends Rpg implements Attack, Skill {
 		System.out.println(user.get(order).getName() + "이(가) 공격을 합니다.");
 		Mon.get(order2)[order3].setHp(Mon.get(order2)[order3].getHp() - user.get(order).getAtk());
 		System.out.println("적 체력 : " + Mon.get(order2)[order3].getHp());
-	}
-
-	public static void initial(ArrayList<User> user1, User[] user2) { // continue 사용, 뒤에 공격,스킬 메서드도 수정해야됨
-		user1.clear();
-		int i = 0;
-		while (i < user1.size()) {
-			user1.add(user2[i]);
-			user1.get(i).setHp(user1.get(i).getMaxhp());
-			user1.get(i).setMp(user1.get(i).getMaxmp());
-			i++;
-		}
 	}
 
 	public abstract void Skill(ArrayList<User> user, ArrayList<Monster[]> Mon, int order, int order2);

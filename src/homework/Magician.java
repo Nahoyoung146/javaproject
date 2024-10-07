@@ -3,8 +3,8 @@ package homework;
 import java.util.ArrayList;
 
 public class Magician extends User {
-	Magician(String name, int maxhp, int maxmp, int atk, String futurejob) {
-		super(name, maxhp, maxmp, atk, futurejob);
+	Magician(String name, int maxhp, int maxmp, int atk) {
+		super(name, maxhp, maxmp, atk);
 	}
 
 	public void Skill(ArrayList<User> user, ArrayList<Monster[]> Mon, int order, int order2) {

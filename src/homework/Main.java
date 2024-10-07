@@ -15,16 +15,108 @@ public class Main {
 				+ "버프를 줄 수 있고 상대 몬스터의 특수효과가 존재할 수도 있다.\n=================================================================================\n");
 	}
 
+	public static boolean deathuser(User[] user) { // abstract death를 만들어서 오버라이딩하여 사용하는 것은 어떨까?
+		int sum = 0;
+		int i = 0;
+		while (i < user.length) {
+			sum += user[i].getHp();
+			i++;
+		}
+
+		if (sum <= 0)
+			return true;
+
+		return false;
+	}
+
+	public static boolean deathmonster(ArrayList<Monster[]> Mon, int order, int order2) {// abstract death를 만들어서 오버라이딩하여
+																							// 사용하는 것은 어떨까?
+		while (order2 < Mon.get(order).length) {
+			if (Mon.get(order)[order2].getHp() <= 0)
+				return true;
+			order2++;
+		}
+		return false;
+	}
+
+	public static void initial(User[] user1) {
+		int i = 0;
+		while (i < user1.length) {
+			user1[i].setHp(user1[i].getMaxhp());
+			user1[i].setMp(user1[i].getMaxmp());
+			i++;
+		}
+	}
+
+	public static void buff(User[] user) {
+		System.out.println("길잡이npc가 등장했습니다.\n일정확률로 버프가 적용됩니다.");
+		int a = (int) (Math.random() * 3) + 1;
+		switch (a) {
+		case 1:
+			System.out.println("모험가들 공격력 증가");
+			int i = 0;
+			while (i < user.length) {
+				user[i].setAtk(user[i].getAtk() + 50);
+				i++;
+			}
+			break;
+		case 2:
+			System.out.println("모험가들 Hp과(와) Mp 증가");
+			i = 0;
+			while (i < user.length) {
+				user[i].setHp(user[i].getMaxhp() + 100);
+				user[i].setMp(user[i].getMaxmp() + 50);
+				i++;
+			}
+			break;
+		default:
+			System.out.println("아쉽지만 아무 버프도 받지 못했습니다.");
+		}
+	}
+
+	public static void iteminfo(ArrayList<Item[]> item, String[] job) {
+		System.out.println("아이템Npc가 등장했습니다");
+		int i = 0;
+		while (i < item.size()) {
+			System.out.println("==================" + job[i] + "==================");
+			for (int j = 0; j < item.get(i).length; j++) {
+				System.out.println(item.get(i)[j]);
+			}
+			i++;
+		}
+	}
+	
+	public static void itemcanbuy(ArrayList<Item[]> item, ArrayList<User> user,String[] job) {
+		System.out.println("구매 가능 물품\n금액 부족시 아무 아이템도 보이지 않음");
+		int i = 0;
+		while (i < item.size()) {
+			System.out.println("==================" + job[i] + "==================");
+			for (int j = 0; j < item.get(i).length; j++) {
+				if (user.get(i).getMoney() >= item.get(i)[j].getPrice()) {
+					System.out.println(item.get(i)[j]);
+				}
+			}
+			i++;
+		}
+	}
+	
+	
+	
+	
+	
+
 	public static void main(String[] args) {
-		User[] user = { new Warrior("모험가1", 1000, 100, 10, "전사"), new Archer("모험가2", 800, 200, 50, "궁수"),
-				new Magician("모험가3", 500, 300, 80, "마법사") };
+		String[] job = { "전사", "궁수", "마법사" };
+
+		User[] user = { new Warrior("모험가1", 1000, 100, 10), new Archer("모험가2", 800, 200, 50),
+				new Magician("모험가3", 500, 300, 80) };
 		ArrayList<User> Arrayuser = new ArrayList<User>();
 		int s1 = 0;
 		while (s1 < user.length) {
 			Arrayuser.add(user[s1]);
 			s1++;
 		}
-		MonDragon[] dragon = { new DragonFirst("용기병", 1000, 500, "용족", 10), new DragonSecond("비늘용", 200, 20, "용족", 30),
+		MonDragon[] dragon = { new DragonFirst("용기병", 1000, 10, "용족", 10), new DragonSecond("비늘용", 200, 20, "용족", 30),
 				new DragonThird("데스윙", 300, 30, "용족", 50) };
 		MonDemon[] demon = { new DemonFirst("하급악마", 350, 35, "악마족", 70), new DemonSecond("총의악마", 400, 40, "악마족", 90),
 				new DemonThird("어둠의 형상", 450, 45, "용족", 120) };
@@ -51,10 +143,10 @@ public class Main {
 		s1 = 0;
 		boolean help = false;
 		while (s1 < stage.length) {
-			User.initial(Arrayuser, user);
-			NpcInfo.buff(Arrayuser);
-			NpcItems.iteminfo(item, 0);
-			NpcItems.itemcanbuy(item, Arrayuser, 0);
+			initial(user);
+			buff(user);
+			iteminfo(item, job);
+			itemcanbuy(item, Arrayuser,job);
 			System.out.println(stage[s1] + "에 입장합니다.");
 			int qua = (int) (Math.random() * 3);
 			System.out.println("전투Npc의 도움을 받겠습니까?\n단, 무작위로 Npc가 정해집니다. : y/n");
@@ -80,18 +172,26 @@ public class Main {
 					System.out.println("턴 수 : " + turn);
 					s3 = 0;
 					while (s3 < Arrayuser.size()) {
-						if (ClassUp[s3] == false && Arrayuser.get(s3).getMp() >= 30) {
-							System.out.print("공격방식을 선택하세요. 1.일반공격 2.스킬 : ");
-							int num = sc.nextInt();
-							if (num == 1)
-								Arrayuser.get(s3).attack(Arrayuser, mon, s3, s1, s2);
-							else
-								Arrayuser.get(s3).Skill(Arrayuser, mon, s1, s2);
+						if (Arrayuser.get(s3).getHp() <= 0) {
+							s3++;
+							continue;
 						}
 
-						else
-							Arrayuser.get(s3).attack(Arrayuser, mon, s3, s1, s2);
-						s3++;
+						else {
+							if (ClassUp[s3] == false && Arrayuser.get(s3).getMp() >= 30) {
+								System.out.print("공격방식을 선택하세요. 1.일반공격 2.스킬 : ");
+								int num = sc.nextInt();
+								if (num == 1)
+									Arrayuser.get(s3).attack(Arrayuser, mon, s3, s1, s2);
+								else
+									Arrayuser.get(s3).Skill(Arrayuser, mon, s1, s2);
+							}
+
+							else
+								Arrayuser.get(s3).attack(Arrayuser, mon, s3, s1, s2);
+							s3++;
+						}
+
 					}
 
 					s3 = 0;
@@ -99,18 +199,27 @@ public class Main {
 					if (help)
 						npc[qua].attack(Arrayuser, mon, s1, s2, 0);
 
-					if (Rpg.deathmonster(mon, s1, s2)) {
+					if (deathmonster(mon, s1, s2)) {
 						System.out.println("적이 쓰려졌습니다.");
 						while (s3 < Arrayuser.size()) {
-							Arrayuser.get(s3).Expup(mon.get(s1)[s2]); 
-							Arrayuser.get(s3).MoneyUp(mon.get(s1)[s2]); //Mon.get(order)[order2]
-							if (Arrayuser.get(s3).getLevel() >= 10 && ClassUp[s3]) {
-								System.out.println("축하합니다." + Arrayuser.get(s3).getName() + "이(가) 레벨10을 달성해서 "
-										+ Arrayuser.get(s3).getFuturejob() + "으로 전직하였습니다. 이제부터 직업스킬이 사용가능합니다.");
-								ClassUp[s3] = false;
-								Arrayuser.get(s3).setJob(Arrayuser.get(s3).getFuturejob());
+							if (Arrayuser.get(s3).getHp() <= 0) {
+								s3++;
+								continue;
 							}
-							s3++;
+
+							else {
+
+								Arrayuser.get(s3).Expup(mon.get(s1)[s2]);
+								Arrayuser.get(s3).MoneyUp(mon.get(s1)[s2]); // Mon.get(order)[order2]
+								if (Arrayuser.get(s3).getLevel() >= 10 && ClassUp[s3]) {
+									System.out.println("축하합니다." + Arrayuser.get(s3).getName() + "이(가) 레벨10을 달성해서 "
+											+ job[s3] + "으로 전직하였습니다. 이제부터 직업스킬이 사용가능합니다.");
+									ClassUp[s3] = false;
+									Arrayuser.get(s3).setJob(job[s3]);
+								}
+								s3++;
+							}
+
 						}
 						turn = 0;
 						break;
@@ -122,23 +231,14 @@ public class Main {
 							mon.get(s1)[s2].Skill(Arrayuser, mon, 0, 0);
 
 						else
-							dragon[s2].attack(Arrayuser, mon, s1, s2, 0);
+							mon.get(s1)[s2].attack(Arrayuser, mon, s1, s2, 0);
 					}
 
 					else {
-						dragon[s2].attack(Arrayuser, mon, s1, s2, 0);
+						mon.get(s1)[s2].attack(Arrayuser, mon, s1, s2, 0);
 					}
 
-					s3 = 0;
-					while (s3 < Arrayuser.size()) {
-						if (Arrayuser.get(s3).getHp() <= 0) {
-							Arrayuser.remove(s3);
-							System.err.println(Arrayuser);
-						}
-						s3++;
-					}
-
-					if (Rpg.deathuser(Arrayuser)) {
+					if (deathuser(user)) {
 						System.out.println("모험가가 모두 사망해서 게임이 종료됩니다");
 						break;
 					}
@@ -146,16 +246,22 @@ public class Main {
 					System.out.println("모험가들의 일정량의 hp와 mp가 회복되었습니다.");
 					s3 = 0;
 					while (s3 < Arrayuser.size()) {
-						Arrayuser.get(s3).recovery();
-						s3++;
+						if (Arrayuser.get(s3).getHp() <= 0) {
+							s3++;
+							continue;
+						} else {
+							Arrayuser.get(s3).recovery();
+							s3++;
+						}
+
 					}
 					System.out.println("=============================================");
 				}
-				if (Rpg.deathuser(Arrayuser))
+				if (deathuser(user))
 					break;
 				s2++;
 			}
-			if (Rpg.deathuser(Arrayuser))
+			if (deathuser(user))
 				break;
 
 			if (s1 == 2) {

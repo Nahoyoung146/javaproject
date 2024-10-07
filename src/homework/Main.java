@@ -100,11 +100,6 @@ public class Main {
 		}
 	}
 	
-	
-	
-	
-	
-
 	public static void main(String[] args) {
 		String[] job = { "전사", "궁수", "마법사" };
 

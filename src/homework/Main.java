@@ -192,8 +192,7 @@ public class Main {
 //			user[0].setMoney(10000);
 //			user[1].setMoney(10000);
 //			user[2].setMoney(10000);
-			initial(user, buff(user));
-			buff(user);
+			int buff = buff(user);
 			iteminfo(item, job);
 			itemcanbuy(item, Arrayuser, job);
 			userbuyitem(user, item, choice);
@@ -317,6 +316,7 @@ public class Main {
 			if (GameClear(s1)) {
 				break;
 			}
+			initial(user, buff);
 			s1++;
 		}
 	}

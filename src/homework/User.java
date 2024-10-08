@@ -11,6 +11,8 @@ public abstract class User extends Rpg implements Attack, Skill {
 		// 대한 접근이 쉽다.)
 		// 객체를 생성할때 정확하게 요구되는 매개변수(데이터)들을 확실하게 전달 받을 수 있다.
 		super(name, atk);
+		super.setHp(this.getMaxhp());
+		super.setMp(this.getMaxmp());
 		this.money = 0;
 		this.exp = 0;
 		this.level = 1;

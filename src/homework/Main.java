@@ -113,28 +113,32 @@ public class Main {
 		}
 	}
 
-	public static void userbuyitem(User[] user, ArrayList<Item[]> item) {
+	public static void userbuyitem(User[] user, ArrayList<Item[]> item, int[] choice) {
 		int i = 0;
 		while (i < user.length) {
-			if (i == 0)
+			if (i == 0) {
 				System.out.print("전사 아이템 구매 번호 입력, 0번 입력시 다음 단계로 진행 : ");
+				choice[i] = sc.nextInt();
+			}
 
-			else if (i == 1)
+			else if (i == 1) {
 				System.out.print("궁수 아이템 구매 번호 입력, 0번 입력시 다음 단계로 진행 : ");
+				choice[i] = sc.nextInt();
+			}
 
-			else
+			else {
 				System.out.print("마법사 아이템 구매 번호 입력, 0번 입력시 다음 단계로 진행 : ");
+				choice[i] = sc.nextInt();
+			}
 
-			int num = sc.nextInt();
-
-			if (num == 0)
+			if (choice[i] == 0)
 				System.out.println("다음 단계 진행");
 
 			else {
-				System.out.println(user[i].getName() + "이(가) " + item.get(i)[num - 1].getName()
+				System.out.println(user[i].getName() + "이(가) " + item.get(i)[choice[i] - 1].getName()
 						+ "을(를) 구매했습니다.\n이제부터 무기전용 스킬이 사용가능합니다");
-				user[i].setAtk(user[i].getAtk() + item.get(i)[num - 1].getWeaponatk());
-				user[i].setMoney(user[i].getMoney() + item.get(i)[num - 1].getPrice());
+				user[i].setAtk(user[i].getAtk() + item.get(i)[choice[i] - 1].getWeaponatk());
+				user[i].setMoney(user[i].getMoney() + item.get(i)[choice[i] - 1].getPrice());
 			}
 			i++;
 		}
@@ -149,6 +153,7 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
+		int[] choice = new int[3];
 		String[] job = { "전사", "궁수", "마법사" };
 
 		User[] user = { new Warrior("모험가1", 1000, 100, 10), new Archer("모험가2", 800, 200, 50),
@@ -191,7 +196,7 @@ public class Main {
 			buff(user);
 			iteminfo(item, job);
 			itemcanbuy(item, Arrayuser, job);
-			userbuyitem(user, item);
+			userbuyitem(user, item, choice);
 			System.out.println(stage[s1] + "에 입장합니다.");
 			int qua = (int) (Math.random() * 3);
 			System.out.println("전투Npc의 도움을 받겠습니까?\n단, 무작위로 Npc가 정해집니다. : y/n");

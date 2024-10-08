@@ -11,8 +11,6 @@ public abstract class User extends Rpg implements Attack, Skill {
 		// 대한 접근이 쉽다.)
 		// 객체를 생성할때 정확하게 요구되는 매개변수(데이터)들을 확실하게 전달 받을 수 있다.
 		super(name, atk);
-		super.setHp(this.getMaxhp());
-		super.setMp(this.getMaxmp());
 		this.money = 0;
 		this.exp = 0;
 		this.level = 1;
@@ -21,6 +19,8 @@ public abstract class User extends Rpg implements Attack, Skill {
 		this.job = "모험가";
 		this.maxhp = maxhp;
 		this.maxmp = maxmp;
+		super.setHp(this.getMaxhp());
+		super.setMp(this.getMaxmp());
 	}
 
 	public int getMoney() {
@@ -96,11 +96,15 @@ public abstract class User extends Rpg implements Attack, Skill {
 			this.setNeedexp(this.getNeedexp() + this.getLevel() * 10);
 			this.setHp(this.getMaxhp() + this.getLevel() * 10);
 			this.setMp(this.getMaxmp() + this.getLevel() * 10);
+			this.setMaxhp(this.getMaxhp() + this.getLevel() * 10);
+			this.setMaxmp(this.getMaxmp() + this.getLevel() * 10);
 			super.setAtk(super.getAtk() + this.getLevel() * 10);
 			this.setSkillatk(this.getSkillatk() + this.getLevel() * 10);
 			System.out.println(this.getName() + "이(가) 레벨업했습니다.");
 		}
-		System.out.println(this.getName() + "의 경험치가 " + a + " 증가하였습니다.");
+		
+		else
+			System.out.println(this.getName() + "의 경험치가 " + a + " 증가하였습니다.");
 	}
 
 	public void MoneyUp(Monster mon) {

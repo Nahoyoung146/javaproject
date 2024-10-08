@@ -42,19 +42,18 @@ public class Main {
 	}
 
 	public static void initial(User[] user, int buff) {
-		if (buff == 1) {
-			int i = 0;
-			while (i < user.length) {
-				user[i].setAtk(user[i].getAtk() - 50);
-				i++;
-			}
+		int i = 0;
+		while (i < user.length) {
+			user[i].setHp(user[i].getMaxhp());
+			user[i].setMp(user[i].getMaxmp());
+			user[i].setAtk(user[i].getAtk());
+			i++;
 		}
 
-		else {
-			int i = 0;
+		if (buff == 1) {
+			i = 0;
 			while (i < user.length) {
-				user[i].setHp(user[i].getMaxhp());
-				user[i].setMp(user[i].getMaxmp());
+				user[i].setAtk(user[i].getAtk() - 50);
 				i++;
 			}
 		}

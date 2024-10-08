@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+	static Scanner sc = new Scanner(System.in);
+
 	public static void printinfo(String GameName) {
 		System.out.print("게임이름 : " + GameName + "\n");
 		System.out.print("========== 게임 룰 설명 ==========\n1. 총 3개의 던전을 클리어하는 것이 목적이고"
@@ -39,16 +41,26 @@ public class Main {
 		return false;
 	}
 
-	public static void initial(User[] user1) {
-		int i = 0;
-		while (i < user1.length) {
-			user1[i].setHp(user1[i].getMaxhp());
-			user1[i].setMp(user1[i].getMaxmp());
-			i++;
+	public static void initial(User[] user, int buff) {
+		if (buff == 1) {
+			int i = 0;
+			while (i < user.length) {
+				user[i].setAtk(user[i].getAtk() - 50);
+				i++;
+			}
+		}
+
+		else {
+			int i = 0;
+			while (i < user.length) {
+				user[i].setHp(user[i].getMaxhp());
+				user[i].setMp(user[i].getMaxmp());
+				i++;
+			}
 		}
 	}
 
-	public static void buff(User[] user) {
+	public static int buff(User[] user) {
 		System.out.println("길잡이npc가 등장했습니다.\n일정확률로 버프가 적용됩니다.");
 		int a = (int) (Math.random() * 3) + 1;
 		switch (a) {
@@ -59,7 +71,7 @@ public class Main {
 				user[i].setAtk(user[i].getAtk() + 50);
 				i++;
 			}
-			break;
+			return 1;
 		case 2:
 			System.out.println("모험가들 Hp과(와) Mp 증가");
 			i = 0;
@@ -68,9 +80,10 @@ public class Main {
 				user[i].setMp(user[i].getMaxmp() + 50);
 				i++;
 			}
-			break;
+			return 2;
 		default:
 			System.out.println("아쉽지만 아무 버프도 받지 못했습니다.");
+			return 3;
 		}
 	}
 
@@ -85,8 +98,8 @@ public class Main {
 			i++;
 		}
 	}
-	
-	public static void itemcanbuy(ArrayList<Item[]> item, ArrayList<User> user,String[] job) {
+
+	public static void itemcanbuy(ArrayList<Item[]> item, ArrayList<User> user, String[] job) {
 		System.out.println("구매 가능 물품\n금액 부족시 아무 아이템도 보이지 않음");
 		int i = 0;
 		while (i < item.size()) {
@@ -99,7 +112,42 @@ public class Main {
 			i++;
 		}
 	}
-	
+
+	public static void userbuyitem(User[] user, ArrayList<Item[]> item) {
+		int i = 0;
+		while (i < user.length) {
+			if (i == 0)
+				System.out.print("전사 아이템 구매 번호 입력, 0번 입력시 다음 단계로 진행 : ");
+
+			else if (i == 1)
+				System.out.print("궁수 아이템 구매 번호 입력, 0번 입력시 다음 단계로 진행 : ");
+
+			else
+				System.out.print("마법사 아이템 구매 번호 입력, 0번 입력시 다음 단계로 진행 : ");
+
+			int num = sc.nextInt();
+
+			if (num == 0)
+				System.out.println("다음 단계 진행");
+
+			else {
+				System.out.println(user[i].getName() + "이(가) " + item.get(i)[num - 1].getName()
+						+ "을(를) 구매했습니다.\n이제부터 무기전용 스킬이 사용가능합니다");
+				user[i].setAtk(user[i].getAtk() + item.get(i)[num - 1].getWeaponatk());
+				user[i].setMoney(user[i].getMoney() + item.get(i)[num - 1].getPrice());
+			}
+			i++;
+		}
+	}
+
+	public static boolean GameClear(int s1) {
+		if (s1 == 2) {
+			System.out.println("모든 스테이지를 클리어하셨습니다.\n축하합니다.");
+			return true;
+		}
+		return false;
+	}
+
 	public static void main(String[] args) {
 		String[] job = { "전사", "궁수", "마법사" };
 
@@ -129,8 +177,6 @@ public class Main {
 		item.add(wa);
 		item.add(ar);
 		item.add(ma);
-
-		Scanner sc = new Scanner(System.in);
 		String[] stage = { "용들의 무덤", "어둠의 동물원", "기계성" };
 		printinfo("전설의 시작");
 		boolean[] ClassUp = { true, true, true };
@@ -138,10 +184,14 @@ public class Main {
 		s1 = 0;
 		boolean help = false;
 		while (s1 < stage.length) {
-			initial(user);
+//			user[0].setMoney(10000);
+//			user[1].setMoney(10000);
+//			user[2].setMoney(10000);
+			initial(user, buff(user));
 			buff(user);
 			iteminfo(item, job);
-			itemcanbuy(item, Arrayuser,job);
+			itemcanbuy(item, Arrayuser, job);
+			userbuyitem(user, item);
 			System.out.println(stage[s1] + "에 입장합니다.");
 			int qua = (int) (Math.random() * 3);
 			System.out.println("전투Npc의 도움을 받겠습니까?\n단, 무작위로 Npc가 정해집니다. : y/n");
@@ -259,8 +309,7 @@ public class Main {
 			if (deathuser(user))
 				break;
 
-			if (s1 == 2) {
-				System.out.println("모든 스테이지를 클리어하셨습니다.\n축하합니다.");
+			if (GameClear(s1)) {
 				break;
 			}
 			s1++;

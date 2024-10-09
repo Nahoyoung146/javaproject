@@ -10,4 +10,8 @@ public class DragonFirst extends MonDragon {
 	public void Skill(ArrayList<User> user, ArrayList<Monster[]> Mon, int order, int order2) {
 
 	};
+
+	public void attack(User user, Monster mon) {
+
+	};
 }

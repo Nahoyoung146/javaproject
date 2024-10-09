@@ -16,4 +16,8 @@ public class DemonThird extends MonDemon {
 			i++;
 		}
 	}
+
+	public void attack(User user, Monster mon) {
+
+	};
 }

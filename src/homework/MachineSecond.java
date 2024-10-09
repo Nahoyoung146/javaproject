@@ -11,4 +11,8 @@ public class MachineSecond extends MonMachine {
 
 	}
 
+	public void attack(User user, Monster mon) {
+
+	};
+
 }

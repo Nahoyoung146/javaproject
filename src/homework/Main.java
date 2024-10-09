@@ -46,16 +46,8 @@ public class Main {
 		while (i < user.length) {
 			user[i].setHp(user[i].getMaxhp());
 			user[i].setMp(user[i].getMaxmp());
-			user[i].setAtk(user[i].getAtk());
+			user[i].setAtk(user[i].getMaxatk());
 			i++;
-		}
-
-		if (buff == 1) {
-			i = 0;
-			while (i < user.length) {
-				user[i].setAtk(user[i].getAtk() - 50);
-				i++;
-			}
 		}
 	}
 
@@ -230,13 +222,13 @@ public class Main {
 								System.out.print("공격방식을 선택하세요. 1.일반공격 2.스킬 : ");
 								int num = sc.nextInt();
 								if (num == 1)
-									Arrayuser.get(s3).attack(Arrayuser, mon, s3, s1, s2);
+									Arrayuser.get(s3).attack(Arrayuser.get(s3), mon.get(s1)[s2]);
 								else
 									Arrayuser.get(s3).Skill(Arrayuser, mon, s1, s2);
 							}
 
 							else
-								Arrayuser.get(s3).attack(Arrayuser, mon, s3, s1, s2);
+								Arrayuser.get(s3).attack(Arrayuser.get(s3), mon.get(s1)[s2]);
 							s3++;
 						}
 
@@ -245,7 +237,7 @@ public class Main {
 					s3 = 0;
 
 					if (help)
-						npc[qua].attack(Arrayuser, mon, s1, s2, 0);
+						npc[qua].attack(Arrayuser.get(s3), mon.get(s1)[s2]);
 
 					if (deathmonster(mon, s1, s2)) {
 						System.out.println("적이 쓰려졌습니다.");
@@ -279,11 +271,11 @@ public class Main {
 							mon.get(s1)[s2].Skill(Arrayuser, mon, 0, 0);
 
 						else
-							mon.get(s1)[s2].attack(Arrayuser, mon, s1, s2, 0);
+							mon.get(s1)[s2].attack1(user, mon.get(s1)[s2]);
 					}
 
 					else {
-						mon.get(s1)[s2].attack(Arrayuser, mon, s1, s2, 0);
+						mon.get(s1)[s2].attack1(user, mon.get(s1)[s2]);
 					}
 
 					if (deathuser(user)) {

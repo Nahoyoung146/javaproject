@@ -20,23 +20,25 @@ public abstract class Monster extends Rpg implements Attack, Skill {
 		return difficulty;
 	}
 
-	public void attack(ArrayList<User> user, ArrayList<Monster[]> Mon, int order, int order2, int order3) {
+	public void attack1(User[] user, Monster mon) {
 		int i = 0;
-		while (i < user.size()) {
-			if (user.get(i).getHp() <= 0) {
+		while (i < user.length) {
+			if (user[i].getHp() <= 0) {
 				i++;
 				continue;
 			}
 
 			else {
-				System.out.println(Mon.get(order)[order2].getName() + "이(가) 공격을 합니다.");
-				user.get(i).setHp(user.get(i).getHp() - Mon.get(order)[order2].getAtk());
-				System.out.println(user.get(i).getName() + "의 체력 : " + user.get(i).getHp());
+				System.out.println(mon.getName() + "이(가) 공격을 합니다.");
+				user[i].setHp(user[i].getHp() - mon.getAtk());
+				System.out.println(user[i].getName() + "의 체력 : " + user[i].getHp());
 				i++;
 			}
 
 		}
 	}
+
+	public abstract void attack(User user, Monster mon);
 
 	public abstract void Skill(ArrayList<User> user, ArrayList<Monster[]> Mon, int order, int order2);
 

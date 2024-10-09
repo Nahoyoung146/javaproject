@@ -3,14 +3,14 @@ package homework;
 import java.util.ArrayList;
 
 public abstract class User extends Rpg implements Attack, Skill {
-	private int money, exp, level, skillatk, needexp, maxhp, maxmp;
+	private int money, exp, level, skillatk, needexp, maxhp, maxmp, maxatk, maxskillatk;
 	private String job;
 
-	User(String name, int maxhp, int maxmp, int atk) {
+	User(String name, int maxhp, int maxmp, int maxatk) {
 		// 기본 생성자는 쓸 일이 없으면 오히려 만들지 않는게 좋다. -> 기본 생성자는 정의를 하지 않았을 경우 무조건적으로 만들어진다. (객체에
 		// 대한 접근이 쉽다.)
 		// 객체를 생성할때 정확하게 요구되는 매개변수(데이터)들을 확실하게 전달 받을 수 있다.
-		super(name, atk);
+		super(name);
 		this.money = 0;
 		this.exp = 0;
 		this.level = 1;
@@ -19,8 +19,12 @@ public abstract class User extends Rpg implements Attack, Skill {
 		this.job = "모험가";
 		this.maxhp = maxhp;
 		this.maxmp = maxmp;
+		this.maxatk = maxatk;
+		this.maxskillatk = 50;
 		super.setHp(this.getMaxhp());
 		super.setMp(this.getMaxmp());
+		super.setAtk(this.getMaxatk());
+		this.setSkillatk(this.getMaxskillatk());
 	}
 
 	public int getMoney() {
@@ -87,6 +91,22 @@ public abstract class User extends Rpg implements Attack, Skill {
 		this.maxmp = maxmp;
 	}
 
+	public int getMaxatk() {
+		return maxatk;
+	}
+
+	public void setMaxatk(int maxatk) {
+		this.maxatk = maxatk;
+	}
+
+	public int getMaxskillatk() {
+		return maxskillatk;
+	}
+
+	public void setMaxskillatk(int maxskillatk) {
+		this.maxskillatk = maxskillatk;
+	}
+
 	public void Expup(Monster mon) {
 		int a = (int) (Math.random() * mon.getDifficulty()) + 1;
 		this.setExp(this.getExp() + a);
@@ -99,10 +119,12 @@ public abstract class User extends Rpg implements Attack, Skill {
 			this.setMaxhp(this.getMaxhp() + this.getLevel() * 10);
 			this.setMaxmp(this.getMaxmp() + this.getLevel() * 10);
 			super.setAtk(super.getAtk() + this.getLevel() * 10);
+			this.setMaxatk(this.getMaxatk() + this.getLevel() * 10);
 			this.setSkillatk(this.getSkillatk() + this.getLevel() * 10);
+			this.setMaxskillatk(this.getMaxskillatk() + this.getLevel() * 10);
 			System.out.println(this.getName() + "이(가) 레벨업했습니다.");
 		}
-		
+
 		else
 			System.out.println(this.getName() + "의 경험치가 " + a + " 증가하였습니다.");
 	}
@@ -124,11 +146,13 @@ public abstract class User extends Rpg implements Attack, Skill {
 		}
 	}
 
-	public void attack(ArrayList<User> user, ArrayList<Monster[]> Mon, int order, int order2, int order3) {
-		System.out.println(user.get(order).getName() + "이(가) 공격을 합니다.");
-		Mon.get(order2)[order3].setHp(Mon.get(order2)[order3].getHp() - user.get(order).getAtk());
-		System.out.println("적 체력 : " + Mon.get(order2)[order3].getHp());
+	public void attack(User user, Monster mon) {
+		System.out.println(user.getName() + "이(가) 공격을 합니다.");
+		mon.setHp(mon.getHp() - user.getAtk());
+		System.out.println("적 체력 : " + mon.getHp());
 	}
+
+	public abstract void attack1(User[] user, Monster mon);
 
 	public abstract void Skill(ArrayList<User> user, ArrayList<Monster[]> Mon, int order, int order2);
 

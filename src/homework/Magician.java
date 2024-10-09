@@ -3,9 +3,13 @@ package homework;
 import java.util.ArrayList;
 
 public class Magician extends User {
-	Magician(String name, int maxhp, int maxmp, int atk) {
-		super(name, maxhp, maxmp, atk);
+	Magician(String name, int maxhp, int maxmp, int maxatk) {
+		super(name, maxhp, maxmp, maxatk);
 	}
+
+	public void attack1(User[] user, Monster mon) {
+
+	};
 
 	public void Skill(ArrayList<User> user, ArrayList<Monster[]> Mon, int order, int order2) {
 		System.out.println(this.getName() + "이(가) 스킬을 시전했습니다\n아군들의 체력이 회복되었습니다.");

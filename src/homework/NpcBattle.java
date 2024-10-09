@@ -7,10 +7,14 @@ public class NpcBattle extends Npc implements Attack {
 		super(name, atk);
 	}
 
-	public void attack(ArrayList<User> user, ArrayList<Monster[]> Mon, int order, int order2, int order3) {
+	public void attack1(User[] user, Monster mon) {
+
+	};
+
+	public void attack(User user, Monster mon) {
 		System.out.println(this.getName() + "이(가) 공격을 합니다.");
-		Mon.get(order)[order2].setHp(Mon.get(order)[order2].getHp() - this.getAtk());
-		System.out.println("적 체력 : " + Mon.get(order)[order2].getHp());
+		mon.setHp(mon.getHp() - this.getAtk());
+		System.out.println("적 체력 : " + mon.getHp());
 	}
 
 	public String toString() {

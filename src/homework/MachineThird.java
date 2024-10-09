@@ -16,4 +16,8 @@ public class MachineThird extends MonMachine {
 			i++;
 		}
 	}
+
+	public void attack(User user, Monster mon) {
+
+	};
 }

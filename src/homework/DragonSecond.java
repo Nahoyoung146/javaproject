@@ -11,4 +11,8 @@ public class DragonSecond extends MonDragon {
 
 	};
 
+	public void attack(User user, Monster mon) {
+
+	};
+
 }

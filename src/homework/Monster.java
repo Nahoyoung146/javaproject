@@ -20,7 +20,7 @@ public abstract class Monster extends Rpg implements Attackmon, Skillmon {
 		return difficulty;
 	}
 
-	public void attack1(User[] user, Monster mon) {
+	public void attack1(User[] user) {
 		int i = 0;
 		while (i < user.length) {
 			if (user[i].getHp() <= 0) {
@@ -29,8 +29,8 @@ public abstract class Monster extends Rpg implements Attackmon, Skillmon {
 			}
 
 			else {
-				System.out.println(mon.getName() + "이(가) 공격을 합니다.");
-				user[i].setHp(user[i].getHp() - mon.getAtk());
+				System.out.println(this.getName() + "이(가) 공격을 합니다.");
+				user[i].setHp(user[i].getHp() - this.getAtk());
 				System.out.println(user[i].getName() + "의 체력 : " + user[i].getHp());
 				i++;
 			}

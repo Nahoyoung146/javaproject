@@ -104,33 +104,43 @@ public class Main {
 		}
 	}
 
-	public static void userbuyitem(User[] user, ArrayList<Item[]> item, int[] choice) {
+	public static void userbuyitem(User[] user, ArrayList<Item[]> item, int[] choice, int s1, boolean[] have) {
 		int i = 0;
 		while (i < user.length) {
 			if (i == 0 && !(choice[i] == 1 || choice[i] == 2 || choice[i] == 3)) {
 				System.out.print("전사 아이템 구매 번호 입력, 0번 입력시 다음 단계로 진행 : ");
 				choice[i] = sc.nextInt();
+				have[i] = true;
 			}
 
 			else if (i == 1 && !(choice[i] == 1 || choice[i] == 2)) {
 				System.out.print("궁수 아이템 구매 번호 입력, 0번 입력시 다음 단계로 진행 : ");
 				choice[i] = sc.nextInt();
+				have[i] = true;
 			}
 
 			else if (i == 2 && !(choice[i] == 1 || choice[i] == 2)) {
 				System.out.print("마법사 아이템 구매 번호 입력, 0번 입력시 다음 단계로 진행 : ");
 				choice[i] = sc.nextInt();
+				have[i] = true;
 			}
 
-			if (choice[i] == 0)
+			if (choice[i] == 0) {
 				System.out.println("다음 단계 진행");
+				have[i] = false;
+			}
 
 			else {
-				System.out.println(user[i].getName() + "이(가) " + item.get(i)[choice[i] - 1].getName()
-						+ "을(를) 구매했습니다.\n이제부터 무기전용 스킬이 사용가능합니다");
-				user[i].setMaxatk(user[i].getMaxatk() + item.get(i)[choice[i] - 1].getWeaponatk());
-				user[i].setAtk(user[i].getMaxatk());
-				user[i].setMoney(user[i].getMoney() + item.get(i)[choice[i] - 1].getPrice());
+				if (s1 != 0 && have[i] == true)
+					System.out.println(user[i].getName() + "는(은) 이미 무기를 가지고 있습니다.");
+
+				else {
+					System.out.println(user[i].getName() + "이(가) " + item.get(i)[choice[i] - 1].getName()
+							+ "을(를) 구매했습니다.\n이제부터 무기전용 스킬이 사용가능합니다");
+					user[i].setMaxatk(user[i].getMaxatk() + item.get(i)[choice[i] - 1].getWeaponatk());
+					user[i].setAtk(user[i].getMaxatk());
+					user[i].setMoney(user[i].getMoney() - item.get(i)[choice[i] - 1].getPrice());
+				}
 			}
 			i++;
 		}
@@ -145,9 +155,9 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
+		boolean[] have = new boolean[3];
 		int[] choice = new int[3];
 		String[] job = { "전사", "궁수", "마법사" };
-
 		User[] user = { new Warrior("모험가1", 1000, 100, 10), new Archer("모험가2", 800, 200, 50),
 				new Magician("모험가3", 500, 300, 80) };
 		MonDragon[] dragon = { new DragonFirst("용기병", 1000, 10, "용족", 10), new DragonSecond("비늘용", 200, 20, "용족", 30),
@@ -175,12 +185,9 @@ public class Main {
 		int s1 = 0;
 		boolean help = false;
 		while (s1 < stage.length) {
-//			user[0].setMoney(10000);
-//			user[1].setMoney(10000);
-//			user[2].setMoney(10000);
 			iteminfo(item, job);
 			itemcanbuy(item, user, job);
-			userbuyitem(user, item, choice);
+			userbuyitem(user, item, choice, s1, have);
 			int buff = buff(user);
 			System.out.println(stage[s1] + "에 입장합니다.");
 			int qua = (int) (Math.random() * 3);
@@ -212,21 +219,18 @@ public class Main {
 							continue;
 						}
 
-						else {
-							if (ClassUp[s3] == false && user[s3].getMp() >= 30) {
-								System.out.print("공격방식을 선택하세요. 1.일반공격 2.스킬 : ");
-								int num = sc.nextInt();
-								if (num == 1)
-									user[s3].attack(mon.get(s1)[s2]);
-								else
-									user[s3].Skill(user, mon.get(s1)[s2]);
-							}
-
-							else
+						if (ClassUp[s3] == false && user[s3].getMp() >= 30) {
+							System.out.print("공격방식을 선택하세요. 1.일반공격 2.스킬 : ");
+							int num = sc.nextInt();
+							if (num == 1)
 								user[s3].attack(mon.get(s1)[s2]);
-							s3++;
+							else
+								user[s3].Skill(user, mon.get(s1)[s2]);
 						}
 
+						else
+							user[s3].attack(mon.get(s1)[s2]);
+						s3++;
 					}
 
 					s3 = 0;
@@ -266,11 +270,11 @@ public class Main {
 							mon.get(s1)[s2].Skill1(user);
 
 						else
-							mon.get(s1)[s2].attack1(user, mon.get(s1)[s2]);
+							mon.get(s1)[s2].attack1(user);
 					}
 
 					else {
-						mon.get(s1)[s2].attack1(user, mon.get(s1)[s2]);
+						mon.get(s1)[s2].attack1(user);
 					}
 
 					if (deathuser(user)) {
@@ -278,7 +282,6 @@ public class Main {
 						break;
 					}
 
-					System.out.println("모험가들의 일정량의 hp와 mp가 회복되었습니다.");
 					s3 = 0;
 					while (s3 < user.length) {
 						if (user[s3].getHp() <= 0) {
@@ -290,6 +293,8 @@ public class Main {
 						}
 
 					}
+
+					System.out.println("모험가들의 일정량의 hp와 mp가 회복되었습니다.");
 					System.out.println("=============================================");
 				}
 				if (deathuser(user))

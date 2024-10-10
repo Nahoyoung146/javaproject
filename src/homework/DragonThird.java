@@ -7,17 +7,13 @@ public class DragonThird extends MonDragon {
 		super(name, hp, atk, species, difficulty);
 	}
 
-	public void Skill(ArrayList<User> user, ArrayList<Monster[]> Mon, int order, int order2) {
+	public void Skill1(User[] user) {
 		System.out.println(this.getName() + "이(가) 스킬을 시전했습니다\t적에게 상당한 피해를 입혔습니다.");
 		int i = 0;
-		while (i < user.size()) {
-			user.get(i).setHp(user.get(i).getHp() - 100);
-			System.out.println(user.get(i).getName() + "의 체력 : " + user.get(i).getHp());
+		while (i < user.length) {
+			user[i].setHp(user[i].getHp() - 100);
+			System.out.println(user[i].getName() + "의 체력 : " + user[i].getHp());
 			i++;
 		}
 	}
-
-	public void attack(User user, Monster mon) {
-
-	};
 }

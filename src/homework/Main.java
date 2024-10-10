@@ -90,13 +90,13 @@ public class Main {
 		}
 	}
 
-	public static void itemcanbuy(ArrayList<Item[]> item, ArrayList<User> user, String[] job) {
-		System.out.println("구매 가능 물품\n금액 부족시 아무 아이템도 보이지 않음");
+	public static void itemcanbuy(ArrayList<Item[]> item, User[] user, String[] job) {
+		System.out.println("구매 가능 물품\n금액 부족시 아무 아이템도 보이지 않음\n무기 구매는 캐릭터당 한번만 구매가능하며 무기교체는 불가능");
 		int i = 0;
 		while (i < item.size()) {
 			System.out.println("==================" + job[i] + "==================");
 			for (int j = 0; j < item.get(i).length; j++) {
-				if (user.get(i).getMoney() >= item.get(i)[j].getPrice()) {
+				if (user[i].getMoney() >= item.get(i)[j].getPrice()) {
 					System.out.println(item.get(i)[j]);
 				}
 			}
@@ -107,17 +107,17 @@ public class Main {
 	public static void userbuyitem(User[] user, ArrayList<Item[]> item, int[] choice) {
 		int i = 0;
 		while (i < user.length) {
-			if (i == 0) {
+			if (i == 0 && !(choice[i] == 1 || choice[i] == 2 || choice[i] == 3)) {
 				System.out.print("전사 아이템 구매 번호 입력, 0번 입력시 다음 단계로 진행 : ");
 				choice[i] = sc.nextInt();
 			}
 
-			else if (i == 1) {
+			else if (i == 1 && !(choice[i] == 1 || choice[i] == 2)) {
 				System.out.print("궁수 아이템 구매 번호 입력, 0번 입력시 다음 단계로 진행 : ");
 				choice[i] = sc.nextInt();
 			}
 
-			else {
+			else if (i == 2 && !(choice[i] == 1 || choice[i] == 2)) {
 				System.out.print("마법사 아이템 구매 번호 입력, 0번 입력시 다음 단계로 진행 : ");
 				choice[i] = sc.nextInt();
 			}
@@ -128,7 +128,8 @@ public class Main {
 			else {
 				System.out.println(user[i].getName() + "이(가) " + item.get(i)[choice[i] - 1].getName()
 						+ "을(를) 구매했습니다.\n이제부터 무기전용 스킬이 사용가능합니다");
-				user[i].setAtk(user[i].getAtk() + item.get(i)[choice[i] - 1].getWeaponatk());
+				user[i].setMaxatk(user[i].getMaxatk() + item.get(i)[choice[i] - 1].getWeaponatk());
+				user[i].setAtk(user[i].getMaxatk());
 				user[i].setMoney(user[i].getMoney() + item.get(i)[choice[i] - 1].getPrice());
 			}
 			i++;
@@ -149,12 +150,6 @@ public class Main {
 
 		User[] user = { new Warrior("모험가1", 1000, 100, 10), new Archer("모험가2", 800, 200, 50),
 				new Magician("모험가3", 500, 300, 80) };
-		ArrayList<User> Arrayuser = new ArrayList<User>();
-		int s1 = 0;
-		while (s1 < user.length) {
-			Arrayuser.add(user[s1]);
-			s1++;
-		}
 		MonDragon[] dragon = { new DragonFirst("용기병", 1000, 10, "용족", 10), new DragonSecond("비늘용", 200, 20, "용족", 30),
 				new DragonThird("데스윙", 300, 30, "용족", 50) };
 		MonDemon[] demon = { new DemonFirst("하급악마", 350, 35, "악마족", 70), new DemonSecond("총의악마", 400, 40, "악마족", 90),
@@ -177,16 +172,16 @@ public class Main {
 		printinfo("전설의 시작");
 		boolean[] ClassUp = { true, true, true };
 		int turn = 0;
-		s1 = 0;
+		int s1 = 0;
 		boolean help = false;
 		while (s1 < stage.length) {
 //			user[0].setMoney(10000);
 //			user[1].setMoney(10000);
 //			user[2].setMoney(10000);
-			int buff = buff(user);
 			iteminfo(item, job);
-			itemcanbuy(item, Arrayuser, job);
+			itemcanbuy(item, user, job);
 			userbuyitem(user, item, choice);
+			int buff = buff(user);
 			System.out.println(stage[s1] + "에 입장합니다.");
 			int qua = (int) (Math.random() * 3);
 			System.out.println("전투Npc의 도움을 받겠습니까?\n단, 무작위로 Npc가 정해집니다. : y/n");
@@ -199,8 +194,8 @@ public class Main {
 			int s2 = 0;
 			while (s2 < mon.get(s1).length) {
 				int s3 = 0;
-				while (s3 < Arrayuser.size()) {
-					System.out.println(Arrayuser.get(s3));
+				while (s3 < user.length) {
+					System.out.println(user[s3]);
 					s3++;
 				}
 				System.out.println("=================================================================================");
@@ -211,24 +206,24 @@ public class Main {
 					turn++;
 					System.out.println("턴 수 : " + turn);
 					s3 = 0;
-					while (s3 < Arrayuser.size()) {
-						if (Arrayuser.get(s3).getHp() <= 0) {
+					while (s3 < user.length) {
+						if (user[s3].getHp() <= 0) {
 							s3++;
 							continue;
 						}
 
 						else {
-							if (ClassUp[s3] == false && Arrayuser.get(s3).getMp() >= 30) {
+							if (ClassUp[s3] == false && user[s3].getMp() >= 30) {
 								System.out.print("공격방식을 선택하세요. 1.일반공격 2.스킬 : ");
 								int num = sc.nextInt();
 								if (num == 1)
-									Arrayuser.get(s3).attack(Arrayuser.get(s3), mon.get(s1)[s2]);
+									user[s3].attack(mon.get(s1)[s2]);
 								else
-									Arrayuser.get(s3).Skill(Arrayuser, mon, s1, s2);
+									user[s3].Skill(user, mon.get(s1)[s2]);
 							}
 
 							else
-								Arrayuser.get(s3).attack(Arrayuser.get(s3), mon.get(s1)[s2]);
+								user[s3].attack(mon.get(s1)[s2]);
 							s3++;
 						}
 
@@ -237,25 +232,25 @@ public class Main {
 					s3 = 0;
 
 					if (help)
-						npc[qua].attack(Arrayuser.get(s3), mon.get(s1)[s2]);
+						npc[qua].attack(mon.get(s1)[s2]);
 
 					if (deathmonster(mon, s1, s2)) {
 						System.out.println("적이 쓰려졌습니다.");
-						while (s3 < Arrayuser.size()) {
-							if (Arrayuser.get(s3).getHp() <= 0) {
+						while (s3 < user.length) {
+							if (user[s3].getHp() <= 0) {
 								s3++;
 								continue;
 							}
 
 							else {
 
-								Arrayuser.get(s3).Expup(mon.get(s1)[s2]);
-								Arrayuser.get(s3).MoneyUp(mon.get(s1)[s2]); // Mon.get(order)[order2]
-								if (Arrayuser.get(s3).getLevel() >= 10 && ClassUp[s3]) {
-									System.out.println("축하합니다." + Arrayuser.get(s3).getName() + "이(가) 레벨10을 달성해서 "
-											+ job[s3] + "으로 전직하였습니다. 이제부터 직업스킬이 사용가능합니다.");
+								user[s3].Expup(mon.get(s1)[s2]);
+								user[s3].MoneyUp(mon.get(s1)[s2]); // Mon.get(order)[order2]
+								if (user[s3].getLevel() >= 10 && ClassUp[s3]) {
+									System.out.println("축하합니다." + user[s3].getName() + "이(가) 레벨10을 달성해서 " + job[s3]
+											+ "으로 전직하였습니다. 이제부터 직업스킬이 사용가능합니다.");
 									ClassUp[s3] = false;
-									Arrayuser.get(s3).setJob(job[s3]);
+									user[s3].setJob(job[s3]);
 								}
 								s3++;
 							}
@@ -268,7 +263,7 @@ public class Main {
 					if (s2 == 2) {
 						int boss = (int) (Math.random() * 3);
 						if (boss == 0)
-							mon.get(s1)[s2].Skill(Arrayuser, mon, 0, 0);
+							mon.get(s1)[s2].Skill1(user);
 
 						else
 							mon.get(s1)[s2].attack1(user, mon.get(s1)[s2]);
@@ -285,12 +280,12 @@ public class Main {
 
 					System.out.println("모험가들의 일정량의 hp와 mp가 회복되었습니다.");
 					s3 = 0;
-					while (s3 < Arrayuser.size()) {
-						if (Arrayuser.get(s3).getHp() <= 0) {
+					while (s3 < user.length) {
+						if (user[s3].getHp() <= 0) {
 							s3++;
 							continue;
 						} else {
-							Arrayuser.get(s3).recovery();
+							user[s3].recovery();
 							s3++;
 						}
 

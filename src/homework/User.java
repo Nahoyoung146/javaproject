@@ -146,15 +146,13 @@ public abstract class User extends Rpg implements Attack, Skill {
 		}
 	}
 
-	public void attack(User user, Monster mon) {
-		System.out.println(user.getName() + "이(가) 공격을 합니다.");
-		mon.setHp(mon.getHp() - user.getAtk());
+	public void attack(Monster mon) {
+		System.out.println(this.getName() + "이(가) 공격을 합니다.");
+		mon.setHp(mon.getHp() - this.getAtk());
 		System.out.println("적 체력 : " + mon.getHp());
 	}
 
-	public abstract void attack1(User[] user, Monster mon);
-
-	public abstract void Skill(ArrayList<User> user, ArrayList<Monster[]> Mon, int order, int order2);
+	public abstract void Skill(User[] user, Monster mon);
 
 	public String toString() {
 		return "이름 : " + this.getName() + ", 레벨 : " + this.getLevel() + ", HP : " + this.getHp() + ", MP : "

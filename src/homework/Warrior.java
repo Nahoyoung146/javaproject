@@ -7,14 +7,10 @@ public class Warrior extends User {
 		super(name, maxhp, maxmp, maxatk);
 	}
 
-	public void attack1(User[] user, Monster mon) {
-
-	};
-
-	public void Skill(ArrayList<User> user, ArrayList<Monster[]> Mon, int order, int order2) {
+	public void Skill(User[] user, Monster mon) {
 		System.out.println(this.getName() + "이(가) 스킬을 시전했습니다\n적에게 상당한 피해를 입혔습니다.");
-		Mon.get(order)[order2].setHp(Mon.get(order)[order2].getHp() - this.getSkillatk());
+		mon.setHp(mon.getHp() - this.getSkillatk());
 		this.setMp(this.getMp() - 30);
-		System.out.println("적 체력 : " + Mon.get(order)[order2].getHp());
+		System.out.println("적 체력 : " + mon.getHp());
 	}
 }

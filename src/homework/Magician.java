@@ -7,19 +7,15 @@ public class Magician extends User {
 		super(name, maxhp, maxmp, maxatk);
 	}
 
-	public void attack1(User[] user, Monster mon) {
-
-	};
-
-	public void Skill(ArrayList<User> user, ArrayList<Monster[]> Mon, int order, int order2) {
+	public void Skill(User[] user, Monster mon) {
 		System.out.println(this.getName() + "이(가) 스킬을 시전했습니다\n아군들의 체력이 회복되었습니다.");
 		int i = 0;
-		while (i < user.size()) {
-			user.get(i).setHp(user.get(i).getHp() + 50);
-			if (user.get(i).getHp() >= user.get(i).getMaxhp()) {
-				user.get(i).setHp(user.get(i).getMaxhp());
+		while (i < user.length) {
+			user[i].setHp(user[i].getHp() + 50);
+			if (user[i].getHp() >= user[i].getMaxhp()) {
+				user[i].setHp(user[i].getMaxhp());
 			}
-			System.out.println(user.get(i).getName() + "의 체력 : " + user.get(i).getHp());
+			System.out.println(user[i].getName() + "의 체력 : " + user[i].getHp());
 			i++;
 		}
 		this.setMp(this.getMp() - 30);

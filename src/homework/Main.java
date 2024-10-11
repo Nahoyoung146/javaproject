@@ -85,12 +85,13 @@ public class Main {
 			System.out.println("==================" + job[i] + "==================");
 			for (int j = 0; j < item.get(i).length; j++) {
 				System.out.println(item.get(i)[j]);
+
 			}
 			i++;
 		}
 	}
 
-	public static void itemcanbuy(ArrayList<Item[]> item, User[] user, String[] job) {
+	public static void itemcanbuy(ArrayList<Item[]> item, User[] user, String[] job, int[] check) {
 		System.out.println("구매 가능 물품\n금액 부족시 아무 아이템도 보이지 않음\n무기 구매는 캐릭터당 한번만 구매가능하며 무기교체는 불가능");
 		int i = 0;
 		while (i < item.size()) {
@@ -98,20 +99,25 @@ public class Main {
 			for (int j = 0; j < item.get(i).length; j++) {
 				if (user[i].getMoney() >= item.get(i)[j].getPrice()) {
 					System.out.println(item.get(i)[j]);
+					check[i]++;
 				}
 			}
 			i++;
 		}
 	}
 
-	public static void userbuyitem(User[] user, ArrayList<Item[]> item, int[] choice, boolean[] have) {
+	public static void userbuyitem(User[] user, ArrayList<Item[]> item, int[] choice, boolean[] have, int[] check) {
 		int i = 0;
 		while (i < user.length) {
 			if (have[i] == true) {
 				System.out.println(user[i].getName() + "는(은) 이미 무기를 가지고 있습니다.");
 			}
 
-			if (i == 0 && !(choice[i] == 1 || choice[i] == 2 || choice[i] == 3)) {
+			else if (check[i] == 0) {
+				System.out.println("돈 부족");
+			}
+
+			if (i == 0 && !(choice[i] == 1 || choice[i] == 2 || choice[i] == 3) && check[i] != 0) {
 				System.out.print("전사 아이템 구매 번호 입력, 0번 입력시 다음 단계로 진행 : ");
 				choice[i] = sc.nextInt();
 				if (choice[i] == 0) {
@@ -129,7 +135,7 @@ public class Main {
 				}
 			}
 
-			else if (i == 1 && !(choice[i] == 1 || choice[i] == 2)) {
+			else if (i == 1 && !(choice[i] == 1 || choice[i] == 2) && check[i] != 0) {
 				System.out.print("궁수 아이템 구매 번호 입력, 0번 입력시 다음 단계로 진행 : ");
 				choice[i] = sc.nextInt();
 				if (choice[i] == 0) {
@@ -147,7 +153,7 @@ public class Main {
 				}
 			}
 
-			else if (i == 2 && !(choice[i] == 1 || choice[i] == 2)) {
+			else if (i == 2 && !(choice[i] == 1 || choice[i] == 2) && check[i] != 0) {
 				System.out.print("마법사 아이템 구매 번호 입력, 0번 입력시 다음 단계로 진행 : ");
 				choice[i] = sc.nextInt();
 				if (choice[i] == 0) {
@@ -178,6 +184,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		boolean[] have = new boolean[3];
+		int[] check = new int[3];
 		int[] choice = new int[3];
 		String[] job = { "전사", "궁수", "마법사" };
 		User[] user = { new Warrior("모험가1", 1000, 100, 10), new Archer("모험가2", 800, 200, 50),
@@ -208,8 +215,8 @@ public class Main {
 		boolean help = false;
 		while (s1 < stage.length) {
 			iteminfo(item, job);
-			itemcanbuy(item, user, job);
-			userbuyitem(user, item, choice, have);
+			itemcanbuy(item, user, job, check);
+			userbuyitem(user, item, choice, have, check);
 			int buff = buff(user);
 			System.out.println(stage[s1] + "에 입장합니다.");
 			int qua = (int) (Math.random() * 3);

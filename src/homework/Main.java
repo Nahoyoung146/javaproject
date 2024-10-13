@@ -199,17 +199,17 @@ public class Main {
 		String[] job = { "전사", "궁수", "마법사" };
 		User[] user = { new Warrior("모험가1", 1000, 100, 10), new Archer("모험가2", 800, 200, 50),
 				new Magician("모험가3", 500, 300, 80) };
-		MonDragon[] dragon = { new DragonFirst("용기병", 1000, 10, "용족", 10), new DragonSecond("비늘용", 200, 20, "용족", 30),
-				new DragonThird("데스윙", 300, 30, "용족", 50) };
-		MonDemon[] demon = { new DemonFirst("하급악마", 350, 35, "악마족", 70), new DemonSecond("총의악마", 400, 40, "악마족", 90),
-				new DemonThird("어둠의 형상", 450, 45, "용족", 120) };
-		MonMachine[] machine = { new MachineFirst("안녕로봇", 500, 50, "기계족", 140),
-				new MachineSecond("기계거미", 550, 55, "기계족", 160), new MachineThird("기계박사 홍길동", 600, 60, "기계족", 200) };
+		MonDragon[] dragon = { new DragonNormal("용기병", 1000, 10, "용족", 10), new DragonNormal("비늘용", 200, 20, "용족", 30),
+				new DragonBoss("데스윙", 300, 30, "용족", 50) };
+		MonDemon[] demon = { new DemonNormal("하급악마", 350, 35, "악마족", 70), new DemonNormal("총의악마", 400, 40, "악마족", 90),
+				new DemonBoss("어둠의 형상", 450, 45, "용족", 120) };
+		MonMachine[] machine = { new MachineNormal("안녕로봇", 500, 50, "기계족", 140),
+				new MachineNormal("기계거미", 550, 55, "기계족", 160), new MachineBoss("기계박사 홍길동", 600, 60, "기계족", 200) };
 		ArrayList<Monster[]> mon = new ArrayList<Monster[]>();
 		mon.add(dragon);
 		mon.add(demon);
 		mon.add(machine);
-		NpcBattle[] npc = { new BattleHigh("알프레드", 100), new BattleMid("사바나", 50), new BattleLow("조나단", 10) };
+		Npc[] npc = { new Npc("알프레드", 100), new Npc("사바나", 50), new Npc("조나단", 10) };
 		ItemWa[] wa = { new Sword("대검", 1000, 10), new Blade("소검", 2000, 20), new Blunt("둔기", 3000, 30) };
 		ItemAr[] ar = { new Cross("석궁", 1500, 10), new Bow("활", 2500, 20) };
 		ItemMa[] ma = { new Wand("완드", 1000, 10), new Broom("빗자루", 1500, 20) };

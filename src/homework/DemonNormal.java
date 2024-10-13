@@ -2,8 +2,8 @@ package homework;
 
 import java.util.ArrayList;
 
-public class MachineFirst extends MonMachine {
-	MachineFirst(String name, int hp, int atk, String species, int difficulty) {
+public class DemonNormal extends MonDemon {
+	DemonNormal(String name, int hp, int atk, String species, int difficulty) {
 		super(name, hp, atk, species, difficulty);
 	}
 

@@ -2,8 +2,8 @@ package homework;
 
 import java.util.ArrayList;
 
-public class DragonThird extends MonDragon {
-	DragonThird(String name, int hp, int atk, String species, int difficulty) {
+public class DragonBoss extends MonDragon {
+	DragonBoss(String name, int hp, int atk, String species, int difficulty) {
 		super(name, hp, atk, species, difficulty);
 	}
 

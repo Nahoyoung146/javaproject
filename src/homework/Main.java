@@ -182,6 +182,16 @@ public class Main {
 		return false;
 	}
 
+	public static boolean end(User[] user, int s1) {
+		if (deathuser(user))
+			return true;
+
+		else if (GameClear(s1))
+			return true;
+
+		return false;
+	}
+
 	public static void main(String[] args) {
 		boolean[] have = new boolean[3];
 		int[] check = new int[3];
@@ -330,12 +340,10 @@ public class Main {
 					break;
 				s2++;
 			}
-			if (deathuser(user))
+
+			if (end(user, s1))
 				break;
 
-			if (GameClear(s1)) {
-				break;
-			}
 			initial(user, buff);
 			s1++;
 		}

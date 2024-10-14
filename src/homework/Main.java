@@ -214,6 +214,16 @@ public class Main {
 		return help;
 	}
 
+	public static void info(User[] user, ArrayList<Monster[]> mon, int s1, int s2, int s3) {
+		while (s3 < user.length) {
+			System.out.println(user[s3]);
+			s3++;
+		}
+		System.out.println("=================================================================================");
+		System.out.println(s2 + 1 + "번째 몬스터가 등장했습니다");
+		System.out.println(mon.get(s1)[s2]);
+	}
+
 	public static void main(String[] args) {
 		User[] user = { new Warrior("모험가1", 1000, 100, 10), new Archer("모험가2", 800, 200, 50),
 				new Magician("모험가3", 500, 300, 80) };
@@ -243,23 +253,15 @@ public class Main {
 		boolean[] ClassUp = { true, true, true };
 		int turn = 0;
 		int s1 = 0;
+		int s3 = 0;
 		boolean help = false;
 		printinfo("전설의 시작");
 		while (s1 < stage.length) {
 			int intro = intro(item, job, user, check, choice, have, stage, s1, npc, help);
 			boolean npc0 = npc(npc[intro], help, item, job, user, check, choice, have, stage, s1);
-
 			int s2 = 0;
 			while (s2 < mon.get(s1).length) {
-				int s3 = 0;
-				while (s3 < user.length) {
-					System.out.println(user[s3]);
-					s3++;
-				}
-				System.out.println("=================================================================================");
-				System.out.println(s2 + 1 + "번째 몬스터가 등장했습니다");
-				System.out.println(mon.get(s1)[s2]);
-
+				info(user, mon, s1, s2, s3);
 				while (true) {
 					turn++;
 					System.out.println("턴 수 : " + turn);

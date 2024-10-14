@@ -29,7 +29,9 @@ public class Magician extends User {
 	}
 
 	public void Broom(Monster mon) {
-		System.out.println("먼지 쓸기을(를) 사용했습니다.\n");
+		System.out.println("난장판 만들기을(를) 사용했습니다.\n상대방의 체력과 공격력이 바뀝니다.");
+		mon.setHp(mon.getAtk());
+		mon.setAtk(mon.getHp());
 		this.setMp(this.getMp() - 50);
 		System.out.println("적 체력 : " + mon.getHp());
 	}

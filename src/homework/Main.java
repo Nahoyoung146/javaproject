@@ -214,7 +214,8 @@ public class Main {
 		return help;
 	}
 
-	public static void info(User[] user, ArrayList<Monster[]> mon, int s1, int s2, int s3) {
+	public static void info(User[] user, ArrayList<Monster[]> mon, int s1, int s2) {
+		int s3 = 0;
 		while (s3 < user.length) {
 			System.out.println(user[s3]);
 			s3++;
@@ -253,7 +254,6 @@ public class Main {
 		boolean[] ClassUp = { true, true, true };
 		int turn = 0;
 		int s1 = 0;
-		int s3 = 0;
 		boolean help = false;
 		printinfo("전설의 시작");
 		while (s1 < stage.length) {
@@ -261,11 +261,11 @@ public class Main {
 			boolean npc0 = npc(npc[intro], help, item, job, user, check, choice, have, stage, s1);
 			int s2 = 0;
 			while (s2 < mon.get(s1).length) {
-				info(user, mon, s1, s2, s3);
+				info(user, mon, s1, s2);
 				while (true) {
 					turn++;
 					System.out.println("턴 수 : " + turn);
-					s3 = 0;
+					int s3 = 0;
 					while (s3 < user.length) {
 						if (user[s3].getHp() <= 0) {
 							s3++;

@@ -17,7 +17,7 @@ public class Main {
 				+ "버프를 줄 수 있고 상대 몬스터의 특수효과가 존재할 수도 있다.\n=================================================================================\n");
 	}
 
-	public static boolean deathuser(User[] user) { // abstract death를 만들어서 오버라이딩하여 사용하는 것은 어떨까?
+	public static boolean deathuser(User[] user) {
 		int sum = 0;
 		int i = 0;
 		while (i < user.length) {
@@ -31,8 +31,7 @@ public class Main {
 		return false;
 	}
 
-	public static boolean deathmonster(ArrayList<Monster[]> Mon, int order, int order2) {// abstract death를 만들어서 오버라이딩하여
-																							// 사용하는 것은 어떨까?
+	public static boolean deathmonster(ArrayList<Monster[]> Mon, int order, int order2) {
 		while (order2 < Mon.get(order).length) {
 			if (Mon.get(order)[order2].getHp() <= 0)
 				return true;
@@ -41,7 +40,7 @@ public class Main {
 		return false;
 	}
 
-	public static void initial(User[] user, int buff) {
+	public static void initial(User[] user) {
 		int i = 0;
 		while (i < user.length) {
 			user[i].setHp(user[i].getMaxhp());
@@ -51,7 +50,7 @@ public class Main {
 		}
 	}
 
-	public static int buff(User[] user) {
+	public static void buff(User[] user) {
 		System.out.println("길잡이npc가 등장했습니다.\n일정확률로 버프가 적용됩니다.");
 		int a = (int) (Math.random() * 3) + 1;
 		switch (a) {
@@ -62,7 +61,7 @@ public class Main {
 				user[i].setAtk(user[i].getAtk() + 50);
 				i++;
 			}
-			return 1;
+			break;
 		case 2:
 			System.out.println("모험가들 Hp과(와) Mp 증가");
 			i = 0;
@@ -71,10 +70,9 @@ public class Main {
 				user[i].setMp(user[i].getMaxmp() + 50);
 				i++;
 			}
-			return 2;
+			break;
 		default:
 			System.out.println("아쉽지만 아무 버프도 받지 못했습니다.");
-			return 3;
 		}
 	}
 
@@ -192,11 +190,31 @@ public class Main {
 		return false;
 	}
 
+	public static int intro(ArrayList<Item[]> item, String[] job, User[] user, int[] check, int[] choice,
+			boolean[] have, String[] stage, int s1, Npc[] npc, boolean help) {
+		iteminfo(item, job);
+		itemcanbuy(item, user, job, check);
+		userbuyitem(user, item, choice, have, check);
+		buff(user);
+		System.out.println(stage[s1] + "에 입장합니다.");
+		int qua = (int) (Math.random() * 3);
+		return qua;
+	}
+
+	public static boolean npc(Npc npc, boolean help, ArrayList<Item[]> item, String[] job, User[] user, int[] check,
+			int[] choice, boolean[] have, String[] stage, int s1) {
+		System.out.println("전투Npc의 도움을 받겠습니까?\n단, 무작위로 Npc가 정해집니다. : y/n");
+		char answer = sc.next().charAt(0);
+		if (answer == 'y') {
+			System.out.println(npc);
+			help = true;
+			return help;
+		}
+
+		return help;
+	}
+
 	public static void main(String[] args) {
-		boolean[] have = new boolean[3];
-		int[] check = new int[3];
-		int[] choice = new int[3];
-		String[] job = { "전사", "궁수", "마법사" };
 		User[] user = { new Warrior("모험가1", 1000, 100, 10), new Archer("모험가2", 800, 200, 50),
 				new Magician("모험가3", 500, 300, 80) };
 		MonDragon[] dragon = { new DragonNormal("용기병", 1000, 10, "용족", 10), new DragonNormal("비늘용", 200, 20, "용족", 30),
@@ -210,32 +228,26 @@ public class Main {
 		mon.add(demon);
 		mon.add(machine);
 		Npc[] npc = { new Npc("알프레드", 100), new Npc("사바나", 50), new Npc("조나단", 10) };
-		ItemWa[] wa = { new Sword("대검", 1000, 10), new Blade("소검", 2000, 20), new Blunt("둔기", 3000, 30) };
-		ItemAr[] ar = { new Cross("석궁", 1500, 10), new Bow("활", 2500, 20) };
-		ItemMa[] ma = { new Wand("완드", 1000, 10), new Broom("빗자루", 1500, 20) };
+		ItemWa[] wa = { new ItemWa("대검", 1000, 10), new ItemWa("소검", 2000, 20), new ItemWa("둔기", 3000, 30) };
+		ItemAr[] ar = { new ItemAr("석궁", 1500, 10), new ItemAr("활", 2500, 20) };
+		ItemMa[] ma = { new ItemMa("완드", 1000, 10), new ItemMa("빗자루", 1500, 20) };
 		ArrayList<Item[]> item = new ArrayList<Item[]>();
 		item.add(wa);
 		item.add(ar);
 		item.add(ma);
+		boolean[] have = new boolean[3];
+		int[] check = new int[3];
+		int[] choice = new int[3];
+		String[] job = { "전사", "궁수", "마법사" };
 		String[] stage = { "용들의 무덤", "어둠의 동물원", "기계성" };
-		printinfo("전설의 시작");
 		boolean[] ClassUp = { true, true, true };
 		int turn = 0;
 		int s1 = 0;
 		boolean help = false;
+		printinfo("전설의 시작");
 		while (s1 < stage.length) {
-			iteminfo(item, job);
-			itemcanbuy(item, user, job, check);
-			userbuyitem(user, item, choice, have, check);
-			int buff = buff(user);
-			System.out.println(stage[s1] + "에 입장합니다.");
-			int qua = (int) (Math.random() * 3);
-			System.out.println("전투Npc의 도움을 받겠습니까?\n단, 무작위로 Npc가 정해집니다. : y/n");
-			char answer = sc.next().charAt(0);
-			if (answer == 'y') {
-				System.out.println(npc[qua]);
-				help = true;
-			}
+			int intro = intro(item, job, user, check, choice, have, stage, s1, npc, help);
+			boolean npc0 = npc(npc[intro], help, item, job, user, check, choice, have, stage, s1);
 
 			int s2 = 0;
 			while (s2 < mon.get(s1).length) {
@@ -274,8 +286,8 @@ public class Main {
 
 					s3 = 0;
 
-					if (help)
-						npc[qua].attack(mon.get(s1)[s2]);
+					if (npc0)
+						npc[intro].attack(mon.get(s1)[s2]);
 
 					if (deathmonster(mon, s1, s2)) {
 						System.out.println("적이 쓰려졌습니다.");
@@ -288,7 +300,7 @@ public class Main {
 							else {
 
 								user[s3].Expup(mon.get(s1)[s2]);
-								user[s3].MoneyUp(mon.get(s1)[s2]); // Mon.get(order)[order2]
+								user[s3].MoneyUp(mon.get(s1)[s2]);
 								if (user[s3].getLevel() >= 10 && ClassUp[s3]) {
 									System.out.println("축하합니다." + user[s3].getName() + "이(가) 레벨10을 달성해서 " + job[s3]
 											+ "으로 전직하였습니다. 이제부터 직업스킬이 사용가능합니다.");
@@ -344,7 +356,7 @@ public class Main {
 			if (end(user, s1))
 				break;
 
-			initial(user, buff);
+			initial(user);
 			s1++;
 		}
 	}

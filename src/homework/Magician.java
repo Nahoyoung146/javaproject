@@ -20,4 +20,17 @@ public class Magician extends User {
 		}
 		this.setMp(this.getMp() - 30);
 	}
+
+	public void Wand(Monster mon) {
+		System.out.println("역지사지을(를) 사용했습니다.\n상대방의 공격력만큼 상대방의 체력이 감소합니다.");
+		mon.setHp(mon.getHp() - mon.getAtk());
+		this.setMp(this.getMp() - 50);
+		System.out.println("적 체력 : " + mon.getHp());
+	}
+
+	public void Broom(Monster mon) {
+		System.out.println("먼지 쓸기을(를) 사용했습니다.\n");
+		this.setMp(this.getMp() - 50);
+		System.out.println("적 체력 : " + mon.getHp());
+	}
 }

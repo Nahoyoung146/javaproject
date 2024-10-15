@@ -211,11 +211,11 @@ public class Main {
 			help = true;
 			return help;
 		}
-
 		return help;
 	}
 
-	public static void info(User[] user, ArrayList<Monster[]> mon, int s1, int s2, int s3) {
+	public static void info(User[] user, ArrayList<Monster[]> mon, int s1, int s2) {
+		int s3 = 0;
 		while (s3 < user.length) {
 			System.out.println(user[s3]);
 			s3++;
@@ -285,7 +285,6 @@ public class Main {
 		boolean[] ClassUp = { true, true, true };
 		int turn = 0;
 		int s1 = 0;
-		int s3 = 0;
 		boolean help = false;
 		printinfo("전설의 시작");
 //		user[0].setMoney(10000);
@@ -296,11 +295,11 @@ public class Main {
 			boolean npc0 = npc(npc[intro], help, item, job, user, check, choice, have, stage, s1);
 			int s2 = 0;
 			while (s2 < mon.get(s1).length) {
-				info(user, mon, s1, s2, s3);
+				info(user, mon, s1, s2);
 				while (true) {
 					turn++;
 					System.out.println("턴 수 : " + turn);
-					s3 = 0;
+					int s3 = 0;
 					while (s3 < user.length) {
 						if (user[s3].getHp() <= 0) {
 							s3++;
@@ -308,38 +307,27 @@ public class Main {
 						}
 
 						int[] buynum = userbuyitem(user, item, choice, have, check);
-						if(buynum[s3]!=0) {
-							if(ClassUp[s3] == false && user[s3].getMp() >= 50) {
+						if (buynum[s3] != 0) {
+							if (ClassUp[s3] == false && user[s3].getMp() >= 50) {
 								System.out.print("공격방식을 선택하세요/1. 일반공격 2. 스킬 3. 무기스킬 : ");
 								int num = sc.nextInt();
 								if (num == 1)
 									user[s3].attack(mon.get(s1)[s2]);
-							
-								else if(num==2)
+
+								else if (num == 2)
 									user[s3].Skill(user, mon.get(s1)[s2]);
-								
+
 								else {
-									
-								
-									weapon( , , , mon, s1, s2, turn, choice);
+
+									// weapon( , , , mon, s1, s2, turn, choice);
 								}
 							}
-							
-							
+
 						}
-						
-						else 
+
+						else
 							user[s3].attack(mon.get(s1)[s2]);
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
+
 //
 //						if (ClassUp[s3] == false && user[s3].getMp() >= 30) {
 //							System.out.print("공격방식을 선택하세요. 1.일반공격 2.스킬 : ");

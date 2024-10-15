@@ -257,8 +257,10 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		User[] user = { new Warrior("모험가1", 1000, 100, 10), new Archer("모험가2", 800, 200, 50),
-				new Magician("모험가3", 500, 300, 80) };
+		Warrior war = new Warrior("모험가1", 1000, 100, 10);
+		Archer arc = new Archer("모험가2", 800, 200, 50);
+		Magician mag = new Magician("모험가3", 500, 300, 80);
+		User[] user = { war, arc, mag };
 		MonDragon[] dragon = { new DragonNormal("용기병", 1000, 10, "용족", 10), new DragonNormal("비늘용", 200, 20, "용족", 30),
 				new DragonBoss("데스윙", 300, 30, "용족", 50) };
 		MonDemon[] demon = { new DemonNormal("하급악마", 350, 35, "악마족", 70), new DemonNormal("총의악마", 400, 40, "악마족", 90),
@@ -300,15 +302,15 @@ public class Main {
 					turn++;
 					System.out.println("턴 수 : " + turn);
 					int s3 = 0;
-					while (s3 < user.length) {
+					/*while (s3 < user.length) {
 						if (user[s3].getHp() <= 0) {
 							s3++;
 							continue;
 						}
 
 						int[] buynum = userbuyitem(user, item, choice, have, check);
-						if (buynum[s3] != 0) {
-							if (ClassUp[s3] == false && user[s3].getMp() >= 50) {
+						if (user[s3].getMp() >= 50) {
+							if (ClassUp[s3] == false && buynum[s3] != 0) {
 								System.out.print("공격방식을 선택하세요/1. 일반공격 2. 스킬 3. 무기스킬 : ");
 								int num = sc.nextInt();
 								if (num == 1)
@@ -317,31 +319,53 @@ public class Main {
 								else if (num == 2)
 									user[s3].Skill(user, mon.get(s1)[s2]);
 
-								else {
-
-									// weapon( , , , mon, s1, s2, turn, choice);
-								}
+								else
+									weapon(war, arc, mag, mon, s1, s2, turn, buynum);
 							}
 
+							else if (ClassUp[s3] == false && buynum[s3] == 0) {
+								System.out.print("공격방식을 선택하세요/1. 일반공격 2. 스킬 : ");
+								int num = sc.nextInt();
+								if (num == 1)
+									user[s3].attack(mon.get(s1)[s2]);
+
+								else
+									user[s3].Skill(user, mon.get(s1)[s2]);
+							}
+
+							else if (ClassUp[s3] == true && buynum[s3] != 0) {
+								System.out.print("공격방식을 선택하세요/1. 일반공격 2. 무기스킬 : ");
+								int num = sc.nextInt();
+								if (num == 1)
+									user[s3].attack(mon.get(s1)[s2]);
+
+								else
+									weapon(war, arc, mag, mon, s1, s2, turn, buynum);
+							}
+
+							else
+								user[s3].attack(mon.get(s1)[s2]);
+						}
+
+						else if (user[s3].getMp() >= 30) {
+							if (ClassUp[s3] == false) {
+								System.out.print("공격방식을 선택하세요/1. 일반공격 2. 스킬 : ");
+								int num = sc.nextInt();
+								if (num == 1)
+									user[s3].attack(mon.get(s1)[s2]);
+
+								else
+									user[s3].Skill(user, mon.get(s1)[s2]);
+							}
+
+							else
+								user[s3].attack(mon.get(s1)[s2]);
 						}
 
 						else
 							user[s3].attack(mon.get(s1)[s2]);
-
-//
-//						if (ClassUp[s3] == false && user[s3].getMp() >= 30) {
-//							System.out.print("공격방식을 선택하세요. 1.일반공격 2.스킬 : ");
-//							int num = sc.nextInt();
-//							if (num == 1)
-//								user[s3].attack(mon.get(s1)[s2]);
-//							else
-//								user[s3].Skill(user, mon.get(s1)[s2]);
-//						}
-//
-//						else
-//							user[s3].attack(mon.get(s1)[s2]);
 						s3++;
-					}
+					}*/ //함수화 해야함
 
 					if (npc0)
 						npc[intro].attack(mon.get(s1)[s2]);

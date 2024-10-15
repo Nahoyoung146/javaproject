@@ -104,7 +104,7 @@ public class Main {
 		}
 	}
 
-	public static void userbuyitem(User[] user, ArrayList<Item[]> item, int[] choice, boolean[] have, int[] check) {
+	public static int[] userbuyitem(User[] user, ArrayList<Item[]> item, int[] choice, boolean[] have, int[] check) {
 		int i = 0;
 		while (i < user.length) {
 			if (have[i] == true) {
@@ -170,6 +170,7 @@ public class Main {
 			}
 			i++;
 		}
+		return choice;
 	}
 
 	public static boolean GameClear(int s1) {
@@ -224,6 +225,37 @@ public class Main {
 		System.out.println(mon.get(s1)[s2]);
 	}
 
+	public static void weapon(Warrior wa, Archer ar, Magician ma, ArrayList<Monster[]> mon, int s1, int s2, int turn,
+			int[] num) {
+		if (num[0] == 1) {
+			wa.Sword(mon.get(s1)[s2]);
+		}
+
+		else if (num[0] == 2) {
+			wa.Blade(mon.get(s1)[s2]);
+		}
+
+		else if (num[0] == 2) {
+			wa.Blade(mon.get(s1)[s2]);
+		}
+
+		else if (num[1] == 1) {
+			ar.Cross(mon.get(s1)[s2], turn);
+		}
+
+		else if (num[1] == 2) {
+			ar.Bow(mon.get(s1)[s2]);
+		}
+
+		else if (num[2] == 1) {
+			ma.Wand(mon.get(s1)[s2]);
+		}
+
+		else if (num[2] == 2) {
+			ma.Broom(mon.get(s1)[s2]);
+		}
+	}
+
 	public static void main(String[] args) {
 		User[] user = { new Warrior("모험가1", 1000, 100, 10), new Archer("모험가2", 800, 200, 50),
 				new Magician("모험가3", 500, 300, 80) };
@@ -256,6 +288,9 @@ public class Main {
 		int s3 = 0;
 		boolean help = false;
 		printinfo("전설의 시작");
+//		user[0].setMoney(10000);
+//		user[1].setMoney(10000);
+//		user[2].setMoney(10000);
 		while (s1 < stage.length) {
 			int intro = intro(item, job, user, check, choice, have, stage, s1, npc, help);
 			boolean npc0 = npc(npc[intro], help, item, job, user, check, choice, have, stage, s1);
@@ -272,26 +307,59 @@ public class Main {
 							continue;
 						}
 
-						if (ClassUp[s3] == false && user[s3].getMp() >= 30) {
-							System.out.print("공격방식을 선택하세요. 1.일반공격 2.스킬 : ");
-							int num = sc.nextInt();
-							if (num == 1)
-								user[s3].attack(mon.get(s1)[s2]);
-							else
-								user[s3].Skill(user, mon.get(s1)[s2]);
+						int[] buynum = userbuyitem(user, item, choice, have, check);
+						if(buynum[s3]!=0) {
+							if(ClassUp[s3] == false && user[s3].getMp() >= 50) {
+								System.out.print("공격방식을 선택하세요/1. 일반공격 2. 스킬 3. 무기스킬 : ");
+								int num = sc.nextInt();
+								if (num == 1)
+									user[s3].attack(mon.get(s1)[s2]);
+							
+								else if(num==2)
+									user[s3].Skill(user, mon.get(s1)[s2]);
+								
+								else {
+									
+								
+									weapon( , , , mon, s1, s2, turn, choice);
+								}
+							}
+							
+							
 						}
-
-						else
+						
+						else 
 							user[s3].attack(mon.get(s1)[s2]);
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+//
+//						if (ClassUp[s3] == false && user[s3].getMp() >= 30) {
+//							System.out.print("공격방식을 선택하세요. 1.일반공격 2.스킬 : ");
+//							int num = sc.nextInt();
+//							if (num == 1)
+//								user[s3].attack(mon.get(s1)[s2]);
+//							else
+//								user[s3].Skill(user, mon.get(s1)[s2]);
+//						}
+//
+//						else
+//							user[s3].attack(mon.get(s1)[s2]);
 						s3++;
 					}
-
-					s3 = 0;
 
 					if (npc0)
 						npc[intro].attack(mon.get(s1)[s2]);
 
 					if (deathmonster(mon, s1, s2)) {
+						s3 = 0;
 						System.out.println("적이 쓰려졌습니다.");
 						while (s3 < user.length) {
 							if (user[s3].getHp() <= 0) {
@@ -300,7 +368,6 @@ public class Main {
 							}
 
 							else {
-
 								user[s3].Expup(mon.get(s1)[s2]);
 								user[s3].MoneyUp(mon.get(s1)[s2]);
 								if (user[s3].getLevel() >= 10 && ClassUp[s3]) {

@@ -181,29 +181,22 @@ public class Main {
 		return false;
 	}
 
-	public static boolean end(User[] user, int s1) {
-		if (deathuser(user))
-			return true;
-
-		else if (GameClear(s1))
-			return true;
-
-		return false;
-	}
-
-	public static int intro(ArrayList<Item[]> item, String[] job, User[] user, int[] check, int[] choice,
-			boolean[] have, String[] stage, int s1, Npc[] npc, boolean help) {
+	public static int[] item0(ArrayList<Item[]> item, String[] job, User[] user, int[] check, int[] choice,
+			boolean[] have) {
 		iteminfo(item, job);
 		itemcanbuy(item, user, job, check);
-		userbuyitem(user, item, choice, have, check);
+		int[] buynum = userbuyitem(user, item, choice, have, check);
+		return buynum;
+	}
+
+	public static int intro(User[] user, String[] stage, int s1) {
 		buff(user);
 		System.out.println(stage[s1] + "에 입장합니다.");
 		int qua = (int) (Math.random() * 3);
 		return qua;
 	}
 
-	public static boolean npc(Npc npc, boolean help, ArrayList<Item[]> item, String[] job, User[] user, int[] check,
-			int[] choice, boolean[] have, String[] stage, int s1) {
+	public static boolean npc(Npc npc, boolean help) {
 		System.out.println("전투Npc의 도움을 받겠습니까?\n단, 무작위로 Npc가 정해집니다. : y/n");
 		char answer = sc.next().charAt(0);
 		if (answer == 'y') {
@@ -256,6 +249,123 @@ public class Main {
 		}
 	}
 
+	public static void userattack(User[] user, boolean[] ClassUp, ArrayList<Monster[]> mon, int s1, int s2, Warrior war,
+			Archer arc, Magician mag, int turn, boolean npc0, Npc[] npc, int intro, int[] buynum) {
+		int s3 = 0;
+		while (s3 < user.length) {
+			if (user[s3].getHp() <= 0) {
+				s3++;
+				continue;
+			}
+
+			if (user[s3].getMp() >= 50) {
+				if (ClassUp[s3] == false && buynum[s3] != 0) {
+					System.out.print("공격방식을 선택하세요/1. 일반공격 2. 스킬 3. 무기스킬 : ");
+					int num = sc.nextInt();
+					if (num == 1)
+						user[s3].attack(mon.get(s1)[s2]);
+
+					else if (num == 2)
+						user[s3].Skill(user, mon.get(s1)[s2]);
+
+					else
+						weapon(war, arc, mag, mon, s1, s2, turn, buynum);
+				}
+
+				else if (ClassUp[s3] == false && buynum[s3] == 0) {
+					System.out.print("공격방식을 선택하세요/1. 일반공격 2. 스킬 : ");
+					int num = sc.nextInt();
+					if (num == 1)
+						user[s3].attack(mon.get(s1)[s2]);
+
+					else
+						user[s3].Skill(user, mon.get(s1)[s2]);
+				}
+
+				else if (ClassUp[s3] == true && buynum[s3] != 0) {
+					System.out.print("공격방식을 선택하세요/1. 일반공격 2. 무기스킬 : ");
+					int num = sc.nextInt();
+					if (num == 1)
+						user[s3].attack(mon.get(s1)[s2]);
+
+					else
+						weapon(war, arc, mag, mon, s1, s2, turn, buynum);
+				}
+
+				else
+					user[s3].attack(mon.get(s1)[s2]);
+			}
+
+			else if (user[s3].getMp() >= 30) {
+				if (ClassUp[s3] == false) {
+					System.out.print("공격방식을 선택하세요/1. 일반공격 2. 스킬 : ");
+					int num = sc.nextInt();
+					if (num == 1)
+						user[s3].attack(mon.get(s1)[s2]);
+
+					else
+						user[s3].Skill(user, mon.get(s1)[s2]);
+				}
+
+				else
+					user[s3].attack(mon.get(s1)[s2]);
+			}
+
+			else
+				user[s3].attack(mon.get(s1)[s2]);
+			s3++;
+		}
+
+		if (npc0)
+			npc[intro].attack(mon.get(s1)[s2]);
+	}
+
+	public static boolean userattackafter(User[] user, ArrayList<Monster[]> mon, int s1, int s2, boolean[] ClassUp,
+			String[] job, int turn) {
+		if (deathmonster(mon, s1, s2)) {
+			int s3 = 0;
+			System.out.println("적이 쓰려졌습니다.");
+			while (s3 < user.length) {
+				if (user[s3].getHp() <= 0) {
+					s3++;
+					continue;
+				}
+
+				else {
+					user[s3].Expup(mon.get(s1)[s2]);
+					user[s3].MoneyUp(mon.get(s1)[s2]);
+					if (user[s3].getLevel() >= 10 && ClassUp[s3]) {
+						System.out.println("축하합니다." + user[s3].getName() + "이(가) 레벨10을 달성해서 " + job[s3]
+								+ "으로 전직하였습니다. 이제부터 직업스킬이 사용가능합니다.");
+						ClassUp[s3] = false;
+						user[s3].setJob(job[s3]);
+					}
+					s3++;
+				}
+
+			}
+			turn = 0;
+			return true;
+		}
+
+		return false;
+	}
+
+	public static void monsterattack(int s2, ArrayList<Monster[]> mon, User[] user, int s1) {
+		if (s2 == 2) {
+			int boss = (int) (Math.random() * 3);
+			if (boss == 0)
+				mon.get(s1)[s2].Skill1(user);
+
+			else
+				mon.get(s1)[s2].attack1(user);
+		}
+
+		else {
+			mon.get(s1)[s2].attack1(user);
+		}
+	}
+
 	public static void main(String[] args) {
 		Warrior war = new Warrior("모험가1", 1000, 100, 10);
 		Archer arc = new Archer("모험가2", 800, 200, 50);
@@ -289,101 +399,43 @@ public class Main {
 		int s1 = 0;
 		boolean help = false;
 		printinfo("전설의 시작");
+//		user[0].setLevel(10);
+//		user[1].setLevel(10);
+//		user[2].setLevel(10);
 //		user[0].setMoney(10000);
 //		user[1].setMoney(10000);
 //		user[2].setMoney(10000);
 		while (s1 < stage.length) {
-			int intro = intro(item, job, user, check, choice, have, stage, s1, npc, help);
-			boolean npc0 = npc(npc[intro], help, item, job, user, check, choice, have, stage, s1);
+			int[] buynum = item0(item, job, user, check, choice, have);
+			int intro = intro(user, stage, s1);
+			boolean npc0 = npc(npc[intro], help);
 			int s2 = 0;
 			while (s2 < mon.get(s1).length) {
 				info(user, mon, s1, s2);
 				while (true) {
 					turn++;
 					System.out.println("턴 수 : " + turn);
-					/*
-					 * int s3 = 0; while (s3 < user.length) { if (user[s3].getHp() <= 0) { s3++;
-					 * continue; }
-					 * 
-					 * int[] buynum = userbuyitem(user, item, choice, have, check); if
-					 * (user[s3].getMp() >= 50) { if (ClassUp[s3] == false && buynum[s3] != 0) {
-					 * System.out.print("공격방식을 선택하세요/1. 일반공격 2. 스킬 3. 무기스킬 : "); int num =
-					 * sc.nextInt(); if (num == 1) user[s3].attack(mon.get(s1)[s2]);
-					 * 
-					 * else if (num == 2) user[s3].Skill(user, mon.get(s1)[s2]);
-					 * 
-					 * else weapon(war, arc, mag, mon, s1, s2, turn, buynum); }
-					 * 
-					 * else if (ClassUp[s3] == false && buynum[s3] == 0) {
-					 * System.out.print("공격방식을 선택하세요/1. 일반공격 2. 스킬 : "); int num = sc.nextInt(); if
-					 * (num == 1) user[s3].attack(mon.get(s1)[s2]);
-					 * 
-					 * else user[s3].Skill(user, mon.get(s1)[s2]); }
-					 * 
-					 * else if (ClassUp[s3] == true && buynum[s3] != 0) {
-					 * System.out.print("공격방식을 선택하세요/1. 일반공격 2. 무기스킬 : "); int num = sc.nextInt();
-					 * if (num == 1) user[s3].attack(mon.get(s1)[s2]);
-					 * 
-					 * else weapon(war, arc, mag, mon, s1, s2, turn, buynum); }
-					 * 
-					 * else user[s3].attack(mon.get(s1)[s2]); }
-					 * 
-					 * else if (user[s3].getMp() >= 30) { if (ClassUp[s3] == false) {
-					 * System.out.print("공격방식을 선택하세요/1. 일반공격 2. 스킬 : "); int num = sc.nextInt(); if
-					 * (num == 1) user[s3].attack(mon.get(s1)[s2]);
-					 * 
-					 * else user[s3].Skill(user, mon.get(s1)[s2]); }
-					 * 
-					 * else user[s3].attack(mon.get(s1)[s2]); }
-					 * 
-					 * else user[s3].attack(mon.get(s1)[s2]); s3++; }
-					 */ // 함수화 해야함
 
-					if (npc0)
-						npc[intro].attack(mon.get(s1)[s2]);
+					userattack(user, ClassUp, mon, s1, s2, war, arc, mag, turn, npc0, npc, intro, buynum);
 
-					if (deathmonster(mon, s1, s2)) {
-						int s3 = 0;
-						System.out.println("적이 쓰려졌습니다.");
-						while (s3 < user.length) {
-							if (user[s3].getHp() <= 0) {
-								s3++;
-								continue;
-							}
-
-							else {
-								user[s3].Expup(mon.get(s1)[s2]);
-								user[s3].MoneyUp(mon.get(s1)[s2]);
-								if (user[s3].getLevel() >= 10 && ClassUp[s3]) {
-									System.out.println("축하합니다." + user[s3].getName() + "이(가) 레벨10을 달성해서 " + job[s3]
-											+ "으로 전직하였습니다. 이제부터 직업스킬이 사용가능합니다.");
-									ClassUp[s3] = false;
-									user[s3].setJob(job[s3]);
-								}
-								s3++;
-							}
-
-						}
-						turn = 0;
+					if (userattackafter(user, mon, s1, s2, ClassUp, job, turn)) {
 						break;
 					}
 
-					if (s2 == 2) {
-						int boss = (int) (Math.random() * 3);
-						if (boss == 0)
-							mon.get(s1)[s2].Skill1(user);
+					/*
+					 * if (s2 == 2) { int boss = (int) (Math.random() * 3); if (boss == 0)
+					 * mon.get(s1)[s2].Skill1(user);
+					 * 
+					 * else mon.get(s1)[s2].attack1(user); }
+					 * 
+					 * else { mon.get(s1)[s2].attack1(user); }
+					 */
 
-						else
-							mon.get(s1)[s2].attack1(user);
-					}
-
-					else {
-						mon.get(s1)[s2].attack1(user);
-					}
+					monsterattack(s2, mon, user, s1);
 
 					if (deathuser(user)) {
 						System.out.println("모험가가 모두 사망해서 게임이 종료됩니다");
-						break;
+						return;
 					}
 
 					int s3 = 0;
@@ -401,13 +453,11 @@ public class Main {
 					System.out.println("모험가들의 일정량의 hp와 mp가 회복되었습니다.");
 					System.out.println("=============================================");
 				}
-				if (deathuser(user))
-					break;
 				s2++;
 			}
 
-			if (end(user, s1))
-				break;
+			if (GameClear(s1))
+				return;
 
 			initial(user);
 			s1++;

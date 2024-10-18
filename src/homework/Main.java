@@ -76,27 +76,25 @@ public class Main {
 		}
 	}
 
-	public static void iteminfo(ArrayList<Item[]> item, String[] job) {
+	public static void iteminfo(Item[][] item, String[] job) {
 		System.out.println("아이템Npc가 등장했습니다");
 		int i = 0;
-		while (i < item.size()) {
+		while (i < item.length) {
 			System.out.println("==================" + job[i] + "==================");
-			for (int j = 0; j < item.get(i).length; j++) {
-				System.out.println(item.get(i)[j]);
-
-			}
+			for (int j = 0; j < item[i].length; j++)
+				System.out.println(item[i][j]);
 			i++;
 		}
 	}
 
-	public static void itemcanbuy(ArrayList<Item[]> item, User[] user, String[] job, int[] check) {
+	public static void itemcanbuy(Item[][] item, User[] user, String[] job, int[] check) {
 		System.out.println("구매 가능 물품\n금액 부족시 아무 아이템도 보이지 않음\n무기 구매는 캐릭터당 한번만 구매가능하며 무기교체는 불가능");
 		int i = 0;
-		while (i < item.size()) {
+		while (i < item.length) {
 			System.out.println("==================" + job[i] + "==================");
-			for (int j = 0; j < item.get(i).length; j++) {
-				if (user[i].getMoney() >= item.get(i)[j].getPrice()) {
-					System.out.println(item.get(i)[j]);
+			for (int j = 0; j < item[i].length; j++) {
+				if (user[i].getMoney() >= item[i][j].getPrice()) {
+					System.out.println(item[i][j]);
 					check[i]++;
 				}
 			}
@@ -104,16 +102,14 @@ public class Main {
 		}
 	}
 
-	public static int[] userbuyitem(User[] user, ArrayList<Item[]> item, int[] choice, boolean[] have, int[] check) {
+	public static int[] userbuyitem(User[] user, Item[][] item, int[] choice, boolean[] have, int[] check) {
 		int i = 0;
 		while (i < user.length) {
-			if (have[i] == true) {
+			if (have[i] == true)
 				System.out.println(user[i].getName() + "는(은) 이미 무기를 가지고 있습니다.");
-			}
 
-			else if (check[i] == 0) {
+			else if (check[i] == 0)
 				System.out.println("돈 부족");
-			}
 
 			if (i == 0 && !(choice[i] == 1 || choice[i] == 2 || choice[i] == 3) && check[i] != 0) {
 				System.out.print("전사 아이템 구매 번호 입력, 0번 입력시 다음 단계로 진행 : ");
@@ -124,11 +120,11 @@ public class Main {
 				}
 
 				else {
-					System.out.println(user[i].getName() + "이(가) " + item.get(i)[choice[i] - 1].getName()
+					System.out.println(user[i].getName() + "이(가) " + item[i][choice[i] - 1].getName()
 							+ "을(를) 구매했습니다.\n이제부터 무기전용 스킬이 사용가능합니다");
-					user[i].setMaxatk(user[i].getMaxatk() + item.get(i)[choice[i] - 1].getWeaponatk());
+					user[i].setMaxatk(user[i].getMaxatk() + item[i][choice[i] - 1].getWeaponatk());
 					user[i].setAtk(user[i].getMaxatk());
-					user[i].setMoney(user[i].getMoney() - item.get(i)[choice[i] - 1].getPrice());
+					user[i].setMoney(user[i].getMoney() - item[i][choice[i] - 1].getPrice());
 					have[i] = true;
 				}
 			}
@@ -142,11 +138,11 @@ public class Main {
 				}
 
 				else {
-					System.out.println(user[i].getName() + "이(가) " + item.get(i)[choice[i] - 1].getName()
+					System.out.println(user[i].getName() + "이(가) " + item[i][choice[i] - 1].getName()
 							+ "을(를) 구매했습니다.\n이제부터 무기전용 스킬이 사용가능합니다");
-					user[i].setMaxatk(user[i].getMaxatk() + item.get(i)[choice[i] - 1].getWeaponatk());
+					user[i].setMaxatk(user[i].getMaxatk() + item[i][choice[i] - 1].getWeaponatk());
 					user[i].setAtk(user[i].getMaxatk());
-					user[i].setMoney(user[i].getMoney() - item.get(i)[choice[i] - 1].getPrice());
+					user[i].setMoney(user[i].getMoney() - item[i][choice[i] - 1].getPrice());
 					have[i] = true;
 				}
 			}
@@ -160,11 +156,11 @@ public class Main {
 				}
 
 				else {
-					System.out.println(user[i].getName() + "이(가) " + item.get(i)[choice[i] - 1].getName()
+					System.out.println(user[i].getName() + "이(가) " + item[i][choice[i] - 1].getName()
 							+ "을(를) 구매했습니다.\n이제부터 무기전용 스킬이 사용가능합니다");
-					user[i].setMaxatk(user[i].getMaxatk() + item.get(i)[choice[i] - 1].getWeaponatk());
+					user[i].setMaxatk(user[i].getMaxatk() + item[i][choice[i] - 1].getWeaponatk());
 					user[i].setAtk(user[i].getMaxatk());
-					user[i].setMoney(user[i].getMoney() - item.get(i)[choice[i] - 1].getPrice());
+					user[i].setMoney(user[i].getMoney() - item[i][choice[i] - 1].getPrice());
 					have[i] = true;
 				}
 			}
@@ -181,8 +177,7 @@ public class Main {
 		return false;
 	}
 
-	public static int[] item0(ArrayList<Item[]> item, String[] job, User[] user, int[] check, int[] choice,
-			boolean[] have) {
+	public static int[] item0(Item[][] item, String[] job, User[] user, int[] check, int[] choice, boolean[] have) {
 		iteminfo(item, job);
 		itemcanbuy(item, user, job, check);
 		int[] buynum = userbuyitem(user, item, choice, have, check);
@@ -366,36 +361,53 @@ public class Main {
 		}
 	}
 
+	public static void recovery(User[] user) {
+		int s3 = 0;
+		while (s3 < user.length) {
+			if (user[s3].getHp() <= 0) {
+				s3++;
+				continue;
+			} else {
+				user[s3].recovery();
+				s3++;
+			}
+		}
+		System.out.println("모험가들의 일정량의 hp와 mp가 회복되었습니다.");
+		System.out.println("=============================================");
+	}
+
 	public static void main(String[] args) {
 		Warrior war = new Warrior("모험가1", 1000, 100, 10);
 		Archer arc = new Archer("모험가2", 800, 200, 50);
 		Magician mag = new Magician("모험가3", 500, 300, 80);
 		User[] user = { war, arc, mag };
-		MonDragon[] dragon = { new DragonNormal("용기병", 1000, 10, "용족", 10), new DragonNormal("비늘용", 200, 20, "용족", 30),
-				new DragonBoss("데스윙", 300, 30, "용족", 50) };
-		MonDemon[] demon = { new DemonNormal("하급악마", 350, 35, "악마족", 70), new DemonNormal("총의악마", 400, 40, "악마족", 90),
-				new DemonBoss("어둠의 형상", 450, 45, "용족", 120) };
-		MonMachine[] machine = { new MachineNormal("안녕로봇", 500, 50, "기계족", 140),
-				new MachineNormal("기계거미", 550, 55, "기계족", 160), new MachineBoss("기계박사 홍길동", 600, 60, "기계족", 200) };
+		MonDragon[] dragon = { new DragonNormal("용기병", 1000, 10, "용족", 10), new DragonNormal("비늘용", 2000, 20, "용족", 30),
+				new DragonBoss("데스윙", 3000, 30, "용족", 50) };
+		MonDemon[] demon = { new DemonNormal("하급악마", 3500, 35, "악마족", 70), new DemonNormal("총의악마", 4000, 40, "악마족", 90),
+				new DemonBoss("어둠의 형상", 4500, 45, "용족", 120) };
+		MonMachine[] machine = { new MachineNormal("안녕로봇", 5000, 50, "기계족", 140),
+				new MachineNormal("기계거미", 5500, 55, "기계족", 160), new MachineBoss("기계박사 홍길동", 6000, 60, "기계족", 200) };
 		ArrayList<Monster[]> mon = new ArrayList<Monster[]>();
 		mon.add(dragon);
 		mon.add(demon);
 		mon.add(machine);
 		Npc[] npc = { new Npc("알프레드", 100), new Npc("사바나", 50), new Npc("조나단", 10) };
-		ItemWa[] wa = { new ItemWa("대검", 1000, 10), new ItemWa("소검", 2000, 20), new ItemWa("둔기", 3000, 30) };
-		ItemAr[] ar = { new ItemAr("석궁", 1500, 10), new ItemAr("활", 2500, 20) };
-		ItemMa[] ma = { new ItemMa("완드", 1000, 10), new ItemMa("빗자루", 1500, 20) };
-		ArrayList<Item[]> item = new ArrayList<Item[]>();
-		item.add(wa);
-		item.add(ar);
-		item.add(ma);
+//		ItemWa[] wa = { new ItemWa("대검", 1000, 10), new ItemWa("소검", 2000, 20), new ItemWa("둔기", 3000, 30) };
+//		ItemAr[] ar = { new ItemAr("석궁", 1500, 10), new ItemAr("활", 2500, 20) };
+//		ItemMa[] ma = { new ItemMa("완드", 1000, 10), new ItemMa("빗자루", 1500, 20) };
+//		ArrayList<Item[]> item = new ArrayList<Item[]>();
+//		item.add(wa);
+//		item.add(ar);
+//		item.add(ma);
+		Item[][] item = { { new Item("대검", 1000, 10), new Item("소검", 2000, 20), new Item("둔기", 3000, 30) },
+				{ new Item("석궁", 1500, 10), new Item("활", 2500, 20) },
+				{ new Item("완드", 1000, 10), new Item("빗자루", 1500, 20) } };
 		boolean[] have = new boolean[3];
 		int[] check = new int[3];
 		int[] choice = new int[3];
 		String[] job = { "전사", "궁수", "마법사" };
 		String[] stage = { "용들의 무덤", "어둠의 동물원", "기계성" };
 		boolean[] ClassUp = { true, true, true };
-		int turn = 0;
 		int s1 = 0;
 		boolean help = false;
 		printinfo("전설의 시작");
@@ -412,6 +424,7 @@ public class Main {
 			int s2 = 0;
 			while (s2 < mon.get(s1).length) {
 				info(user, mon, s1, s2);
+				int turn = 0;
 				while (true) {
 					turn++;
 					System.out.println("턴 수 : " + turn);
@@ -422,15 +435,6 @@ public class Main {
 						break;
 					}
 
-					/*
-					 * if (s2 == 2) { int boss = (int) (Math.random() * 3); if (boss == 0)
-					 * mon.get(s1)[s2].Skill1(user);
-					 * 
-					 * else mon.get(s1)[s2].attack1(user); }
-					 * 
-					 * else { mon.get(s1)[s2].attack1(user); }
-					 */
-
 					monsterattack(s2, mon, user, s1);
 
 					if (deathuser(user)) {
@@ -438,20 +442,7 @@ public class Main {
 						return;
 					}
 
-					int s3 = 0;
-					while (s3 < user.length) {
-						if (user[s3].getHp() <= 0) {
-							s3++;
-							continue;
-						} else {
-							user[s3].recovery();
-							s3++;
-						}
-
-					}
-
-					System.out.println("모험가들의 일정량의 hp와 mp가 회복되었습니다.");
-					System.out.println("=============================================");
+					recovery(user);
 				}
 				s2++;
 			}

@@ -18,14 +18,7 @@ public class Main {
 	}
 
 	public static boolean deathuser(User[] user) {
-		int sum = 0;
-		int i = 0;
-		while (i < user.length) {
-			sum += user[i].getHp();
-			i++;
-		}
-
-		if (sum <= 0)
+		if (user[0].getHp() <= 0 && user[1].getHp() <= 0 && user[2].getHp() <= 0)
 			return true;
 
 		return false;
@@ -376,6 +369,41 @@ public class Main {
 		System.out.println("=============================================");
 	}
 
+	public static boolean intermediate(User[] user, boolean[] ClassUp, ArrayList<Monster[]> mon, int s1, int s2,
+			Warrior war, Archer arc, Magician mag, boolean npc0, Npc[] npc, int intro, int[] buynum, String[] job) {
+		int turn = 0;
+		while (true) {
+			turn++;
+			System.out.println("턴 수 : " + turn);
+
+			userattack(user, ClassUp, mon, s1, s2, war, arc, mag, turn, npc0, npc, intro, buynum);
+
+			if (userattackafter(user, mon, s1, s2, ClassUp, job, turn)) {
+				break;
+			}
+
+			monsterattack(s2, mon, user, s1);
+
+			if (deathuser(user)) {
+				System.out.println("모험가가 모두 사망해서 게임이 종료됩니다");
+				return true;
+			}
+
+			recovery(user);
+		}
+
+		return false;
+	}
+
+	public static boolean finale(int s1, User[] user) {
+		if (GameClear(s1))
+			return true;
+
+		initial(user);
+
+		return false;
+	}
+
 	public static void main(String[] args) {
 		Warrior war = new Warrior("모험가1", 1000, 100, 10);
 		Archer arc = new Archer("모험가2", 800, 200, 50);
@@ -392,13 +420,6 @@ public class Main {
 		mon.add(demon);
 		mon.add(machine);
 		Npc[] npc = { new Npc("알프레드", 100), new Npc("사바나", 50), new Npc("조나단", 10) };
-//		ItemWa[] wa = { new ItemWa("대검", 1000, 10), new ItemWa("소검", 2000, 20), new ItemWa("둔기", 3000, 30) };
-//		ItemAr[] ar = { new ItemAr("석궁", 1500, 10), new ItemAr("활", 2500, 20) };
-//		ItemMa[] ma = { new ItemMa("완드", 1000, 10), new ItemMa("빗자루", 1500, 20) };
-//		ArrayList<Item[]> item = new ArrayList<Item[]>();
-//		item.add(wa);
-//		item.add(ar);
-//		item.add(ma);
 		Item[][] item = { { new Item("대검", 1000, 10), new Item("소검", 2000, 20), new Item("둔기", 3000, 30) },
 				{ new Item("석궁", 1500, 10), new Item("활", 2500, 20) },
 				{ new Item("완드", 1000, 10), new Item("빗자루", 1500, 20) } };
@@ -424,33 +445,14 @@ public class Main {
 			int s2 = 0;
 			while (s2 < mon.get(s1).length) {
 				info(user, mon, s1, s2);
-				int turn = 0;
-				while (true) {
-					turn++;
-					System.out.println("턴 수 : " + turn);
-
-					userattack(user, ClassUp, mon, s1, s2, war, arc, mag, turn, npc0, npc, intro, buynum);
-
-					if (userattackafter(user, mon, s1, s2, ClassUp, job, turn)) {
-						break;
-					}
-
-					monsterattack(s2, mon, user, s1);
-
-					if (deathuser(user)) {
-						System.out.println("모험가가 모두 사망해서 게임이 종료됩니다");
-						return;
-					}
-
-					recovery(user);
-				}
+				if (intermediate(user, ClassUp, mon, s1, s2, war, arc, mag, npc0, npc, intro, buynum, job))
+					return;
 				s2++;
 			}
 
-			if (GameClear(s1))
+			if (finale(s1, user))
 				return;
 
-			initial(user);
 			s1++;
 		}
 	}

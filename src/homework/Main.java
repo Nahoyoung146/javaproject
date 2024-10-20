@@ -452,7 +452,6 @@ public class Main {
 
 			if (finale(s1, user))
 				return;
-
 			s1++;
 		}
 	}

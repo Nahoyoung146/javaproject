@@ -423,12 +423,9 @@ public class Main {
 		Item[][] item = { { new Item("대검", 1000, 10), new Item("소검", 2000, 20), new Item("둔기", 3000, 30) },
 				{ new Item("석궁", 1500, 10), new Item("활", 2500, 20) },
 				{ new Item("완드", 1000, 10), new Item("빗자루", 1500, 20) } };
-		boolean[] have = new boolean[3];
-		int[] check = new int[3];
-		int[] choice = new int[3];
-		String[] job = { "전사", "궁수", "마법사" };
-		String[] stage = { "용들의 무덤", "어둠의 동물원", "기계성" };
-		boolean[] ClassUp = { true, true, true };
+		boolean[] have = new boolean[3], ClassUp = { true, true, true };
+		int[] check = new int[3], choice = new int[3];
+		String[] job = { "전사", "궁수", "마법사" }, stage = { "용들의 무덤", "어둠의 동물원", "기계성" };
 		int s1 = 0;
 		boolean help = false;
 		printinfo("전설의 시작");

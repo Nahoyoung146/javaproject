@@ -98,54 +98,23 @@ public class Main {
 	public static int[] userbuyitem(User[] user, Item[][] item, int[] choice, boolean[] have, int[] check) {
 		int i = 0;
 		while (i < user.length) {
-			if (have[i] == true)
+			if (have[i] == true) {
 				System.out.println(user[i].getName() + "는(은) 이미 무기를 가지고 있습니다.");
+				i++;
+				continue;
+			}
 
-			else if (check[i] == 0)
+			if (check[i] == 0) {
 				System.out.println("돈 부족");
-
-			if (i == 0 && !(choice[i] == 1 || choice[i] == 2 || choice[i] == 3) && check[i] != 0) {
-				System.out.print("전사 아이템 구매 번호 입력, 0번 입력시 다음 단계로 진행 : ");
-				choice[i] = sc.nextInt();
-				if (choice[i] == 0) {
-					System.out.println("다음 단계 진행");
-					have[i] = false;
-				}
-
-				else {
-					System.out.println(user[i].getName() + "이(가) " + item[i][choice[i] - 1].getName()
-							+ "을(를) 구매했습니다.\n이제부터 무기전용 스킬이 사용가능합니다");
-					user[i].setMaxatk(user[i].getMaxatk() + item[i][choice[i] - 1].getWeaponatk());
-					user[i].setAtk(user[i].getMaxatk());
-					user[i].setMoney(user[i].getMoney() - item[i][choice[i] - 1].getPrice());
-					have[i] = true;
-				}
+				i++;
+				continue;
 			}
 
-			else if (i == 1 && !(choice[i] == 1 || choice[i] == 2) && check[i] != 0) {
-				System.out.print("궁수 아이템 구매 번호 입력, 0번 입력시 다음 단계로 진행 : ");
+			if (have[i] == false && check[i] != 0) {
+				System.out.print(user[i].getName() + "님 아이템 구매 번호 입력, 0번 입력시 다음 단계로 진행 : ");
 				choice[i] = sc.nextInt();
 				if (choice[i] == 0) {
 					System.out.println("다음 단계 진행");
-					have[i] = false;
-				}
-
-				else {
-					System.out.println(user[i].getName() + "이(가) " + item[i][choice[i] - 1].getName()
-							+ "을(를) 구매했습니다.\n이제부터 무기전용 스킬이 사용가능합니다");
-					user[i].setMaxatk(user[i].getMaxatk() + item[i][choice[i] - 1].getWeaponatk());
-					user[i].setAtk(user[i].getMaxatk());
-					user[i].setMoney(user[i].getMoney() - item[i][choice[i] - 1].getPrice());
-					have[i] = true;
-				}
-			}
-
-			else if (i == 2 && !(choice[i] == 1 || choice[i] == 2) && check[i] != 0) {
-				System.out.print("마법사 아이템 구매 번호 입력, 0번 입력시 다음 단계로 진행 : ");
-				choice[i] = sc.nextInt();
-				if (choice[i] == 0) {
-					System.out.println("다음 단계 진행");
-					have[i] = false;
 				}
 
 				else {
@@ -404,9 +373,9 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		Warrior war = new Warrior("모험가1", 1000, 100, 10);
-		Archer arc = new Archer("모험가2", 800, 200, 50);
-		Magician mag = new Magician("모험가3", 500, 300, 80);
+		Warrior war = new Warrior("모험가1", 1000, 100, 50);
+		Archer arc = new Archer("모험가2", 800, 200, 80);
+		Magician mag = new Magician("모험가3", 500, 300, 100);
 		User[] user = { war, arc, mag };
 		MonDragon[] dragon = { new DragonNormal("용기병", 1000, 10, "용족", 10), new DragonNormal("비늘용", 2000, 20, "용족", 30),
 				new DragonBoss("데스윙", 3000, 30, "용족", 50) };

@@ -1,5 +1,5 @@
 package homework;
 
 public interface Skillmon {
-	public void Skill1(User[] user);
+	public void Skillmon(User[] user);
 }

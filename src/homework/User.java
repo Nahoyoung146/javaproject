@@ -1,7 +1,5 @@
 package homework;
 
-import java.util.ArrayList;
-
 public abstract class User extends Rpg implements Attack, Skill {
 	private int money, exp, level, skillatk, needexp, maxhp, maxmp, maxatk, maxskillatk;
 	private String job;

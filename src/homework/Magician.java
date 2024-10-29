@@ -1,7 +1,5 @@
 package homework;
 
-import java.util.ArrayList;
-
 public class Magician extends User {
 	Magician(String name, int maxhp, int maxmp, int maxatk) {
 		super(name, maxhp, maxmp, maxatk);

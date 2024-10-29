@@ -18,7 +18,11 @@ public class Main {
 	}
 
 	public static boolean deathuser(User[] user) {
-		if (user[0].getHp() <= 0 && user[1].getHp() <= 0 && user[2].getHp() <= 0)
+		int sum = 0;
+		for (int i = 0; i < user.length; i++) {
+			sum += user[i].getHp();
+		}
+		if (sum <= 0)
 			return true;
 
 		return false;
@@ -69,7 +73,7 @@ public class Main {
 		}
 	}
 
-	public static void iteminfo(Item[][] item, String[] job) {
+	public static void iteminfo(Item[][] item, String[] job, User[] user, int[] check) {
 		System.out.println("아이템Npc가 등장했습니다");
 		int i = 0;
 		while (i < item.length) {
@@ -78,11 +82,9 @@ public class Main {
 				System.out.println(item[i][j]);
 			i++;
 		}
-	}
 
-	public static void itemcanbuy(Item[][] item, User[] user, String[] job, int[] check) {
 		System.out.println("구매 가능 물품\n금액 부족시 아무 아이템도 보이지 않음\n무기 구매는 캐릭터당 한번만 구매가능하며 무기교체는 불가능");
-		int i = 0;
+		i = 0;
 		while (i < item.length) {
 			System.out.println("==================" + job[i] + "==================");
 			for (int j = 0; j < item[i].length; j++) {
@@ -171,8 +173,7 @@ public class Main {
 	}
 
 	public static int[] item0(Item[][] item, String[] job, User[] user, int[] check, int[] choice, boolean[] have) {
-		iteminfo(item, job);
-		itemcanbuy(item, user, job, check);
+		iteminfo(item, job, user, check);
 		int[] buynum = userbuyitem(user, item, choice, have, check);
 		return buynum;
 	}
@@ -343,14 +344,14 @@ public class Main {
 		if (s2 == 2) {
 			int boss = (int) (Math.random() * 3);
 			if (boss == 0)
-				mon.get(s1)[s2].Skill1(user);
+				mon.get(s1)[s2].Skillmon(user);
 
 			else
-				mon.get(s1)[s2].attack1(user);
+				mon.get(s1)[s2].attackmon(user);
 		}
 
 		else {
-			mon.get(s1)[s2].attack1(user);
+			mon.get(s1)[s2].attackmon(user);
 		}
 	}
 

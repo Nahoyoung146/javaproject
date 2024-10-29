@@ -1,7 +1,5 @@
 package homework;
 
-import java.util.ArrayList;
-
 public class Rpg {
 	private String name;
 	private int hp, mp, atk;

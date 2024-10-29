@@ -1,7 +1,5 @@
 package homework;
 
-import java.util.ArrayList;
-
 public class Npc extends Rpg implements Attack {
 	Npc(String name, int atk) {
 		super(name, atk);

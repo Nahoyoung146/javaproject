@@ -188,7 +188,7 @@ public class Main {
 			wa.Blade(mon.get(s1)[s2]);
 		}
 
-		else if (num[1] == 1) {
+		if (num[1] == 1) {
 			ar.Cross(mon.get(s1)[s2], turn);
 		}
 
@@ -196,7 +196,7 @@ public class Main {
 			ar.Bow(mon.get(s1)[s2]);
 		}
 
-		else if (num[2] == 1) {
+		if (num[2] == 1) {
 			ma.Wand(mon.get(s1)[s2]);
 		}
 
